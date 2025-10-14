@@ -61,7 +61,7 @@
       if (timeLog[currentSetIndex] === undefined) {
         timeLog[currentSetIndex] = 0;
       }
-      timeLog[currentSetIndex] = totalTimeOnSet;
+      timeLog[currentSetIndex] += totalTimeOnSet;
       console.log(`Time saved for set ${currentSetIndex}: ${timeLog[currentSetIndex]/1000}s`, timeLog);
       totalTimeOnSet = 0; // Reset for next set
     }
