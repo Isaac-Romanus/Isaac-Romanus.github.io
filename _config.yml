@@ -14,13 +14,13 @@ url: ""
 # --- Simple (cosmetic) client-side login gate ---
 # NOTE: This site is static and (currently) hosted from a PUBLIC repository, so
 # this gate only hides the UI — it does NOT make the content private. To change
-# the password, replace the hash below with the SHA-256 of your new password:
-#   printf 'yourpassword' | sha256sum
-# The default password is: resident
+# the passphrase, replace the hash below with the SHA-256 of your new passphrase:
+#   printf 'yourpassphrase' | sha256sum
+# The current passphrase is: Stockholm
 auth:
   enabled: true
-  # SHA-256 of the passphrase (default: "resident")
-  sha256: "84816ff383c826e9c11e26fdbd8d66e4edd7cf1ec1a4b23f8d10d84aa56e0d8f"
+  # SHA-256 of the passphrase (current: "Stockholm")
+  sha256: "b982d7ebca1ea21a2d427983da88ad1b8a692109024155ecb460703f25544a4e"
 
 # --- Collections ---
 collections:

@@ -5,6 +5,13 @@
       <span class="brand-text">{{ site.title }}</span>
     </a>
 
+    <div class="search" role="search" data-search-url="{{ '/search.json' | relative_url }}">
+      <span class="search-icon" aria-hidden="true">🔎</span>
+      <input type="search" id="site-search" class="search-input" placeholder="Search entries…" aria-label="Search entries" autocomplete="off" spellcheck="false">
+      <kbd class="search-kbd" aria-hidden="true">/</kbd>
+      <div id="search-results" class="search-results" role="listbox" hidden></div>
+    </div>
+
     <nav class="site-nav" aria-label="Primary">
       <a href="{{ '/' | relative_url }}">Fields</a>
       <a href="{{ '/diseases/' | relative_url }}">A&ndash;Z</a>

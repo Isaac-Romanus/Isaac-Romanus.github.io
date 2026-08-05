@@ -45,7 +45,7 @@ Add an entry to `_data/fields.yml` and create a matching page in `fields/<slug>.
 
 ## Login / privacy
 
-The site shows a passphrase prompt (default passphrase: **`resident`**). Change it by
+The site shows a passphrase prompt (current passphrase: **`Stockholm`**). Change it by
 replacing the SHA-256 hash in `_config.yml` under `auth.sha256`:
 
 ```bash
