@@ -1,0 +1,27 @@
+---
+layout: default
+---
+{% assign fld = site.data.fields | where: "slug", page.field | first %}
+{% assign items = site.diseases | where: "field", page.field | sort: "title" %}
+
+<section class="field-header" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
+  <div class="wrap">
+    <nav class="crumbs"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>{{ fld.name | default: page.title }}</span></nav>
+    <h1>{% if fld.icon %}<span class="crumb-icon">{{ fld.icon }}</span>{% endif %}{{ fld.name | default: page.title }}</h1>
+    {% if fld.description %}<p class="field-desc">{{ fld.description }}</p>{% endif %}
+    <p class="muted">{{ items | size }} entr{% if items.size == 1 %}y{% else %}ies{% endif %}</p>
+  </div>
+</section>
+
+<section class="section wrap">
+  {% if page.content != "" %}<div class="prose field-intro">{{ content }}</div>{% endif %}
+  {% if items.size == 0 %}
+    <p class="empty-state">No entries yet in this field. Add a Markdown file to <code>_diseases/</code> with <code>field: {{ page.field }}</code>.</p>
+  {% else %}
+    <div class="disease-list">
+      {% for disease in items %}
+        {% include disease-card.html disease=disease %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

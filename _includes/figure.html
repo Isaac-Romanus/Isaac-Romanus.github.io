@@ -1,0 +1,18 @@
+{% assign image = include.image %}
+<figure class="figure">
+  <button type="button" class="figure-zoom" data-full="{{ image.src | relative_url }}" aria-label="Open image in viewer">
+    <img src="{{ image.src | relative_url }}" alt="{{ image.alt | default: image.caption | default: 'Histology image' }}" loading="lazy">
+  </button>
+  {% if image.caption or image.stain or image.magnification %}
+  <figcaption>
+    {% if image.caption %}<span class="fig-caption">{{ image.caption }}</span>{% endif %}
+    {% if image.stain or image.magnification %}
+      <span class="fig-meta">
+        {% if image.stain %}<span class="fig-stain">{{ image.stain }}</span>{% endif %}
+        {% if image.stain and image.magnification %}<span class="dot">&middot;</span>{% endif %}
+        {% if image.magnification %}<span class="fig-mag">{{ image.magnification }}</span>{% endif %}
+      </span>
+    {% endif %}
+  </figcaption>
+  {% endif %}
+</figure>

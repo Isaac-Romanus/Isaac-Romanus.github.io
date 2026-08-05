@@ -1,0 +1,16 @@
+{% assign disease = include.disease %}
+{% assign fld = site.data.fields | where: "slug", disease.field | first %}
+<a class="disease-card" href="{{ disease.url | relative_url }}" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
+  <span class="dc-body">
+    <span class="dc-title">{{ disease.title }}</span>
+    {% if disease.synonyms %}
+      <span class="dc-syn">{% if disease.synonyms.first %}{{ disease.synonyms | join: ", " }}{% else %}{{ disease.synonyms }}{% endif %}</span>
+    {% elsif disease.summary %}
+      <span class="dc-syn">{{ disease.summary }}</span>
+    {% endif %}
+    {% if disease.tags %}
+      <span class="dc-tags">{% for t in disease.tags %}<span class="badge badge-tag">{{ t }}</span>{% endfor %}</span>
+    {% endif %}
+  </span>
+  <span class="dc-arrow" aria-hidden="true">&rarr;</span>
+</a>

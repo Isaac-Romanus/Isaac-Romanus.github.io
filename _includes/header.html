@@ -1,0 +1,17 @@
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-mark">🔬</span>
+      <span class="brand-text">{{ site.title }}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <a href="{{ '/' | relative_url }}">Fields</a>
+      <a href="{{ '/diseases/' | relative_url }}">A&ndash;Z</a>
+      <a href="{{ '/about/' | relative_url }}">About</a>
+      {% if site.auth.enabled %}
+        <button type="button" id="lock-btn" class="lock-btn" title="Lock the notebook">Lock</button>
+      {% endif %}
+    </nav>
+  </div>
+</header>

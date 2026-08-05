@@ -1,10 +1,67 @@
-lsi: false
-safe: true
-source: 
-incremental: false
+title: Pathology Notebook
+tagline: A resident's notebook of surgical & anatomic pathology
+description: >-
+  A personal, modern notebook for pathology residents — surgical and anatomic
+  pathology notes organized by subspecialty, with structured disease pages and
+  histology image galleries.
+author: Pathology Resident
+lang: en
+
+# Base URL. Empty for a user site served at the domain root.
+baseurl: ""
+url: ""
+
+# --- Simple (cosmetic) client-side login gate ---
+# NOTE: This site is static and (currently) hosted from a PUBLIC repository, so
+# this gate only hides the UI — it does NOT make the content private. To change
+# the password, replace the hash below with the SHA-256 of your new password:
+#   printf 'yourpassword' | sha256sum
+# The default password is: resident
+auth:
+  enabled: true
+  # SHA-256 of the passphrase (default: "resident")
+  sha256: "84816ff383c826e9c11e26fdbd8d66e4edd7cf1ec1a4b23f8d10d84aa56e0d8f"
+
+# --- Collections ---
+collections:
+  diseases:
+    output: true
+    permalink: /diseases/:name/
+
+# --- Front-matter defaults ---
+defaults:
+  - scope:
+      path: ""
+      type: diseases
+    values:
+      layout: disease
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# --- Build settings ---
+markdown: kramdown
 highlighter: rouge
-gist:
-  noscript: false
 kramdown:
+  input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
+
+sass:
+  style: compressed
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+  - README.md
+  - scripts
+  - node_modules
