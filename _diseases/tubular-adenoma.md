@@ -5,7 +5,7 @@ synonyms:
   - Conventional colorectal adenoma
 tags:
   - benign
-  - precursor lesion
+  - precursor-lesion
 quick_facts:
   - label: Typical age
     value: "> 50 years"

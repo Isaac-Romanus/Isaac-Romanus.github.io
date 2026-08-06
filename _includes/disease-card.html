@@ -1,5 +1,5 @@
 {% assign disease = include.disease %}
-{% assign fld = site.data.fields | where: "slug", disease.field | first %}
+{% include field-lookup.html slug=disease.field %}
 <a class="disease-card" href="{{ disease.url | relative_url }}" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
   <span class="dc-body">
     <span class="dc-title">{{ disease.title }}</span>
@@ -9,7 +9,20 @@
       <span class="dc-syn">{{ disease.summary }}</span>
     {% endif %}
     {% if disease.tags %}
-      <span class="dc-tags">{% for t in disease.tags %}<span class="badge badge-tag">{{ t }}</span>{% endfor %}</span>
+      <span class="dc-tags">
+        {% for t in disease.tags %}
+          {% assign raw = t | strip | downcase %}
+          {% assign label = t %}
+          {% for tr in site.data.tags %}
+            {% assign t_slug = tr.slug | downcase %}
+            {% assign t_name = tr.name | downcase %}
+            {% if raw == t_slug or raw == t_name %}
+              {% assign label = tr.name %}
+            {% endif %}
+          {% endfor %}
+          <span class="badge badge-tag">{{ label }}</span>
+        {% endfor %}
+      </span>
     {% endif %}
   </span>
   <span class="dc-arrow" aria-hidden="true">&rarr;</span>

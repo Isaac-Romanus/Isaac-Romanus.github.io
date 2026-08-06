@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign fld = site.data.fields | where: "slug", page.field | first %}
+{% include field-lookup.html slug=page.field %}
 {% assign items = site.diseases | where: "field", page.field | sort: "title" %}
 
 <section class="field-header" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
@@ -15,13 +15,48 @@ layout: default
 
 <section class="section wrap">
   {% if page.content != "" %}<div class="prose field-intro">{{ content }}</div>{% endif %}
+
   {% if items.size == 0 %}
     <p class="empty-state">No entries yet in this field. Add a Markdown file to <code>_diseases/</code> with <code>field: {{ page.field }}</code>.</p>
   {% else %}
-    <div class="disease-list">
+    {% assign field_tags = "" | split: "" %}
+    {% for disease in items %}
+      {% for t in disease.tags %}
+        {% assign t_key = t | strip | downcase %}
+        {% assign field_tags = field_tags | push: t_key %}
+      {% endfor %}
+    {% endfor %}
+    {% assign field_tags = field_tags | uniq | sort %}
+
+    {% if field_tags.size > 0 %}
+      <div class="tag-filters" data-filter-root aria-label="Filter by tag">
+        <button type="button" class="tag-filter is-active" data-filter="all">All</button>
+        {% for t_key in field_tags %}
+          {% assign label = t_key %}
+          {% for t in site.data.tags %}
+            {% assign t_slug = t.slug | downcase %}
+            {% assign t_name = t.name | downcase %}
+            {% if t_key == t_slug or t_key == t_name %}
+              {% assign label = t.name %}
+            {% endif %}
+          {% endfor %}
+          <button type="button" class="tag-filter" data-filter="{{ t_key }}">{{ label }}</button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="disease-list" data-filter-list>
       {% for disease in items %}
-        {% include disease-card.html disease=disease %}
+        {% assign tag_keys = "" %}
+        {% for t in disease.tags %}
+          {% assign t_norm = t | strip | downcase %}
+          {% assign tag_keys = tag_keys | append: t_norm | append: " " %}
+        {% endfor %}
+        <div class="filter-item" data-tags="{{ tag_keys | strip }}">
+          {% include disease-card.html disease=disease %}
+        </div>
       {% endfor %}
     </div>
+    <p class="empty-state filter-empty" hidden>No entries match this filter.</p>
   {% endif %}
 </section>

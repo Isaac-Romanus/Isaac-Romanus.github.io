@@ -1,0 +1,29 @@
+{% comment %}
+  Differential diagnosis comparison table.
+  Usage:
+    {% include ddx-table.html rows=page.ddx %}
+  where page.ddx is a list of { entity, favors, against }
+{% endcomment %}
+{% assign rows = include.rows %}
+{% if rows and rows.size > 0 %}
+<div class="prose-table-wrap">
+  <table class="ddx-table">
+    <thead>
+      <tr>
+        <th scope="col">Entity</th>
+        <th scope="col">Favors</th>
+        <th scope="col">Against</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.entity }}</td>
+          <td>{{ row.favors | default: "—" }}</td>
+          <td>{{ row.against | default: "—" }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}

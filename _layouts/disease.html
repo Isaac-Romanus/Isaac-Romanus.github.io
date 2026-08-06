@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-{% assign fld = site.data.fields | where: "slug", page.field | first %}
+{% include field-lookup.html slug=page.field %}
 
 <article class="disease" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
   <header class="disease-header">
@@ -19,7 +19,7 @@ layout: default
       {% endif %}
       <div class="badges">
         {% if fld %}<a class="badge badge-field" href="{{ '/fields/' | append: fld.slug | append: '/' | relative_url }}">{{ fld.icon }} {{ fld.name }}</a>{% endif %}
-        {% if page.tags %}{% for t in page.tags %}<span class="badge badge-tag">{{ t }}</span>{% endfor %}{% endif %}
+        {% if page.tags %}{% for t in page.tags %}{% include tag-badge.html tag=t %}{% endfor %}{% endif %}
       </div>
     </div>
   </header>
@@ -27,7 +27,7 @@ layout: default
   <div class="wrap disease-layout">
     <div class="disease-main">
       {% if page.quick_facts %}
-        <aside class="quick-facts">
+        <aside class="quick-facts" id="quick-facts" data-toc-label="Quick facts">
           <h2 class="qf-title">Quick facts</h2>
           <dl>
             {% for fact in page.quick_facts %}
@@ -37,13 +37,31 @@ layout: default
         </aside>
       {% endif %}
 
-      {% if page.images %}
-        {% include gallery.html images=page.images %}
+      {% assign gallery_before = false %}
+      {% if page.gallery_position == "before" %}
+        {% assign gallery_before = true %}
+      {% endif %}
+
+      {% if gallery_before and page.images %}
+        <div id="histology" data-toc-label="Histology">
+          {% include gallery.html images=page.images %}
+        </div>
       {% endif %}
 
       <div class="prose disease-body">
         {{ content }}
       </div>
+
+      {% unless gallery_before %}
+        {% if page.images %}
+          <div id="histology" data-toc-label="Histology">
+            {% include gallery.html images=page.images %}
+          </div>
+        {% endif %}
+      {% endunless %}
+
+      {% include disease-pager.html disease=page %}
+      {% include related-entries.html disease=page field_name=fld.name %}
     </div>
 
     <aside class="disease-toc" aria-label="On this page">

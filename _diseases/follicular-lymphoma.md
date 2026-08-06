@@ -44,6 +44,10 @@ Second most common non-Hodgkin lymphoma in the West; median age around 60.
 Painless, often widespread lymphadenopathy; frequently disseminated (including marrow)
 at diagnosis despite an indolent course.
 
+## Gross
+
+Macroscopic appearance of involved nodes is rarely distinctive; often firm and fleshy.
+
 ## Microscopic (histology)
 
 - **Effaced** nodal architecture by crowded, **back-to-back follicles**.

@@ -1,0 +1,29 @@
+{% comment %}
+  IHC / special-stain table.
+  Usage:
+    {% include ihc-table.html rows=page.ihc %}
+  where page.ihc is a list of { marker, result, notes }
+{% endcomment %}
+{% assign rows = include.rows %}
+{% if rows and rows.size > 0 %}
+<div class="prose-table-wrap">
+  <table class="ihc-table">
+    <thead>
+      <tr>
+        <th scope="col">Marker / stain</th>
+        <th scope="col">Result</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.marker }}</td>
+          <td>{{ row.result }}</td>
+          <td>{{ row.notes | default: "—" }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}

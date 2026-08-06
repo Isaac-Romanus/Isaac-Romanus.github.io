@@ -51,6 +51,7 @@ kramdown:
 
 sass:
   style: compressed
+  sass_dir: _sass
 
 plugins:
   - jekyll-seo-tag
@@ -64,4 +65,6 @@ exclude:
   - .bundle
   - README.md
   - scripts
+  - Rakefile
   - node_modules
+  - .github

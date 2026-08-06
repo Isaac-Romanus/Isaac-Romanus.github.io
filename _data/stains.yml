@@ -1,0 +1,19 @@
+# Common stains / techniques for histology figure metadata.
+# Prefer these `name` values in image `stain:` fields for consistency.
+- H&E
+- IHC
+- PAS
+- PAS-D
+- Trichrome
+- Reticulin
+- Prussian blue
+- GMS
+- AFB
+- Mucicarmine
+- Oil Red O
+- Congo red
+- Warthin-Starry
+- Gram
+- Diff-Quik
+- Pap
+- Unstained

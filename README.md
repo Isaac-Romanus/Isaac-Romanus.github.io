@@ -15,33 +15,73 @@ bundle exec jekyll serve --host 0.0.0.0 --port 4000
 # open http://localhost:4000/
 ```
 
+Validate content and build:
+
+```bash
+bundle exec rake          # validate + jekyll build
+bundle exec rake validate
+ruby scripts/validate_content.rb
+```
+
 ## Project structure
 
 ```
 _config.yml              Site config, collections, and the login hash
-_data/fields.yml         The subspecialty taxonomy (name, accent color, icon)
+_data/fields.yml         Subspecialty taxonomy (name, accent, icon)
+_data/tags.yml           Controlled tag vocabulary
+_data/stains.yml         Preferred histology stain names
 _layouts/                default, home, field, disease
-_includes/               head, header, footer, cards, figure/gallery, login
-_diseases/               One Markdown file per disease (a Jekyll collection)
-fields/                  One page per field (lists that field's entries)
-assets/css/main.scss     Pastel design system
-assets/js/               auth.js (login), viewer.js (image lightbox), toc.js
+_includes/               cards, gallery, callouts, IHC/DDx tables, pager, related
+_diseases/               One Markdown file per disease (Jekyll collection)
+fields/                  Generated field pages (see scripts/generate_fields.rb)
+assets/css/main.scss    Design system entry (partials in `_sass/`)
+assets/js/               auth, search, viewer, toc, filter, nav
+_sass/                   SCSS partials (_tokens, _disease, _viewer, …)
 assets/images/<field>/<entry-slug>/   Histology images
+scripts/                 validate, generate fields, new entry/field
 ```
 
 ## Adding a new entry
 
+```bash
+ruby scripts/new_entry.rb "Tubular adenoma" gastrointestinal
+```
+
+Or manually:
+
 1. Copy `_diseases/template.md` to `_diseases/<your-entry>.md`.
 2. Set the front matter: `title`, `field` (must match a `slug` in `_data/fields.yml`),
-   optional `synonyms`, `tags`, `quick_facts`, and `images`.
+   `tags` (must match `_data/tags.yml`), optional `synonyms`, `quick_facts`, `images`,
+   `ihc`, and `ddx`.
 3. Write the body using the standard `##` section headings.
-4. Put images in `assets/images/<field>/<your-entry>/` and list them under `images:`
-   with `src`, `caption`, `stain`, `magnification`, and `alt`.
+4. Put images in `assets/images/<field>/<your-entry>/` and list them under `images:`.
+
+Optional scaffolding in Markdown / front matter:
+
+- `{% include callout.html kind="pearl" text="…" %}` — pearl / pitfall / grading / note
+- `{% include ihc-table.html rows=page.ihc %}` and `{% include ddx-table.html rows=page.ddx %}` —
+  place these includes under the matching `##` sections; define the rows in front matter
+- `gallery_position: before` — show histology above the body (default is after)
 
 ## Adding a new field
 
-Add an entry to `_data/fields.yml` and create a matching page in `fields/<slug>.md`
-(copy an existing one and change the `field`, `title`, and `permalink`).
+```bash
+ruby scripts/new_field.rb --slug oral --name "Oral pathology" \
+  --description "Oral cavity and odontogenic lesions." --accent "#E8D5B7" --icon "🦷"
+```
+
+Or edit `_data/fields.yml` and run:
+
+```bash
+ruby scripts/generate_fields.rb
+```
+
+## Search, tags, and navigation
+
+- Header search indexes title, synonyms, tags, field, summary, quick facts, and full body.
+- `/tags/` lists every controlled tag with matching entries; badges link there.
+- Field pages offer tag filter chips (`?tag=malignant` works too).
+- Disease pages include prev/next within the field and related same-field entries.
 
 ## Login / privacy
 

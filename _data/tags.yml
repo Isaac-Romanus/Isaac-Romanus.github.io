@@ -1,0 +1,45 @@
+# Controlled tag vocabulary.
+# Disease front matter `tags:` must use these `slug` values (or the exact `name`).
+- slug: benign
+  name: Benign
+  description: Non-malignant / non-neoplastic or benign neoplasm.
+
+- slug: malignant
+  name: Malignant
+  description: Malignant neoplasm.
+
+- slug: low-grade
+  name: Low-grade
+  description: Low-grade or indolent behavior.
+
+- slug: high-grade
+  name: High-grade
+  description: High-grade or aggressive behavior.
+
+- slug: precursor-lesion
+  name: Precursor lesion
+  description: Premalignant or precursor entity.
+
+- slug: b-cell
+  name: B-cell
+  description: B-lineage hematolymphoid process.
+
+- slug: t-cell
+  name: T-cell
+  description: T-lineage hematolymphoid process.
+
+- slug: inflammatory
+  name: Inflammatory
+  description: Inflammatory / reactive process.
+
+- slug: infectious
+  name: Infectious
+  description: Infectious disease.
+
+- slug: hereditary
+  name: Hereditary
+  description: Inherited / syndromic association.
+
+- slug: metastatic
+  name: Metastatic
+  description: Metastasis or metastatic pattern.

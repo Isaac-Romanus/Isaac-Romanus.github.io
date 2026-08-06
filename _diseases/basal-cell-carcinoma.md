@@ -27,12 +27,28 @@ images:
     stain: H&E
     magnification: 200x
     alt: High power basaloid nest with peripheral palisading and cleft.
+ihc:
+  - marker: BerEP4
+    result: Positive
+    notes: Helps separate from squamous cell carcinoma
+  - marker: EMA
+    result: Negative
+    notes: Usually negative in BCC; positive in SCC
+ddx:
+  - entity: Basaloid squamous cell carcinoma
+    favors: Surface dysplasia / SCC in situ, abrupt keratinization
+    against: Classic stromal clefting of BCC
+  - entity: Trichoepithelioma / trichoblastoma
+    favors: Papillary mesenchymal bodies, more fibrotic stroma
+    against: Ulceration, marked clefting, high mitotic rate
 ---
 
 ## Definition
 
 **Basal cell carcinoma (BCC)** is the most common human malignancy: a locally invasive
 tumor of basaloid keratinocytes that only rarely metastasizes.
+
+{% include callout.html kind="pearl" text="Peripheral palisading + stromal clefting is the classic low-power clue — confirm at high power before calling a basaloid mimic." %}
 
 ## Epidemiology
 
@@ -59,6 +75,8 @@ Pearly, sometimes ulcerated nodule or plaque on sun-exposed skin.
 Usually a morphologic diagnosis. **BerEP4** positive; **EMA** negative (helps separate
 from squamous cell carcinoma).
 
+{% include ihc-table.html rows=page.ihc %}
+
 ## Molecular
 
 Dysregulated **Hedgehog** signaling, commonly via **PTCH1** loss or **SMO** mutation.
@@ -68,6 +86,8 @@ Dysregulated **Hedgehog** signaling, commonly via **PTCH1** loss or **SMO** muta
 - Basaloid squamous cell carcinoma
 - Trichoepithelioma / trichoblastoma
 - Sebaceous carcinoma
+
+{% include ddx-table.html rows=page.ddx %}
 
 ## Prognosis & treatment
 

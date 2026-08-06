@@ -1,11 +1,12 @@
 /* Lightweight, dependency-free client-side search over _diseases.
    Loads /search.json on first use, ranks matches across title / synonyms /
-   tags / field / summary / body, and shows a results dropdown with keyboard
-   navigation. */
+   tags / field / summary / facts / body, and shows a results dropdown with
+   keyboard navigation and ARIA live updates. */
 (function () {
   var box = document.querySelector('.search');
   var input = document.getElementById('site-search');
   var panel = document.getElementById('search-results');
+  var status = document.getElementById('search-status');
   if (!box || !input || !panel) return;
 
   var url = box.getAttribute('data-search-url') || '/search.json';
@@ -13,14 +14,41 @@
   var loading = false;
   var results = [];
   var active = -1;
+  var debounceTimer = null;
+  var fieldScope = (function () {
+    var p = new URLSearchParams(window.location.search);
+    return (p.get('field') || box.getAttribute('data-field') || '').toLowerCase();
+  })();
+
+  function setExpanded(open) {
+    input.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function setStatus(msg) {
+    if (status) status.textContent = msg || '';
+  }
 
   function load() {
     if (docs || loading) return;
     loading = true;
+    setStatus('Loading search index…');
     fetch(url)
       .then(function (r) { return r.json(); })
-      .then(function (data) { docs = data || []; if (input.value) run(input.value); })
-      .catch(function () { docs = []; })
+      .then(function (data) {
+        docs = data || [];
+        if (fieldScope) {
+          docs = docs.filter(function (d) {
+            return (d.fieldSlug || '').toLowerCase() === fieldScope ||
+              (d.field || '').toLowerCase() === fieldScope;
+          });
+        }
+        if (input.value) run(input.value);
+        else setStatus('');
+      })
+      .catch(function () {
+        docs = [];
+        setStatus('Search index unavailable.');
+      })
       .finally(function () { loading = false; });
   }
 
@@ -56,7 +84,7 @@
       if (p !== -1 && (pos === -1 || p < pos)) pos = p;
     }
     if (pos === -1) {
-      var fallback = asText(doc.summary) || asText(doc.synonyms);
+      var fallback = asText(doc.summary) || asText(doc.facts) || asText(doc.synonyms);
       return highlight(fallback.slice(0, 130), terms);
     }
     var start = Math.max(0, pos - 45);
@@ -71,6 +99,7 @@
     var tags = asText(doc.tags).toLowerCase();
     var field = asText(doc.field).toLowerCase();
     var summary = asText(doc.summary).toLowerCase();
+    var facts = asText(doc.facts).toLowerCase();
     var body = asText(doc.body).toLowerCase();
 
     var total = 0;
@@ -82,6 +111,7 @@
       if (tags.indexOf(t) !== -1) termScore += 4;
       if (field.indexOf(t) !== -1) termScore += 3;
       if (summary.indexOf(t) !== -1) termScore += 2;
+      if (facts.indexOf(t) !== -1) termScore += 2;
       if (body.indexOf(t) !== -1) termScore += 1;
       if (termScore === 0) return 0; // AND: every term must match somewhere
       total += termScore;
@@ -91,7 +121,7 @@
 
   function run(q) {
     var terms = q.toLowerCase().split(/\s+/).filter(Boolean);
-    if (!docs || terms.length === 0) { close(); return; }
+    if (!docs || terms.length === 0) { close(); setStatus(''); return; }
 
     results = docs
       .map(function (d) { return { doc: d, s: score(d, terms) }; })
@@ -103,16 +133,25 @@
     render(terms, q);
   }
 
+  function scheduleRun(q) {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(function () { run(q); }, 120);
+  }
+
   function render(terms, q) {
     if (results.length === 0) {
       panel.innerHTML = '<div class="search-empty">No matches for “' + escapeHtml(q) + '”.</div>';
       panel.hidden = false;
       box.classList.add('open');
+      setExpanded(true);
+      setStatus('No matches.');
+      input.removeAttribute('aria-activedescendant');
       return;
     }
     var html = results.map(function (r, i) {
       var d = r.doc;
-      return '<a class="search-hit" role="option" href="' + d.url + '" data-i="' + i + '">' +
+      var id = 'search-opt-' + i;
+      return '<a class="search-hit" role="option" id="' + id + '" href="' + d.url + '" data-i="' + i + '">' +
                '<span class="hit-title">' + highlight(asText(d.title), terms) + '</span>' +
                '<span class="hit-field">' + escapeHtml(asText(d.field)) + '</span>' +
                '<span class="hit-snip">' + snippet(d, terms) + '</span>' +
@@ -121,12 +160,17 @@
     panel.innerHTML = html;
     panel.hidden = false;
     box.classList.add('open');
+    setExpanded(true);
+    setStatus(results.length + ' result' + (results.length === 1 ? '' : 's'));
+    input.removeAttribute('aria-activedescendant');
   }
 
   function close() {
     panel.hidden = true;
     box.classList.remove('open');
     active = -1;
+    setExpanded(false);
+    input.removeAttribute('aria-activedescendant');
   }
 
   function setActive(i) {
@@ -135,10 +179,11 @@
     active = (i + hits.length) % hits.length;
     hits.forEach(function (h, idx) { h.classList.toggle('active', idx === active); });
     hits[active].scrollIntoView({ block: 'nearest' });
+    input.setAttribute('aria-activedescendant', hits[active].id);
   }
 
   input.addEventListener('focus', load);
-  input.addEventListener('input', function () { load(); run(input.value); });
+  input.addEventListener('input', function () { load(); scheduleRun(input.value); });
 
   input.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
@@ -155,11 +200,10 @@
     if (!box.contains(e.target)) close();
   });
 
-  // "/" focuses the search box (unless already typing in a field)
   document.addEventListener('keydown', function (e) {
     if (e.key !== '/') return;
     var tag = (document.activeElement && document.activeElement.tagName) || '';
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement && document.activeElement.isContentEditable)) return;
     e.preventDefault();
     input.focus();
   });
