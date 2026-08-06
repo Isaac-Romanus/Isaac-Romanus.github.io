@@ -1,0 +1,8 @@
+{% assign field = include.field %}
+{% assign count = site.diseases | where: "field", field.slug | size %}
+<a class="field-card" href="{{ '/fields/' | append: field.slug | append: '/' | relative_url }}" style="--accent: {{ field.accent }}">
+  <span class="field-icon" aria-hidden="true">{{ field.icon }}</span>
+  <span class="field-name">{{ field.name }}</span>
+  <span class="field-desc">{{ field.description }}</span>
+  <span class="field-count">{{ count }} entr{% if count == 1 %}y{% else %}ies{% endif %}</span>
+</a>

@@ -1,0 +1,16 @@
+.gallery-block { margin: 28px 0 32px; scroll-margin-top: 92px; }
+.gallery-title { font-family: var(--font-serif); font-weight: 600; font-size: var(--text-section); margin: 0 0 14px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+.gallery-single { grid-template-columns: minmax(0, 520px); }
+.figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+.figure-zoom { display: block; width: 100%; padding: 0; border: 0; background: #f1f0f7; cursor: zoom-in; }
+.figure-zoom img { width: 100%; height: 200px; object-fit: cover; transition: transform .3s ease; }
+.gallery-single .figure-zoom img { height: 340px; }
+.figure-zoom:hover img { transform: scale(1.03); }
+.figure figcaption { padding: 12px 14px; font-size: .9rem; }
+.fig-caption { display: block; color: var(--ink); }
+.fig-meta { display: block; margin-top: 4px; color: var(--muted); font-size: .82rem; }
+.fig-stain { font-weight: 600; color: var(--ink-soft); }
+.fig-meta .dot { margin: 0 6px; }
+
+#histology { scroll-margin-top: 92px; }

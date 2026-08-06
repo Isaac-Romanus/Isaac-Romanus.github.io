@@ -1,0 +1,30 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">{{ site.tagline }}</p>
+    <h1 class="hero-title">{{ page.heading | default: site.title }}</h1>
+    {% if page.intro %}<p class="hero-intro">{{ page.intro }}</p>{% endif %}
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{{ '/diseases/' | relative_url }}">Browse all entries</a>
+      <a class="btn btn-ghost" href="#fields">Jump to fields</a>
+    </div>
+  </div>
+</section>
+
+<section id="fields" class="section wrap">
+  <div class="section-head">
+    <h2>Pathology fields</h2>
+    <p class="muted">{{ site.diseases | size }} entries across {{ site.data.fields | size }} subspecialties.</p>
+  </div>
+  <div class="card-grid">
+    {% for field in site.data.fields %}
+      {% include field-card.html field=field %}
+    {% endfor %}
+  </div>
+</section>
+
+{% if page.content != "" %}
+  {{ content }}
+{% endif %}

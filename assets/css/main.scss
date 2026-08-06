@@ -1,0 +1,17 @@
+---
+# Front matter dashes tell Jekyll to process this file with Sass.
+---
+
+/* Pathology Notebook — pastel design system (partials below). */
+@import "tokens";
+@import "base";
+@import "header";
+@import "search";
+@import "home";
+@import "cards";
+@import "disease";
+@import "gallery";
+@import "viewer";
+@import "login";
+@import "footer";
+@import "print";

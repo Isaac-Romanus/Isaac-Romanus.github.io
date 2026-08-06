@@ -1,0 +1,14 @@
+.hero {
+  background:
+    radial-gradient(1200px 400px at 10% -10%, #e7dffb 0%, transparent 60%),
+    radial-gradient(1000px 420px at 100% 0%, #d9f2e8 0%, transparent 55%),
+    linear-gradient(180deg, #fbfaff 0%, var(--bg) 100%);
+  padding: 72px 0 64px;
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow { color: var(--brand-ink); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: .8rem; margin: 0 0 12px; }
+.hero-title { font-family: var(--font-serif); font-weight: 600; font-size: var(--text-hero); line-height: 1.08; margin: 0 0 16px; letter-spacing: -.02em; }
+.hero-intro { font-size: 1.15rem; color: var(--ink-soft); max-width: 60ch; margin: 0 0 28px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.recent-list { margin-top: 8px; }

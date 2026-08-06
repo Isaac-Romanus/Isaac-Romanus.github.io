@@ -1,0 +1,72 @@
+---
+layout: default
+---
+{% include field-lookup.html slug=page.field %}
+
+<article class="disease" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
+  <header class="disease-header">
+    <div class="wrap">
+      <nav class="crumbs">
+        <a href="{{ '/' | relative_url }}">Home</a> <span>/</span>
+        {% if fld %}<a href="{{ '/fields/' | append: fld.slug | append: '/' | relative_url }}">{{ fld.name }}</a> <span>/</span>{% endif %}
+        <span>{{ page.title }}</span>
+      </nav>
+      <h1>{{ page.title }}</h1>
+      {% if page.synonyms %}
+        <p class="synonyms"><span class="lbl">Synonyms:</span>
+          {% if page.synonyms.first %}{{ page.synonyms | join: ", " }}{% else %}{{ page.synonyms }}{% endif %}
+        </p>
+      {% endif %}
+      <div class="badges">
+        {% if fld %}<a class="badge badge-field" href="{{ '/fields/' | append: fld.slug | append: '/' | relative_url }}">{{ fld.icon }} {{ fld.name }}</a>{% endif %}
+        {% if page.tags %}{% for t in page.tags %}{% include tag-badge.html tag=t %}{% endfor %}{% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap disease-layout">
+    <div class="disease-main">
+      {% if page.quick_facts %}
+        <aside class="quick-facts" id="quick-facts" data-toc-label="Quick facts">
+          <h2 class="qf-title">Quick facts</h2>
+          <dl>
+            {% for fact in page.quick_facts %}
+              <div class="qf-row"><dt>{{ fact.label }}</dt><dd>{{ fact.value }}</dd></div>
+            {% endfor %}
+          </dl>
+        </aside>
+      {% endif %}
+
+      {% assign gallery_before = false %}
+      {% if page.gallery_position == "before" %}
+        {% assign gallery_before = true %}
+      {% endif %}
+
+      {% if gallery_before and page.images %}
+        <div id="histology" data-toc-label="Histology">
+          {% include gallery.html images=page.images %}
+        </div>
+      {% endif %}
+
+      <div class="prose disease-body">
+        {{ content }}
+      </div>
+
+      {% unless gallery_before %}
+        {% if page.images %}
+          <div id="histology" data-toc-label="Histology">
+            {% include gallery.html images=page.images %}
+          </div>
+        {% endif %}
+      {% endunless %}
+
+      {% include disease-pager.html disease=page %}
+      {% include related-entries.html disease=page field_name=fld.name %}
+    </div>
+
+    <aside class="disease-toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <nav id="toc"></nav>
+    </aside>
+  </div>
+</article>

@@ -1,10 +1,70 @@
-lsi: false
-safe: true
-source: 
-incremental: false
+title: Pathology Notebook
+tagline: A resident's notebook of surgical & anatomic pathology
+description: >-
+  A personal, modern notebook for pathology residents — surgical and anatomic
+  pathology notes organized by subspecialty, with structured disease pages and
+  histology image galleries.
+author: Pathology Resident
+lang: en
+
+# Base URL. Empty for a user site served at the domain root.
+baseurl: ""
+url: ""
+
+# --- Simple (cosmetic) client-side login gate ---
+# NOTE: This site is static and (currently) hosted from a PUBLIC repository, so
+# this gate only hides the UI — it does NOT make the content private. To change
+# the passphrase, replace the hash below with the SHA-256 of your new passphrase:
+#   printf 'yourpassphrase' | sha256sum
+# The current passphrase is: Stockholm
+auth:
+  enabled: true
+  # SHA-256 of the passphrase (current: "Stockholm")
+  sha256: "b982d7ebca1ea21a2d427983da88ad1b8a692109024155ecb460703f25544a4e"
+
+# --- Collections ---
+collections:
+  diseases:
+    output: true
+    permalink: /diseases/:name/
+
+# --- Front-matter defaults ---
+defaults:
+  - scope:
+      path: ""
+      type: diseases
+    values:
+      layout: disease
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# --- Build settings ---
+markdown: kramdown
 highlighter: rouge
-gist:
-  noscript: false
 kramdown:
+  input: GFM
   math_engine: mathjax
   syntax_highlighter: rouge
+
+sass:
+  style: compressed
+  sass_dir: _sass
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+  - README.md
+  - scripts
+  - Rakefile
+  - node_modules
+  - .github

@@ -1,0 +1,20 @@
+name: Build & validate
+
+on:
+  push:
+    branches: [main, "cursor/**"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Validate content
+        run: ruby scripts/validate_content.rb
+      - name: Build site
+        run: bundle exec jekyll build

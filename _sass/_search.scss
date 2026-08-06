@@ -1,0 +1,46 @@
+.search { position: relative; flex: 1 1 auto; max-width: 440px; margin: 0 24px; display: flex; align-items: center; }
+.search-icon { position: absolute; left: 14px; font-size: 14px; opacity: .6; pointer-events: none; }
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 38px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  font-size: .95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.search-input::placeholder { color: var(--muted); }
+.search-input:focus { border-color: var(--brand); background: #fff; box-shadow: 0 0 0 4px var(--brand-tint); }
+.search-kbd {
+  position: absolute; right: 12px;
+  font-family: var(--font-sans); font-size: .72rem; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 6px; padding: 1px 7px; background: #fff;
+}
+.search.open .search-kbd { display: none; }
+
+.search-results {
+  position: absolute; top: calc(100% + 10px); left: 0; right: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  max-height: min(70vh, 460px); overflow-y: auto;
+  z-index: 60;
+}
+.search-hit { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 12px 16px; color: var(--ink); border-bottom: 1px solid var(--line); }
+.search-hit:last-child { border-bottom: none; }
+.search-hit:hover, .search-hit.active { background: var(--brand-tint); text-decoration: none; }
+.hit-title { font-weight: 600; }
+.hit-field { grid-row: 1; justify-self: end; font-size: .72rem; font-weight: 600; color: var(--brand-ink); background: var(--brand-tint); padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.search-hit.active .hit-field { background: #fff; }
+.hit-snip { grid-column: 1 / -1; font-size: .84rem; color: var(--ink-soft); line-height: 1.5; }
+.search-empty { padding: 18px 16px; color: var(--muted); font-size: .9rem; }
+mark { background: #fdf0ad; color: inherit; border-radius: 3px; padding: 0 2px; }
+
+@media (max-width: 860px) {
+  .search { max-width: none; margin: 0; }
+  .search-kbd { display: none; }
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}"{% if site.auth.enabled %} class="pn-auth"{% endif %}>
+{% include head.html %}
+<body>
+  {% if site.auth.enabled %}{% include login.html %}{% endif %}
+
+  <div id="app">
+    {% include header.html %}
+    <main class="site-main">
+      {{ content }}
+    </main>
+    {% include footer.html %}
+  </div>
+
+  <script src="{{ '/assets/js/nav.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/viewer.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/search.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/filter.js' | relative_url }}" defer></script>
+  {% if site.auth.enabled %}<script src="{{ '/assets/js/auth.js' | relative_url }}"></script>{% endif %}
+</body>
+</html>
