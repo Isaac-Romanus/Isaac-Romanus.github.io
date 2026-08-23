@@ -1,0 +1,20 @@
+{% assign qb_sub = nil %}
+{% for sub in site.data.po_subspecialties %}
+  {% if sub.fields contains page.field %}
+    {% assign qb_sub = sub %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if qb_sub %}
+<section class="qb-field-practice section wrap">
+  <h2 class="qb-section-title">Practice questions</h2>
+  <p class="muted">Board-style questions for this field from the local question bank.</p>
+  <div class="qb-card-actions">
+    <a class="btn btn-primary btn-sm" href="{{ '/questionbank/quiz/' | relative_url }}?mode=practice&amp;sid={{ qb_sub.sid }}&amp;field={{ page.field }}">Practice all</a>
+    <a class="btn btn-secondary btn-sm" href="{{ '/questionbank/quiz/' | relative_url }}?mode=review&amp;sid={{ qb_sub.sid }}">Review wrong</a>
+    <a class="btn btn-secondary btn-sm" href="{{ '/questionbank/quiz/' | relative_url }}?mode=leitner&amp;sid={{ qb_sub.sid }}">Leitner</a>
+    <a class="btn btn-secondary btn-sm" href="{{ '/questionbank/' | relative_url }}">Question bank home</a>
+  </div>
+</section>
+{% endif %}

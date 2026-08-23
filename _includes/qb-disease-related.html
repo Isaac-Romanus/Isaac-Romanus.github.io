@@ -1,0 +1,44 @@
+<section class="qb-disease-related" id="related-questions" data-toc-label="Related questions" data-disease-slug="{{ disease.slug | default: page.name }}" data-disease-field="{{ disease.field | default: page.field }}">
+  <h2 class="qb-section-title">Related questions</h2>
+  <p class="muted">Practice questions linked to this entry.</p>
+  <div id="qb-disease-related-list" class="qb-related-list">
+    <p class="muted">Loading related questions…</p>
+  </div>
+</section>
+
+<script src="{{ '/assets/js/qb-quiz.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/qb-storage.js' | relative_url }}" defer></script>
+<script>
+(function () {
+  function init() {
+    if (!window.QBQuiz) return setTimeout(init, 50);
+    var root = document.getElementById('qb-disease-related-list');
+    var section = document.getElementById('related-questions');
+    if (!root || !section) return;
+    var slug = section.getAttribute('data-disease-slug');
+    var field = section.getAttribute('data-disease-field');
+    var subs = {{ site.data.po_subspecialties | jsonify }};
+    var sub = subs.find(function (s) { return (s.fields || []).indexOf(field) >= 0; });
+    if (!sub) { root.innerHTML = '<p class="muted">No question bank for this field yet.</p>'; return; }
+    window.QBQuiz.loadBank(sub.slug).then(function (qs) {
+      var related = window.QBQuiz.findRelated(qs, slug);
+      if (!related.length) {
+        root.innerHTML = '<p class="muted">No linked questions yet for this entry.</p>';
+        return;
+      }
+      root.innerHTML = '';
+      related.slice(0, 8).forEach(function (q) {
+        var a = document.createElement('a');
+        a.className = 'qb-related-item';
+        a.href = {{ '/questionbank/quiz/' | relative_url | jsonify }} + '?mode=practice&sid=' + sub.sid + '&qid=' + encodeURIComponent(q.id);
+        a.innerHTML = '<span>' + (q.stem.length > 120 ? q.stem.slice(0, 117) + '…' : q.stem) + '</span><span>→</span>';
+        root.appendChild(a);
+      });
+    }).catch(function () {
+      root.innerHTML = '<p class="muted">Could not load questions.</p>';
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
