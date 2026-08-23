@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "banks": {
+    "gi-liver": "gi-liver.json"
+  }
+}

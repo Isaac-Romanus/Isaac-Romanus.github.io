@@ -4,3 +4,4 @@ source "https://rubygems.org"
 # builds match production. `webrick` is required for `jekyll serve` on Ruby 3+.
 gem "github-pages", group: :jekyll_plugins
 gem "webrick"
+gem "nokogiri", group: :development
