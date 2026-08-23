@@ -1,0 +1,111 @@
+# Pathology Outlines question bank subspecialties (sid = PO review-questions?sid=N).
+# `fields` maps to slugs in _data/fields.yml for cross-linking.
+- sid: 1
+  name: Autopsy & forensics
+  slug: autopsy-forensics
+  question_count_estimate: 55
+  fields: []
+
+- sid: 2
+  name: Bone, joints & soft tissue
+  slug: bone-soft-tissue
+  question_count_estimate: 378
+  fields:
+    - soft-tissue-bone
+
+- sid: 3
+  name: Breast
+  slug: breast
+  question_count_estimate: 227
+  fields:
+    - breast
+
+- sid: 4
+  name: Clinical pathology
+  slug: clinical-pathology
+  question_count_estimate: 459
+  fields:
+    - hematopathology
+
+- sid: 5
+  name: Cytopathology
+  slug: cytopathology
+  question_count_estimate: 44
+  fields:
+    - cytopathology
+
+- sid: 6
+  name: GI / liver
+  slug: gi-liver
+  question_count_estimate: 916
+  fields:
+    - gastrointestinal
+    - liver-pancreas
+
+- sid: 7
+  name: Dermatopathology
+  slug: dermatopathology
+  question_count_estimate: 512
+  fields:
+    - dermatopathology
+
+- sid: 8
+  name: GU / adrenal
+  slug: gu-adrenal
+  question_count_estimate: 416
+  fields:
+    - genitourinary
+
+- sid: 9
+  name: Gyn
+  slug: gyn
+  question_count_estimate: 491
+  fields:
+    - gynecologic
+
+- sid: 10
+  name: Head & neck
+  slug: head-neck
+  question_count_estimate: 429
+  fields:
+    - head-neck
+
+- sid: 11
+  name: Hematopathology
+  slug: hematopathology
+  question_count_estimate: 451
+  fields:
+    - hematopathology
+
+- sid: 12
+  name: Informatics / digital pathology
+  slug: informatics
+  question_count_estimate: 96
+  fields: []
+
+- sid: 13
+  name: Medical renal
+  slug: medical-renal
+  question_count_estimate: 132
+  fields:
+    - genitourinary
+
+- sid: 14
+  name: Neuropathology
+  slug: neuropathology
+  question_count_estimate: 278
+  fields:
+    - neuropathology
+
+- sid: 15
+  name: Stains (IHC & special) / molecular
+  slug: stains-molecular
+  question_count_estimate: 299
+  fields: []
+
+- sid: 16
+  name: Thoracic
+  slug: thoracic
+  question_count_estimate: 227
+  fields:
+    - pulmonary

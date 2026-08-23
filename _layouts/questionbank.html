@@ -1,0 +1,18 @@
+---
+layout: default
+---
+{{ content }}
+
+<script>
+  window.PN_QB = window.PN_QB || {};
+  window.PN_QB.baseUrl = {{ site.baseurl | jsonify }};
+  window.PN_QB.subspecialties = {{ site.data.po_subspecialties | jsonify }};
+  window.PN_QB.fields = {{ site.data.fields | jsonify }};
+  window.PN_QB.tags = {{ site.data.tags | jsonify }};
+  window.PN_QB.page = {{ page.qb_page | default: "index" | jsonify }};
+</script>
+<script src="{{ '/assets/js/qb-storage.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/qb-leitner.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/qb-quiz.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/qb-exam.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/questionbank.js' | relative_url }}" defer></script>
