@@ -308,6 +308,7 @@ PLATFORMS
 
 DEPENDENCIES
   github-pages
+  nokogiri
   webrick
 
 CHECKSUMS

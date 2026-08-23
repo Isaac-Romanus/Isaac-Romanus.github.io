@@ -277,7 +277,8 @@
       tag: p.get('tag') || null,
       timer: p.get('timer') ? parseInt(p.get('timer'), 10) : 0,
       field: p.get('field') || null,
-      related: p.get('related') || null
+      related: p.get('related') || null,
+      qid: p.get('qid') || null
     };
   }
 
@@ -302,6 +303,9 @@
     };
 
     window.QBQuiz.prepareSession(prepOpts).then(function (questions) {
+      if (params.qid) {
+        questions = questions.filter(function (q) { return q.id === params.qid; });
+      }
       if (loading) loading.hidden = true;
       if (!questions.length) {
         if (empty) empty.hidden = false;
