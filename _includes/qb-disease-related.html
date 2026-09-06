@@ -1,4 +1,15 @@
-<section class="qb-disease-related" id="related-questions" data-toc-label="Related questions" data-disease-slug="{{ disease.slug | default: page.name }}" data-disease-field="{{ disease.field | default: page.field }}">
+{% comment %}
+  Jekyll::Document has no Liquid `name` method. Prefer explicit slug front matter,
+  otherwise derive from the collection permalink (/diseases/<slug>/).
+{% endcomment %}
+{% if disease.slug and disease.slug != "" %}
+  {% assign qb_disease_slug = disease.slug %}
+{% elsif page.slug and page.slug != "" %}
+  {% assign qb_disease_slug = page.slug %}
+{% else %}
+  {% assign qb_disease_slug = disease.url | default: page.url | split: '/' | compact | last %}
+{% endif %}
+<section class="qb-disease-related" id="related-questions" data-toc-label="Related questions" data-disease-slug="{{ qb_disease_slug }}" data-disease-field="{{ disease.field | default: page.field }}">
   <h2 class="qb-section-title">Related questions</h2>
   <p class="muted">Practice questions linked to this entry.</p>
   <div id="qb-disease-related-list" class="qb-related-list">
