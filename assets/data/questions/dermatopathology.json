@@ -1,0 +1,197 @@
+[
+  {
+    "id": "po-derm-0001",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
+    "po_subspecialty_id": 7,
+    "po_chapter": "Melanocytic lesions",
+    "fields": ["dermatopathology"],
+    "tags": ["malignant"],
+    "stem": "Which feature is most concerning for melanoma rather than a banal melanocytic nevus?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Symmetry and maturation with depth",
+        "correct": false,
+        "explanation": "Symmetry and maturation with descent into the dermis favor a benign nevus."
+      },
+      {
+        "key": "B",
+        "text": "Pagetoid scatter of atypical melanocytes in the epidermis with dermal mitotic activity",
+        "correct": true,
+        "explanation": "Upward pagetoid scatter of atypical melanocytes combined with dermal mitoses is a classic warning sign for melanoma."
+      },
+      {
+        "key": "C",
+        "text": "Uniform small nests at the dermoepidermal junction",
+        "correct": false,
+        "explanation": "Uniform junctional nesting is typical of benign nevi."
+      },
+      {
+        "key": "D",
+        "text": "Congenital pattern with involvement of adnexal structures only",
+        "correct": false,
+        "explanation": "Adnexal involvement can be seen in congenital nevi and is not by itself diagnostic of melanoma."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-derm-0002",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
+    "po_subspecialty_id": 7,
+    "po_chapter": "Nonmelanoma skin tumors",
+    "fields": ["dermatopathology"],
+    "tags": ["malignant"],
+    "stem": "Basal cell carcinoma is most characteristically associated with which immunohistochemical finding?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "BerEP4 positive, EMA usually negative",
+        "correct": true,
+        "explanation": "BCC is typically BerEP4+ and EMA−, which helps distinguish it from squamous cell carcinoma (often BerEP4−/EMA+)."
+      },
+      {
+        "key": "B",
+        "text": "BerEP4 negative, EMA strongly positive",
+        "correct": false,
+        "explanation": "That profile is more typical of squamous cell carcinoma than BCC."
+      },
+      {
+        "key": "C",
+        "text": "S100 and SOX10 diffuse positivity in epithelial nests",
+        "correct": false,
+        "explanation": "Diffuse S100/SOX10 favors melanocytic or neural differentiation, not conventional BCC."
+      },
+      {
+        "key": "D",
+        "text": "CK20+ Merkel cell dot-like perinuclear staining",
+        "correct": false,
+        "explanation": "Dot-like CK20 is characteristic of Merkel cell carcinoma, not BCC."
+      }
+    ],
+    "related_disease": "basal-cell-carcinoma",
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-derm-0003",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
+    "po_subspecialty_id": 7,
+    "po_chapter": "Inflammatory dermatoses",
+    "fields": ["dermatopathology"],
+    "tags": ["inflammatory"],
+    "stem": "Interface dermatitis with continuous basal vacuolization, thickened basement membrane, and follicular plugging is most suggestive of:",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Psoriasis vulgaris",
+        "correct": false,
+        "explanation": "Psoriasis is a spongiotic/psoriasiform process with regular acanthosis and neutrophils in the stratum corneum, not lupus-like interface change."
+      },
+      {
+        "key": "B",
+        "text": "Discoid lupus erythematosus",
+        "correct": true,
+        "explanation": "Discoid lupus typically shows vacuolar interface dermatitis, basement membrane thickening, follicular plugging, and superficial and deep perivascular/periadnexal inflammation."
+      },
+      {
+        "key": "C",
+        "text": "Bullous pemphigoid",
+        "correct": false,
+        "explanation": "Bullous pemphigoid is a subepidermal blistering disorder with eosinophils; it lacks the chronic discoid lupus pattern described."
+      },
+      {
+        "key": "D",
+        "text": "Dermatofibroma",
+        "correct": false,
+        "explanation": "Dermatofibroma is a dermal fibrohistiocytic proliferation, not an interface dermatitis."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-derm-0004",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
+    "po_subspecialty_id": 7,
+    "po_chapter": "Soft tissue of skin",
+    "fields": ["dermatopathology"],
+    "tags": ["benign"],
+    "stem": "Factor XIIIa+/CD34− dermal spindle proliferation with collagen trapping at the periphery most likely represents:",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Dermatofibrosarcoma protuberans",
+        "correct": false,
+        "explanation": "DFSP is typically CD34+ and Factor XIIIa−, with storiform infiltration of subcutis."
+      },
+      {
+        "key": "B",
+        "text": "Dermatofibroma (fibrous histiocytoma)",
+        "correct": true,
+        "explanation": "Dermatofibroma is usually Factor XIIIa+ / CD34− (or only peripheral CD34) with collagen trapping — the classic contrast with DFSP."
+      },
+      {
+        "key": "C",
+        "text": "Neurofibroma",
+        "correct": false,
+        "explanation": "Neurofibroma is S100+ and does not show the classic Factor XIIIa+/CD34− dermatofibroma immunoprofile."
+      },
+      {
+        "key": "D",
+        "text": "Leiomyoma",
+        "correct": false,
+        "explanation": "Leiomyoma is SMA+/desmin+ smooth muscle tumor, not a Factor XIIIa fibrohistiocytic lesion."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-derm-0005",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
+    "po_subspecialty_id": 7,
+    "po_chapter": "Infectious",
+    "fields": ["dermatopathology"],
+    "tags": ["infectious"],
+    "stem": "Molluscum contagiosum is diagnosed by recognizing which epidermal change?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Koilocytes with raisinoid nuclei only in the basal layer",
+        "correct": false,
+        "explanation": "Koilocytes are HPV-related changes; molluscum shows Henderson-Paterson bodies, not classic koilocytes."
+      },
+      {
+        "key": "B",
+        "text": "Intracytoplasmic eosinophilic viral inclusions (Henderson-Paterson bodies) in keratinocytes",
+        "correct": true,
+        "explanation": "Molluscum contagiosum shows cup-shaped epidermal hyperplasia with large intracytoplasmic eosinophilic Henderson-Paterson inclusion bodies."
+      },
+      {
+        "key": "C",
+        "text": "Multinucleated keratinocytes with nuclear molding and chromatin margination only",
+        "correct": false,
+        "explanation": "That description fits herpesvirus cytopathic effect, not molluscum."
+      },
+      {
+        "key": "D",
+        "text": "Pseudoepitheliomatous hyperplasia with fungal yeast forms in giant cells",
+        "correct": false,
+        "explanation": "That pattern suggests deep fungal infection or blastomycosis-like reactions, not molluscum."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  }
+]

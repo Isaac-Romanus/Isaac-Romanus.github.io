@@ -1,6 +1,9 @@
 {
   "version": 1,
   "banks": {
-    "gi-liver": "gi-liver.json"
+    "gi-liver": "gi-liver.json",
+    "breast": "breast.json",
+    "dermatopathology": "dermatopathology.json",
+    "hematopathology": "hematopathology.json"
   }
 }

@@ -1,0 +1,197 @@
+[
+  {
+    "id": "po-br-0001",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
+    "po_subspecialty_id": 3,
+    "po_chapter": "Invasive carcinoma",
+    "fields": ["breast"],
+    "tags": ["malignant"],
+    "stem": "Which immunohistochemical profile is most typical of invasive lobular carcinoma of the breast?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "E-cadherin retained, p120 membranous, CK20+",
+        "correct": false,
+        "explanation": "Invasive lobular carcinoma typically loses membranous E-cadherin; CK20 is a GI marker and is not expected in breast carcinoma."
+      },
+      {
+        "key": "B",
+        "text": "E-cadherin lost, p120 cytoplasmic, CK7+/CK20−",
+        "correct": true,
+        "explanation": "Classic invasive lobular carcinoma shows loss of membranous E-cadherin with cytoplasmic p120 redistribution, and a CK7+/CK20− phenotype typical of breast epithelium."
+      },
+      {
+        "key": "C",
+        "text": "E-cadherin retained, GATA3−, mammaglobin−",
+        "correct": false,
+        "explanation": "E-cadherin is usually retained in ductal carcinoma; lobular carcinoma is typically GATA3+ and often mammaglobin+."
+      },
+      {
+        "key": "D",
+        "text": "CDX2+, SATB2+, E-cadherin lost",
+        "correct": false,
+        "explanation": "CDX2 and SATB2 support gastrointestinal origin; they are not the usual profile of primary lobular breast carcinoma."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-br-0002",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
+    "po_subspecialty_id": 3,
+    "po_chapter": "Fibroepithelial lesions",
+    "fields": ["breast"],
+    "tags": ["benign"],
+    "stem": "Which feature best favors phyllodes tumor over fibroadenoma?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Intracanalicular growth pattern only",
+        "correct": false,
+        "explanation": "Both fibroadenoma and phyllodes can show intracanalicular architecture; this alone does not distinguish them."
+      },
+      {
+        "key": "B",
+        "text": "Leaf-like stromal fronds with stromal expansion and heterogeneity",
+        "correct": true,
+        "explanation": "Phyllodes tumors characteristically show exaggerated leaf-like stromal projections with increased stromal cellularity and often stromal heterogeneity compared with fibroadenoma."
+      },
+      {
+        "key": "C",
+        "text": "Uniform paucicellular stroma without atypia",
+        "correct": false,
+        "explanation": "Uniform paucicellular stroma favors fibroadenoma rather than phyllodes tumor."
+      },
+      {
+        "key": "D",
+        "text": "Absent mitotic activity in stroma",
+        "correct": false,
+        "explanation": "Phyllodes tumors often show stromal mitoses; absent stromal mitoses are more typical of fibroadenoma."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-br-0003",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
+    "po_subspecialty_id": 3,
+    "po_chapter": "In situ lesions",
+    "fields": ["breast"],
+    "tags": ["precursor-lesion", "high-grade"],
+    "stem": "Comedo-type ductal carcinoma in situ is most closely associated with which finding?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Low-grade nuclei and micropapillary architecture only",
+        "correct": false,
+        "explanation": "Comedo DCIS is a high-grade pattern; low-grade nuclei argue against classic comedo-type DCIS."
+      },
+      {
+        "key": "B",
+        "text": "Central necrosis with high-grade nuclei in ducts",
+        "correct": true,
+        "explanation": "Comedo DCIS is defined by high-grade cytologic atypia with central comedonecrosis within ducts."
+      },
+      {
+        "key": "C",
+        "text": "Obligate loss of myoepithelial cells around involved ducts",
+        "correct": false,
+        "explanation": "DCIS retains myoepithelial cells; loss of myoepithelium supports invasion."
+      },
+      {
+        "key": "D",
+        "text": "Obligate HER2 negativity",
+        "correct": false,
+        "explanation": "High-grade / comedo DCIS is frequently HER2-positive; HER2 negativity is not required."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-br-0004",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
+    "po_subspecialty_id": 3,
+    "po_chapter": "Immunohistochemistry",
+    "fields": ["breast"],
+    "tags": ["malignant"],
+    "stem": "Which marker pair is most helpful to support a breast primary in a CK7+/CK20− carcinoma of unknown origin?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "TTF-1 and Napsin A",
+        "correct": false,
+        "explanation": "TTF-1/Napsin A support pulmonary adenocarcinoma, not breast origin."
+      },
+      {
+        "key": "B",
+        "text": "GATA3 and mammaglobin (or GCDFP-15)",
+        "correct": true,
+        "explanation": "GATA3 with mammaglobin and/or GCDFP-15 is commonly used to support mammary origin in the appropriate clinical context."
+      },
+      {
+        "key": "C",
+        "text": "CDX2 and SATB2",
+        "correct": false,
+        "explanation": "CDX2/SATB2 favor lower GI adenocarcinoma rather than breast."
+      },
+      {
+        "key": "D",
+        "text": "PAX8 and WT1",
+        "correct": false,
+        "explanation": "PAX8/WT1 are used for Müllerian / gynecologic origin, not breast."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-br-0005",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
+    "po_subspecialty_id": 3,
+    "po_chapter": "Prognostic markers",
+    "fields": ["breast"],
+    "tags": ["malignant"],
+    "stem": "According to ASCO/CAP guidelines, which HER2 IHC result is considered equivocal and typically reflexed to ISH?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "0 (no staining)",
+        "correct": false,
+        "explanation": "IHC 0 is negative and does not require routine ISH reflex for classic HER2 status determination."
+      },
+      {
+        "key": "B",
+        "text": "1+ (incomplete faint membrane staining)",
+        "correct": false,
+        "explanation": "IHC 1+ is negative (though it may be relevant in other therapeutic contexts); classic HER2 equivocal is 2+."
+      },
+      {
+        "key": "C",
+        "text": "2+ (weak to moderate complete membrane staining)",
+        "correct": true,
+        "explanation": "HER2 IHC 2+ is equivocal and is reflexed to in situ hybridization (ISH) per ASCO/CAP guidelines."
+      },
+      {
+        "key": "D",
+        "text": "3+ (intense complete membrane staining in >10% of cells)",
+        "correct": false,
+        "explanation": "IHC 3+ is positive and generally does not require ISH for HER2 positivity confirmation."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  }
+]

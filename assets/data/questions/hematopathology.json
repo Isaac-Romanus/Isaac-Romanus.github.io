@@ -1,0 +1,197 @@
+[
+  {
+    "id": "po-heme-0001",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
+    "po_subspecialty_id": 11,
+    "po_chapter": "Lymphoma",
+    "fields": ["hematopathology"],
+    "tags": ["malignant", "b-cell"],
+    "stem": "Which immunophenotype best fits follicular lymphoma?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "CD20+, CD10+, BCL6+, BCL2+ (in follicles), CD5−",
+        "correct": true,
+        "explanation": "Follicular lymphoma is a CD20+/CD10+/BCL6+ germinal-center B-cell lymphoma that overexpresses BCL2 in neoplastic follicles and is typically CD5−."
+      },
+      {
+        "key": "B",
+        "text": "CD20+, CD5+, CD23+, CD10−",
+        "correct": false,
+        "explanation": "That profile is classic for chronic lymphocytic leukemia / small lymphocytic lymphoma, not follicular lymphoma."
+      },
+      {
+        "key": "C",
+        "text": "CD20+, CD5+, cyclin D1+, CD10−",
+        "correct": false,
+        "explanation": "CD5+/cyclin D1+ supports mantle cell lymphoma."
+      },
+      {
+        "key": "D",
+        "text": "CD3+, CD4+, CD10+, CXCL13+",
+        "correct": false,
+        "explanation": "That T-follicular helper phenotype is associated with angioimmunoblastic T-cell lymphoma, not FL."
+      }
+    ],
+    "related_disease": "follicular-lymphoma",
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-heme-0002",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
+    "po_subspecialty_id": 11,
+    "po_chapter": "Lymphoma",
+    "fields": ["hematopathology"],
+    "tags": ["malignant", "b-cell"],
+    "stem": "The t(11;14) IGH::CCND1 rearrangement is the genetic hallmark of:",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Follicular lymphoma",
+        "correct": false,
+        "explanation": "Follicular lymphoma is typically associated with t(14;18) IGH::BCL2."
+      },
+      {
+        "key": "B",
+        "text": "Mantle cell lymphoma",
+        "correct": true,
+        "explanation": "Mantle cell lymphoma is defined by CCND1 rearrangement, usually t(11;14) IGH::CCND1, leading to cyclin D1 overexpression."
+      },
+      {
+        "key": "C",
+        "text": "Burkitt lymphoma",
+        "correct": false,
+        "explanation": "Burkitt lymphoma harbors MYC rearrangements (e.g., t(8;14)), not CCND1."
+      },
+      {
+        "key": "D",
+        "text": "Marginal zone lymphoma",
+        "correct": false,
+        "explanation": "Marginal zone lymphomas have different genetics (e.g., MALT1 rearrangements in some extranodal MZL); not t(11;14)."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-heme-0003",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
+    "po_subspecialty_id": 11,
+    "po_chapter": "Hodgkin lymphoma",
+    "fields": ["hematopathology"],
+    "tags": ["malignant"],
+    "stem": "Classic Reed-Sternberg cells of classic Hodgkin lymphoma are typically:",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "CD15+, CD30+, CD20−/weak, CD45−, PAX5 weak+",
+        "correct": true,
+        "explanation": "Classic RS cells are CD15+/CD30+, usually CD45−, CD20 negative or weak, with weak PAX5 — the classic CHL immunophenotype."
+      },
+      {
+        "key": "B",
+        "text": "CD20 bright+, CD45+, CD15−, CD30−",
+        "correct": false,
+        "explanation": "Bright B-cell program with CD45 favors NLPHL (LP cells) or large B-cell lymphoma, not classic RS cells."
+      },
+      {
+        "key": "C",
+        "text": "CD3+, CD4+, CD30+, ALK+",
+        "correct": false,
+        "explanation": "That profile suggests anaplastic large cell lymphoma, not CHL."
+      },
+      {
+        "key": "D",
+        "text": "CD61+, CD41+, Factor VIII+",
+        "correct": false,
+        "explanation": "Those are megakaryocytic markers, unrelated to Reed-Sternberg cells."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-heme-0004",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
+    "po_subspecialty_id": 11,
+    "po_chapter": "Plasma cell neoplasms",
+    "fields": ["hematopathology"],
+    "tags": ["malignant", "b-cell"],
+    "stem": "Which finding best supports plasma cell myeloma over a reactive plasmacytosis?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "Polyclonal kappa and lambda by in situ hybridization",
+        "correct": false,
+        "explanation": "Polytypic light chains support a reactive process."
+      },
+      {
+        "key": "B",
+        "text": "Monotypic light chain restriction with aberrant CD56 and/or cyclin D1 in a subset",
+        "correct": true,
+        "explanation": "Light-chain restriction plus aberrant antigen expression (e.g., CD56, sometimes cyclin D1 with t(11;14)) supports neoplastic plasma cells."
+      },
+      {
+        "key": "C",
+        "text": "Mixed mature plasma cells without atypia and no M-protein",
+        "correct": false,
+        "explanation": "That picture favors reactive plasmacytosis."
+      },
+      {
+        "key": "D",
+        "text": "CD19 bright expression on all plasma cells",
+        "correct": false,
+        "explanation": "Neoplastic plasma cells often lose CD19; bright CD19 is more typical of reactive plasma cells."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  },
+  {
+    "id": "po-heme-0005",
+    "source": "pathologyoutlines",
+    "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
+    "po_subspecialty_id": 11,
+    "po_chapter": "Acute leukemia",
+    "fields": ["hematopathology"],
+    "tags": ["malignant"],
+    "stem": "Auer rods are most specific for which lineage of acute leukemia?",
+    "image": null,
+    "options": [
+      {
+        "key": "A",
+        "text": "B-lymphoblastic leukemia/lymphoma",
+        "correct": false,
+        "explanation": "Auer rods are not a feature of lymphoblastic leukemia."
+      },
+      {
+        "key": "B",
+        "text": "T-lymphoblastic leukemia/lymphoma",
+        "correct": false,
+        "explanation": "T-ALL/LBL lacks Auer rods; those are myeloid inclusions."
+      },
+      {
+        "key": "C",
+        "text": "Acute myeloid leukemia",
+        "correct": true,
+        "explanation": "Auer rods are crystalline cytoplasmic inclusions essentially pathognomonic for myeloid differentiation (AML)."
+      },
+      {
+        "key": "D",
+        "text": "Blastic plasmacytoid dendritic cell neoplasm",
+        "correct": false,
+        "explanation": "BPDCN is a distinct CD123+/CD4+/CD56+ neoplasm and does not show Auer rods."
+      }
+    ],
+    "related_disease": null,
+    "explanation_status": "complete"
+  }
+]
