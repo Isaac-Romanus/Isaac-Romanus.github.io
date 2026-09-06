@@ -102,19 +102,16 @@
     return put('profiles', profile).then(function () { return profile; });
   }
 
+  /* Resolve the active profile if one was explicitly chosen.
+     Never auto-creates a "Default" profile — callers must gate until the user picks/creates one. */
   function ensureProfile() {
     return listProfiles().then(function (profiles) {
       var activeId = getActiveProfileId();
       var active = profiles.find(function (p) { return p.id === activeId; });
       if (active) return active;
-      if (profiles.length) {
-        setActiveProfileId(profiles[0].id);
-        return profiles[0];
-      }
-      return createProfile('Default').then(function (p) {
-        setActiveProfileId(p.id);
-        return p;
-      });
+      // Stale localStorage pointer — clear it; do not invent a profile.
+      if (activeId) setActiveProfileId('');
+      return null;
     });
   }
 

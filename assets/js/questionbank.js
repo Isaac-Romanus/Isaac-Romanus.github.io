@@ -76,13 +76,23 @@
     });
   }
 
+  var profileGateRequired = false;
+
   function bindModalClose() {
     $all('[data-close-modal]').forEach(function (el) {
-      el.addEventListener('click', hideModal);
+      el.addEventListener('click', function () {
+        // On gated pages, closing without a profile is not allowed.
+        if (profileGateRequired && !profile) {
+          alert('Enter a study profile name before starting.');
+          return;
+        }
+        hideModal();
+      });
     });
   }
 
   function requireProfile(gate) {
+    profileGateRequired = !!gate;
     return window.QBStorage.ensureProfile().then(function (p) {
       profile = p;
       updateProfileBar();
@@ -92,12 +102,18 @@
 
       var switchBtn = $('#qb-switch-profile');
       if (switchBtn) switchBtn.addEventListener('click', function () {
+        profileGateRequired = false;
         renderProfileList();
         showModal();
       });
 
-      if (gate) showModal();
-      else onProfileReady();
+      if (gate && !profile) {
+        showModal();
+        return;
+      }
+      if (profile) onProfileReady();
+      else if (!gate) onProfileReady();
+      else showModal();
     }).catch(function (err) {
       console.error(err);
       alert('Could not initialize question bank storage: ' + err.message);
@@ -127,13 +143,21 @@
   function initDashboard() {
     var statsEl = $('#qb-dashboard-stats');
     var recentEl = $('#qb-recent-attempts');
-    if (!statsEl || !window.QBStorage) return;
+    var summaryEl = $('#qb-dashboard-summary');
+    if (!statsEl || !window.QBStorage || !profile) return;
 
     Promise.all([
       window.QBStorage.getAttemptsForProfile(profile.id),
+      window.QBStorage.getWrongQuestionIds(profile.id),
+      window.QBStorage.getBookmarks(profile.id),
+      window.QBStorage.getLeitnerForProfile(profile.id),
       window.QBQuiz ? window.QBQuiz.loadManifest().catch(function () { return { banks: {} }; }) : { banks: {} }
     ]).then(function (parts) {
       var attempts = parts[0] || [];
+      var wrongIds = parts[1] || [];
+      var bookmarks = parts[2] || [];
+      var leitner = parts[3] || [];
+      renderDashboardSummary(summaryEl, attempts, wrongIds, bookmarks, leitner);
       renderDashboardStats(statsEl, attempts);
       renderRecentAttempts(recentEl, attempts);
     });
@@ -173,6 +197,27 @@
         importInput.value = '';
       });
     }
+  }
+
+  function renderDashboardSummary(el, attempts, wrongIds, bookmarks, leitner) {
+    if (!el) return;
+    var correct = attempts.filter(function (a) { return a.correct; }).length;
+    var accuracy = attempts.length ? Math.round((correct / attempts.length) * 100) : 0;
+    var boxCounts = [0, 0, 0, 0, 0];
+    (leitner || []).forEach(function (row) {
+      var box = Math.max(1, Math.min(5, row.box || 1));
+      boxCounts[box - 1] += 1;
+    });
+    el.innerHTML =
+      '<article class="qb-summary-card"><h3>Attempts</h3><p class="qb-summary-value">' + attempts.length + '</p></article>' +
+      '<article class="qb-summary-card"><h3>Accuracy</h3><p class="qb-summary-value">' + (attempts.length ? accuracy + '%' : '—') + '</p></article>' +
+      '<article class="qb-summary-card"><h3>Still wrong</h3><p class="qb-summary-value">' + wrongIds.length + '</p>' +
+        '<a class="btn btn-ghost btn-sm" href="' + (window.QBQuiz ? window.QBQuiz.assetUrl('/questionbank/quiz/?mode=review&sid=6') : '#') + '">Review</a></article>' +
+      '<article class="qb-summary-card"><h3>Bookmarks</h3><p class="qb-summary-value">' + bookmarks.length + '</p></article>' +
+      '<article class="qb-summary-card qb-summary-leitner"><h3>Leitner boxes</h3>' +
+        '<div class="qb-leitner-bars">' + boxCounts.map(function (n, i) {
+          return '<span title="Box ' + (i + 1) + ': ' + n + '"><em>B' + (i + 1) + '</em><strong>' + n + '</strong></span>';
+        }).join('') + '</div></article>';
   }
 
   function renderDashboardStats(el, attempts) {
@@ -599,8 +644,10 @@
 
   ready(function () {
     if (!window.QBStorage) return;
-    var gatePages = ['quiz', 'mixed', 'exam'];
+    // Always require an explicit profile before quiz / mixed / exam / dashboard / add.
+    // Index can render the grid without a profile (counts still load).
+    var gatePages = ['quiz', 'mixed', 'exam', 'dashboard', 'add'];
     var needsGate = gatePages.indexOf(page) >= 0;
-    requireProfile(needsGate && !window.QBStorage.getActiveProfileId());
+    requireProfile(needsGate);
   });
 })();
