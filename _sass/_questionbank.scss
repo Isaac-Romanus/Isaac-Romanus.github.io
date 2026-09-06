@@ -140,6 +140,24 @@
 .qb-exam-breakdown { display: grid; gap: 8px; margin: 20px 0; }
 
 .qb-dashboard-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.qb-summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;
+  margin: 0 0 28px;
+}
+.qb-summary-card {
+  padding: 14px 16px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow-sm);
+}
+.qb-summary-card h3 { margin: 0 0 6px; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); font-weight: 600; }
+.qb-summary-value { margin: 0; font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.2; }
+.qb-summary-card .btn { margin-top: 8px; }
+.qb-leitner-bars { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+.qb-leitner-bars span {
+  display: flex; flex-direction: column; align-items: center; min-width: 2.2rem;
+  padding: 4px 6px; background: var(--bg); border-radius: var(--radius-sm); font-size: .75rem;
+}
+.qb-leitner-bars em { font-style: normal; color: var(--ink-soft); }
+.qb-leitner-bars strong { font-size: .95rem; }
 .qb-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 40px; }
 .qb-stat-card {
   padding: 18px 20px; background: var(--surface); border: 1px solid var(--line);

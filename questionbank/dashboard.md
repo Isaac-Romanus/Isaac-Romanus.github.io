@@ -27,6 +27,11 @@ qb_page: dashboard
     </label>
   </div>
 
+  <div id="qb-dashboard-summary" class="qb-summary-grid" aria-live="polite">
+    <p class="muted">Loading summary…</p>
+  </div>
+
+  <h2 class="qb-section-title">By subspecialty</h2>
   <div id="qb-dashboard-stats" class="qb-stats-grid">
     <p class="empty-state">Loading stats…</p>
   </div>
