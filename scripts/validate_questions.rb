@@ -83,10 +83,22 @@ else
         end
       end
 
+      generic_re = /see pathologyoutlines\.com for (full )?discussion|this option is incorrect\. review the correct-answer/i
       if q["explanation_status"] == "complete"
         opts.each do |opt|
-          warnings << "#{prefix} option #{opt['key']}: empty explanation (marked complete)" if opt["explanation"].to_s.strip.empty?
+          exp = opt["explanation"].to_s.strip
+          if exp.empty?
+            errors << "#{prefix} option #{opt['key']}: empty explanation but explanation_status is complete"
+          elsif !opt["correct"] && exp.match?(generic_re)
+            errors << "#{prefix} option #{opt['key']}: generic placeholder explanation but explanation_status is complete"
+          end
         end
+      elsif q["explanation_status"] == "partial"
+        opts.each do |opt|
+          warnings << "#{prefix} option #{opt['key']}: empty explanation" if opt["explanation"].to_s.strip.empty?
+        end
+      else
+        errors << "#{prefix}: explanation_status must be 'complete' or 'partial' (got #{q['explanation_status'].inspect})"
       end
 
       if q["source"] == "pathologyoutlines" && q["source_url"].to_s.strip.empty?

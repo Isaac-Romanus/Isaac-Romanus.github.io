@@ -25,23 +25,23 @@
         "key": "B",
         "text": "Lymph nodes > 1 cm are submitted in their entirety",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "No lymph node submission is necessary, as no mass has been identified grossly",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Representative sections of all lymph nodes",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0002",
@@ -63,13 +63,13 @@
         "key": "A",
         "text": "Only 1 representative section of appendix and a representative section of perforation",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Only 1 representative section of appendix for documentation of appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -81,11 +81,11 @@
         "key": "D",
         "text": "Representative section of appendix and surgical margin",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0003",
@@ -185,9 +185,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which clinical scenario is most likely associated with the histologic diagnosis of the appendectomy specimen shown above?",
     "image": null,
     "options": [
@@ -240,7 +238,7 @@
         "key": "A",
         "text": "Foamy macrophages",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
@@ -252,17 +250,17 @@
         "key": "C",
         "text": "Multinucleated giant cells",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Neutrophilic infiltrate",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0007",
@@ -362,9 +360,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "An 11 year old boy undergoes appendectomy for dilated appearing appendix on imaging. What is the most likely diagnosis for the histologic appearance shown above?",
     "image": null,
     "options": [
@@ -460,13 +456,13 @@
         "key": "A",
         "text": "Ki67 index and extent of local spread",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Ki67 index and mitotic rate",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -478,11 +474,11 @@
         "key": "D",
         "text": "Size and Ki67 index",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0012",
@@ -548,7 +544,7 @@
         "key": "A",
         "text": "When a tumor extends to the surgical resection margin",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
@@ -566,11 +562,11 @@
         "key": "D",
         "text": "When a tumor is a goblet cell adenocarcinoma",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0014",
@@ -714,9 +710,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 44 year old woman underwent screening colonoscopy. The endoscopist noted a polypoid mass arising in the cecum and performed endoscopic polypectomy. The findings are pictured above. Which of the following is a key microscopic feature of this entity?",
     "image": null,
     "options": [
@@ -758,9 +752,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 56 year old woman with a history of cecal mass on imaging underwent partial cecectomy with appendectomy. The gross findings are pictured above. What is true of this diagnosis?",
     "image": null,
     "options": [
@@ -890,9 +882,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 58 year old patient presents with acute right lower quadrant abdominal pain and is found to have an appendiceal mass during surgery. Histological examination of the resected specimen reveals a lesion as depicted in the images above. Which of the following is the correct diagnosis?",
     "image": null,
     "options": [
@@ -900,13 +890,13 @@
         "key": "A",
         "text": "High grade appendiceal mucinous neoplasm",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Low grade appendiceal mucinous neoplasm",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -922,7 +912,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0022",
@@ -978,9 +968,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which of the following is correct regarding the entity shown in the image above?",
     "image": null,
     "options": [
@@ -1022,9 +1010,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which of these features can be seen in a normal appendix?",
     "image": null,
     "options": [
@@ -1038,23 +1024,23 @@
         "key": "B",
         "text": "Neutrophils",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Tubular adenoma",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Ulceration",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0025",
@@ -1066,9 +1052,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which of the following statements is true about mucinous proliferations of the appendix and peritoneum?",
     "image": null,
     "options": [
@@ -1076,13 +1060,13 @@
         "key": "A",
         "text": "Low grade appendiceal mucinous neoplasm (LAMN) has a variable grade depending on the morphologic features present",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Mucinous adenocarcinoma of the appendix is typically grade 1",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -1094,11 +1078,11 @@
         "key": "D",
         "text": "Pseudomyxoma peritonei is typically nonneoplastic",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0026",
@@ -1120,7 +1104,7 @@
         "key": "A",
         "text": "They arise from low grade appendiceal mucinous neoplasms",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
@@ -1132,17 +1116,17 @@
         "key": "C",
         "text": "They have no risk of malignant progression",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "They only occur in patients with familial adenomatous polyposis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": "tubular-adenoma",
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0027",
@@ -1154,9 +1138,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 32 year old woman with history of hematuria coinciding with her menstruation underwent an appendectomy for an incidentally discovered dilated appendix. On gross exam, the appendix appeared dilated. Sectioning revealed a dilated mucin filled lumen with no evidence of neoplasms. What histological findings are supportive of an endometriosis involving an appendix?",
     "image": null,
     "options": [
@@ -1208,7 +1190,7 @@
         "key": "A",
         "text": "Intraperitoneal chemotherapy is appropriate",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
@@ -1220,17 +1202,17 @@
         "key": "C",
         "text": "Right sided hemicolectomy with lymph node dissection",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Tumor debulking",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0029",
@@ -1242,9 +1224,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 65 year old man presented to the emergency room with decreased appetite and right lower abdominal pain. He was noted to have a fever 1 week ago that had resolved at the time of presentation. The patient has no known significant medical history. CT image showed an abscess around the cecum. Antibiotics was initiated and percutaneous drainage was performed. The patient came back 2 months later for appendectomy. The H&E image of the surgical specimen is shown. What is the most likely diagnosis?",
     "image": null,
     "options": [
@@ -1252,13 +1232,13 @@
         "key": "A",
         "text": "Acute appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Adenocarcinoma of the appendix",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -1270,11 +1250,11 @@
         "key": "D",
         "text": "Crohn's disease",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0030",
@@ -1296,19 +1276,19 @@
         "key": "A",
         "text": "Interval appendicitis is a chronic inflammatory process; thus, acute inflammation should not be identified microscopically",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "The main purpose of interval appendectomy is to prevent recurrence of appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Most patients with complicated appendicitis will undergo interval appendectomy after initial antibiotic management",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
@@ -1318,7 +1298,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0031",
@@ -1346,7 +1326,7 @@
         "key": "B",
         "text": "Serrated lesion with dysplasia",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -1358,11 +1338,11 @@
         "key": "D",
         "text": "Tubulovillous adenoma",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0032",
@@ -1374,9 +1354,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which of the following is true regarding the current molecular understanding of the possible pathogenesis of hyperplastic polyps in the appendix?",
     "image": null,
     "options": [
@@ -1384,19 +1362,19 @@
         "key": "A",
         "text": "They are clearly related to and caused by the serrated pathway of colorectal neoplasia",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "They commonly demonstrate a CpG island methylator (CIMP) phenotype",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "They commonly have microsatellite instability",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
@@ -1406,7 +1384,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0033",
@@ -1418,9 +1396,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "A 45 year old woman presents with a 2 week history of abdominal pain and increased abdominal girth. Clinical and radiologic findings are concerning for pseudomyxoma peritonei. A biopsy from an omental nodule is shown. The primary neoplasm is most likely from which anatomic site?",
     "image": null,
     "options": [
@@ -1434,23 +1410,23 @@
         "key": "B",
         "text": "Colon",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Ovary",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Pancreas",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0034",
@@ -1462,9 +1438,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Based on the WHO (5th edition) grading system of peritoneal metastases of appendiceal mucinous neoplasms, which of the following is a feature of grade 2?",
     "image": null,
     "options": [
@@ -1478,23 +1452,23 @@
         "key": "B",
         "text": "Infiltrating signet ring cells",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Low grade cytology",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Signet ring appearing cells floating in mucin pools",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0035",
@@ -1506,9 +1480,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "Which of the following criteria below should be used to stage the appendiceal tumor in this patient?",
     "image": null,
     "options": [
@@ -1522,23 +1494,23 @@
         "key": "B",
         "text": "Percentage of gland formation only",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Mitotic activity / Ki67",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Size",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0036",
@@ -1560,19 +1532,19 @@
         "key": "A",
         "text": "Immediately alert the surgeon, as the patient requires a right hemicolectomy",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Send the case out for consultation",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Sign it out as goblet cell adenocarcinoma, grade 1 (formerly known as goblet cell carcinoid)",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
@@ -1582,7 +1554,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0037",
@@ -1610,23 +1582,23 @@
         "key": "B",
         "text": "Appendiceal endometriosis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Interval appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
         "text": "Low grade appendiceal mucinous neoplasm",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0038",
@@ -1648,13 +1620,13 @@
         "key": "A",
         "text": "Acute appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Appendiceal diverticulitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -1666,11 +1638,11 @@
         "key": "D",
         "text": "Interval appendicitis",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0039",
@@ -1692,13 +1664,13 @@
         "key": "A",
         "text": "Invasive versus noninvasive",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Ki67 labeling index and counts of mitotic figures",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
@@ -1710,11 +1682,11 @@
         "key": "D",
         "text": "Presence of TP53 mutation",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   },
   {
     "id": "po-gi-0040",
@@ -1726,9 +1698,7 @@
       "gastrointestinal",
       "liver-pancreas"
     ],
-    "tags": [
-
-    ],
+    "tags": [],
     "stem": "What is the most important feature that determines the potential for metastasis for the appendiceal tumor (NET) shown above?",
     "image": null,
     "options": [
@@ -1736,19 +1706,19 @@
         "key": "A",
         "text": "Depth of invasion",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "B",
         "text": "Ki67 labeling index",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "C",
         "text": "Loss of synaptophysin expression on immunohistochemistry",
         "correct": false,
-        "explanation": "See PathologyOutlines.com for full discussion."
+        "explanation": "This option is incorrect. Review the correct-answer explanation and the linked PathologyOutlines topic for why this distractor does not fit."
       },
       {
         "key": "D",
@@ -1758,6 +1728,6 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "partial"
   }
 ]
