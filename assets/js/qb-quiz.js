@@ -99,9 +99,10 @@
   }
 
   function filterByMode(questions, mode, profileId) {
-    if (mode === 'exam') return filterComplete(questions);
+    // Always return a Promise — prepareSession chains .then() on this result.
+    if (mode === 'exam') return Promise.resolve(filterComplete(questions));
     if (!global.QBStorage || mode === 'practice' || mode === 'leitner' || mode === 'tag') {
-      return questions;
+      return Promise.resolve(questions);
     }
     if (mode === 'review') {
       return global.QBStorage.getWrongQuestionIds(profileId).then(function (ids) {

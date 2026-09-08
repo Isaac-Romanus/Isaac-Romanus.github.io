@@ -212,7 +212,7 @@
       '<article class="qb-summary-card"><h3>Attempts</h3><p class="qb-summary-value">' + attempts.length + '</p></article>' +
       '<article class="qb-summary-card"><h3>Accuracy</h3><p class="qb-summary-value">' + (attempts.length ? accuracy + '%' : '—') + '</p></article>' +
       '<article class="qb-summary-card"><h3>Still wrong</h3><p class="qb-summary-value">' + wrongIds.length + '</p>' +
-        '<a class="btn btn-ghost btn-sm" href="' + (window.QBQuiz ? window.QBQuiz.assetUrl('/questionbank/quiz/?mode=review&sid=6') : '#') + '">Review</a></article>' +
+        '<a class="btn btn-ghost btn-sm" href="' + (window.QBQuiz ? window.QBQuiz.assetUrl('/questionbank/quiz/?mode=review&sids=' + (cfg.subspecialties || []).map(function (s) { return s.sid; }).join(',')) : '#') + '">Review</a></article>' +
       '<article class="qb-summary-card"><h3>Bookmarks</h3><p class="qb-summary-value">' + bookmarks.length + '</p></article>' +
       '<article class="qb-summary-card qb-summary-leitner"><h3>Leitner boxes</h3>' +
         '<div class="qb-leitner-bars">' + boxCounts.map(function (n, i) {
@@ -527,9 +527,13 @@
     if (!window.QBExam) return;
     window.QBExam.stopTimer();
 
-    // Fill unanswered with null
+    // Capture the current question's selection, then leave truly unanswered as null.
+    var currentSelection = getSelectedKey();
+    if (session.answers[session.index] === undefined && currentSelection) {
+      session.answers[session.index] = currentSelection;
+    }
     session.questions.forEach(function (_, i) {
-      if (session.answers[i] === undefined) session.answers[i] = getSelectedKey();
+      if (session.answers[i] === undefined) session.answers[i] = null;
     });
 
     var result = window.QBExam.gradeExam(session.questions, session.answers);
