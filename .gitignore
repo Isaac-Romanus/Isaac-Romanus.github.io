@@ -6,3 +6,4 @@ _site/
 # Bundler / local gems
 vendor/bundle/
 .bundle/
+tmp/
