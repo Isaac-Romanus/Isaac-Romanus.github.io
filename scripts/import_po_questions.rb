@@ -24,6 +24,8 @@ require "digest"
 require "time"
 require "cgi"
 require "shellwords"
+require "date"
+require "yaml"
 
 begin
   require "nokogiri"
@@ -38,29 +40,38 @@ IMAGE_DIR = File.join(ROOT, "assets", "images", "questionbank")
 COOKIE_JAR = File.join(ROOT, "tmp", "po_import_cookies.txt")
 LAST_HTML = File.join(ROOT, "tmp", "po_last_response.html")
 USER_AGENTS_CACHE = File.join(ROOT, "tmp", "chrome_ua_cache.txt")
+SUBS_YAML = File.join(ROOT, "_data", "po_subspecialties.yml")
 
-TAXONOMY = {
-  6 => { sid: "gi-liver", name: "GI / Liver", tags: %w[gi liver] },
-  2 => { sid: "breast", name: "Breast", tags: %w[breast] },
-  3 => { sid: "dermatopathology", name: "Dermatopathology", tags: %w[derm] },
-  7 => { sid: "hematopathology", name: "Hematopathology", tags: %w[heme] },
-  9 => { sid: "genitourinary", name: "Genitourinary", tags: %w[gu] },
-  8 => { sid: "gynecologic", name: "Gynecologic", tags: %w[gyn] },
-  11 => { sid: "head-neck", name: "Head & Neck", tags: %w[hn] },
-  15 => { sid: "soft-tissue-bone", name: "Soft Tissue / Bone", tags: %w[soft-tissue bone] },
-  14 => { sid: "pulmonary", name: "Pulmonary", tags: %w[pulmonary] },
-  4 => { sid: "endocrine", name: "Endocrine", tags: %w[endocrine] },
-  5 => { sid: "forensic", name: "Forensic / Autopsy", tags: %w[forensic] },
-  10 => { sid: "clinical-pathology", name: "Clinical Pathology", tags: %w[cp] },
-  12 => { sid: "informatics", name: "Informatics", tags: %w[informatics] },
-  13 => { sid: "molecular", name: "Molecular", tags: %w[molecular] },
-  16 => { sid: "cytopathology", name: "Cytopathology", tags: %w[cyto] }
-}.freeze
+def load_taxonomy
+  begin
+    require "yaml"
+    rows = YAML.safe_load(File.read(SUBS_YAML), permitted_classes: [Date, Time], aliases: true) || []
+  rescue LoadError, Errno::ENOENT, Psych::Exception
+    rows = []
+  end
+  taxonomy = {}
+  rows.each do |row|
+    next unless row.is_a?(Hash) && row["sid"]
+
+    taxonomy[row["sid"].to_i] = {
+      sid: row["slug"].to_s,
+      name: row["name"].to_s,
+      fields: Array(row["fields"]).map(&:to_s)
+    }
+  end
+  taxonomy
+end
+
+TAXONOMY = load_taxonomy.freeze
 
 BASE_HOST = "https://www.pathologyoutlines.com"
 HOME_URL = "#{BASE_HOST}/"
-INDEX_URL = "#{BASE_HOST}/php/boardreview.php"
-QUESTION_URL = "#{BASE_HOST}/php/boardreviewquestion.php"
+INDEX_URL = "#{BASE_HOST}/review-questions"
+QUESTION_URL = "#{BASE_HOST}/review-questions"
+
+DISTRACTOR_EXPLANATION =
+  "This option is incorrect. Review the correct-answer explanation and the linked " \
+  "PathologyOutlines topic for why this distractor does not fit."
 
 options = {
   sid: nil,
@@ -94,7 +105,11 @@ OptionParser.new do |opts|
 end.parse!
 
 abort "Missing --sid" unless options[:sid]
-meta = TAXONOMY[options[:sid]] || { sid: "po-#{options[:sid]}", name: "PO #{options[:sid]}", tags: [] }
+meta = TAXONOMY[options[:sid]] || {
+  sid: "po-#{options[:sid]}",
+  name: "PO #{options[:sid]}",
+  fields: []
+}
 out_path = options[:out] || File.join(DEFAULT_OUT_DIR, "#{meta[:sid]}.json")
 
 # ---------------------------------------------------------------------------
@@ -222,7 +237,7 @@ class ChromeClient
     attempt = 0
     loop do
       attempt += 1
-      wait!("before request ##{@request_count + 1}") if @request_count.positive?
+      wait!(label: "before request ##{@request_count + 1}") if @request_count.positive?
       @request_count += 1
 
       response = perform_get(uri, referer: referer || @last_url, accept: accept)
@@ -265,7 +280,7 @@ class ChromeClient
     attempt = 0
     loop do
       attempt += 1
-      wait!("image download")
+      wait!(label: "image download")
       response = perform_get(
         uri,
         referer: referer,
@@ -365,19 +380,24 @@ def extract_images(body)
 end
 
 def parse_answer_block(answer_body)
-  return [nil, "", nil] unless answer_body
+  return [nil, "", nil, nil] unless answer_body
 
   bold = answer_body.at_css("b")
   letter = bold && clean_text(bold.text).upcase[0]
   full = clean_text(answer_body.inner_text)
-  # Drop UI chrome
   full = full.sub(/\AAnswer\s+\d+\s*/i, "")
   full = full.sub(/\s*Comment Here\s*/i, " ")
   explanation = full.sub(/\A[A-D]\s*\.\s*/i, "").strip
-  # Prefer keeping "Answers X are incorrect..." as part of explanation
+  explanation = explanation.sub(/\s*Reference:\s*.*\z/i, "").strip
+
   ref = answer_body.at_css("a[href*='topic/'], a[href*='pathologyoutlines.com']")
   topic = ref && absolute_url(ref["href"])
-  [letter, explanation, topic]
+  chapter = nil
+  if ref
+    label = clean_text(ref.text)
+    chapter = label.split(" - ").first if label && !label.empty?
+  end
+  [letter, explanation, topic, chapter]
 end
 
 def letter_to_index(letter, count)
@@ -389,7 +409,7 @@ def letter_to_index(letter, count)
   idx
 end
 
-def parse_questions(html, limit: nil)
+def parse_questions(html, limit: nil, po_sid:, fields:, source_url:)
   doc = Nokogiri::HTML(html)
   blocks = doc.css(".block_content")
   warn "Parser found #{blocks.size} .block_content nodes"
@@ -405,54 +425,48 @@ def parse_questions(html, limit: nil)
     a_sec = block.at_css(".block_section.answer")
     a_body = a_sec&.at_css(".block_body.answer_block, .answer_block, .block_body")
 
-    options = q_body.css("ol.liststyle2 li, ol li").map { |li| clean_text(li.text) }.reject(&:empty?)
-    next if options.size < 2
+    option_texts = q_body.css("ol.liststyle2 li, ol li").map { |li| clean_text(li.text) }.reject(&:empty?)
+    next if option_texts.size < 2
 
     stem = extract_question_stem(q_body)
     next if stem.empty?
 
     images = extract_images(q_body)
-    letter, explanation, topic_url = parse_answer_block(a_body)
-    correct = letter_to_index(letter, options.size)
+    letter, explanation, _topic_url, chapter = parse_answer_block(a_body)
+    correct = letter_to_index(letter, option_texts.size)
     next if correct.nil?
 
     po_id = q_sec["id"].to_s.sub(/\Apracticequestion/i, "")
     po_id = Digest::SHA1.hexdigest(stem)[0, 10] if po_id.empty?
 
-    answers = options.each_with_index.map do |text, idx|
+    options = option_texts.each_with_index.map do |text, idx|
       {
-        "id" => ("a".."z").to_a[idx],
+        "key" => ("A".ord + idx).chr,
         "text" => text,
-        "explanation" => idx == correct ? explanation : "",
-        "explanationCompleteness" => idx == correct ? "complete" : "partial"
+        "correct" => idx == correct,
+        "explanation" => idx == correct ? explanation : DISTRACTOR_EXPLANATION
       }
     end
 
-    # Attach distractor rationale when PO packs it into the correct explanation
-    # ("Answers B, C and D are incorrect because..."). Keep on correct answer;
-    # leave others partial unless we can split cleanly later.
+    image_objs = images.map do |im|
+      { "src" => im[:src], "alt" => im[:alt], "caption" => im[:caption] }
+    end
 
-    item = {
+    results << {
       "id" => "po-#{po_id}",
-      "stem" => stem,
-      "answers" => answers,
-      "correctAnswerId" => answers[correct]["id"],
-      "images" => images.map { |im| { "src" => im[:src], "alt" => im[:alt], "caption" => im[:caption] } },
-      "image" => images[0] && images[0][:src],
+      "source" => "pathologyoutlines",
+      "source_url" => source_url,
+      "po_subspecialty_id" => po_sid,
+      "po_chapter" => chapter,
+      "fields" => fields.dup,
       "tags" => [],
-      "difficulty" => nil,
-      "source" => {
-        "type" => "pathology-outlines",
-        "url" => nil,
-        "topicUrl" => topic_url,
-        "poQuestionId" => po_id,
-        "licenseNote" => "Personal educational use only — written permission obtained."
-      },
-      "reviewStatus" => "imported",
-      "createdAt" => Time.now.utc.iso8601,
-      "updatedAt" => Time.now.utc.iso8601
+      "stem" => stem,
+      "image" => image_objs[0] && image_objs[0]["src"],
+      "options" => options,
+      "related_disease" => nil,
+      "explanation_status" => "partial",
+      "images" => image_objs
     }
-    results << item
   end
 
   results
@@ -494,6 +508,13 @@ def download_images!(client, questions, subspecialty, referer:)
   end
 end
 
+def read_bank(path)
+  return [] unless File.file?(path)
+
+  data = JSON.parse(File.read(path))
+  data.is_a?(Array) ? data : Array(data["questions"])
+end
+
 def merge_questions(existing, incoming)
   by_id = {}
   existing.each { |q| by_id[q["id"]] = q }
@@ -501,35 +522,33 @@ def merge_questions(existing, incoming)
   by_id.values
 end
 
-def write_bank!(path, meta, questions, po_sid:)
+def write_bank!(path, questions)
   FileUtils.mkdir_p(File.dirname(path))
-  payload = {
-    "version" => 1,
-    "subspecialty" => {
-      "id" => meta[:sid],
-      "name" => meta[:name],
-      "poSid" => po_sid
-    },
-    "updatedAt" => Time.now.utc.iso8601,
-    "questions" => questions
-  }
-  File.write(path, JSON.pretty_generate(payload) + "\n")
+  File.write(path, JSON.pretty_generate(questions) + "\n")
 end
 
-def update_index!(bank_path, meta, count)
+def update_index!(bank_path, meta, _count = nil)
   index_path = File.join(DEFAULT_OUT_DIR, "index.json")
-  index = File.file?(index_path) ? JSON.parse(File.read(index_path)) : { "version" => 1, "banks" => [] }
-  rel = bank_path.sub(%r{\A#{Regexp.escape(ROOT)}/?}, "")
-  banks = index["banks"] || []
-  entry = {
-    "id" => meta[:sid],
-    "name" => meta[:name],
-    "path" => rel.start_with?("assets/") ? "/#{rel}" : rel,
-    "questionCount" => count
-  }
-  banks.reject! { |b| b["id"] == meta[:sid] }
-  banks << entry
-  banks.sort_by! { |b| b["name"].to_s }
+  index = if File.file?(index_path)
+            JSON.parse(File.read(index_path))
+          else
+            { "version" => 1, "banks" => {} }
+          end
+  banks = index["banks"]
+  # Preserve legacy hash map: { "gi-liver" => "gi-liver.json" }
+  if banks.is_a?(Hash)
+    banks[meta[:sid]] = File.basename(bank_path)
+  else
+    banks = Array(banks)
+    banks.reject! { |b| b.is_a?(Hash) && b["id"] == meta[:sid] }
+    rel = bank_path.sub(%r{\A#{Regexp.escape(ROOT)}/?}, "")
+    banks << {
+      "id" => meta[:sid],
+      "name" => meta[:name],
+      "path" => rel.start_with?("assets/") ? "/#{rel}" : rel
+    }
+    banks.sort_by! { |b| b["name"].to_s }
+  end
   index["banks"] = banks
   index["updatedAt"] = Time.now.utc.iso8601
   File.write(index_path, JSON.pretty_generate(index) + "\n")
@@ -551,10 +570,14 @@ client = ChromeClient.new(
 question_page = "#{QUESTION_URL}?sid=#{options[:sid]}"
 
 if options[:warmup]
-  warn "Warmup: homepage"
-  client.get(HOME_URL, referer: "")
-  warn "Warmup: question bank index"
-  client.get(INDEX_URL, referer: HOME_URL)
+  begin
+    warn "Warmup: homepage"
+    client.get(HOME_URL, referer: "")
+    warn "Warmup: question bank index"
+    client.get(INDEX_URL, referer: HOME_URL)
+  rescue StandardError => e
+    warn "Warmup skipped after error: #{e.message}"
+  end
 end
 
 warn "Fetching questions: #{question_page}"
@@ -562,14 +585,14 @@ html = client.get(question_page, referer: INDEX_URL)
 File.write(LAST_HTML, html)
 warn "Saved raw HTML → #{LAST_HTML} (#{html.bytesize} bytes)"
 
-questions = parse_questions(html, limit: options[:limit])
+questions = parse_questions(
+  html,
+  limit: options[:limit],
+  po_sid: options[:sid],
+  fields: meta[:fields] || [],
+  source_url: question_page
+)
 warn "Parsed #{questions.size} questions"
-
-# Apply default tags from taxonomy
-questions.each do |q|
-  q["tags"] = (meta[:tags] + Array(q["tags"])).uniq
-  q["source"]["url"] = question_page
-end
 
 if options[:download_images] && !options[:dry_run]
   warn "Downloading images (paced)…"
@@ -586,13 +609,14 @@ if options[:dry_run]
 end
 
 if options[:merge] && File.file?(out_path)
-  existing = JSON.parse(File.read(out_path))
-  old = existing["questions"] || []
+  old = read_bank(out_path)
   questions = merge_questions(old, questions)
   warn "Merged → #{questions.size} total questions"
 end
 
-write_bank!(out_path, meta, questions, po_sid: options[:sid])
-update_index!(out_path, meta, questions.size)
+# Only update the shared index when writing into assets/data/questions/
+writing_to_assets = File.expand_path(out_path).start_with?(File.expand_path(DEFAULT_OUT_DIR) + File::SEPARATOR)
+write_bank!(out_path, questions)
+update_index!(out_path, meta, questions.size) if writing_to_assets
 warn "Wrote #{questions.size} questions → #{out_path}"
 warn "Done."
