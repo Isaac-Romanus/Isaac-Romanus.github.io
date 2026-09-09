@@ -5,8 +5,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
     "po_subspecialty_id": 7,
     "po_chapter": "Melanocytic lesions",
-    "fields": ["dermatopathology"],
-    "tags": ["malignant"],
+    "fields": [
+      "dermatopathology"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Which feature is most concerning for melanoma rather than a banal melanocytic nevus?",
     "image": null,
     "options": [
@@ -36,7 +40,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-derm-0002",
@@ -44,10 +49,14 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
     "po_subspecialty_id": 7,
     "po_chapter": "Nonmelanoma skin tumors",
-    "fields": ["dermatopathology"],
-    "tags": ["malignant"],
+    "fields": [
+      "dermatopathology"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Basal cell carcinoma is most characteristically associated with which immunohistochemical finding?",
-    "image": null,
+    "image": "/assets/images/dermatopathology/basal-cell-carcinoma/low.svg",
     "options": [
       {
         "key": "A",
@@ -75,7 +84,19 @@
       }
     ],
     "related_disease": "basal-cell-carcinoma",
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": [
+      {
+        "src": "/assets/images/dermatopathology/basal-cell-carcinoma/low.svg",
+        "alt": "Low-power basal cell carcinoma",
+        "caption": "Basaloid nests with peripheral palisading."
+      },
+      {
+        "src": "/assets/images/dermatopathology/basal-cell-carcinoma/high.svg",
+        "alt": "High-power basal cell carcinoma",
+        "caption": "Peripheral palisading and stromal clefting."
+      }
+    ]
   },
   {
     "id": "po-derm-0003",
@@ -83,8 +104,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
     "po_subspecialty_id": 7,
     "po_chapter": "Inflammatory dermatoses",
-    "fields": ["dermatopathology"],
-    "tags": ["inflammatory"],
+    "fields": [
+      "dermatopathology"
+    ],
+    "tags": [
+      "inflammatory"
+    ],
     "stem": "Interface dermatitis with continuous basal vacuolization, thickened basement membrane, and follicular plugging is most suggestive of:",
     "image": null,
     "options": [
@@ -114,7 +139,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-derm-0004",
@@ -122,8 +148,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
     "po_subspecialty_id": 7,
     "po_chapter": "Soft tissue of skin",
-    "fields": ["dermatopathology"],
-    "tags": ["benign"],
+    "fields": [
+      "dermatopathology"
+    ],
+    "tags": [
+      "benign"
+    ],
     "stem": "Factor XIIIa+/CD34− dermal spindle proliferation with collagen trapping at the periphery most likely represents:",
     "image": null,
     "options": [
@@ -153,7 +183,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-derm-0005",
@@ -161,8 +192,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=7",
     "po_subspecialty_id": 7,
     "po_chapter": "Infectious",
-    "fields": ["dermatopathology"],
-    "tags": ["infectious"],
+    "fields": [
+      "dermatopathology"
+    ],
+    "tags": [
+      "infectious"
+    ],
     "stem": "Molluscum contagiosum is diagnosed by recognizing which epidermal change?",
     "image": null,
     "options": [
@@ -192,6 +227,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   }
 ]

@@ -5,10 +5,15 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
     "po_subspecialty_id": 11,
     "po_chapter": "Lymphoma",
-    "fields": ["hematopathology"],
-    "tags": ["malignant", "b-cell"],
+    "fields": [
+      "hematopathology"
+    ],
+    "tags": [
+      "malignant",
+      "b-cell"
+    ],
     "stem": "Which immunophenotype best fits follicular lymphoma?",
-    "image": null,
+    "image": "/assets/images/hematopathology/follicular-lymphoma/low.svg",
     "options": [
       {
         "key": "A",
@@ -36,7 +41,19 @@
       }
     ],
     "related_disease": "follicular-lymphoma",
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": [
+      {
+        "src": "/assets/images/hematopathology/follicular-lymphoma/low.svg",
+        "alt": "Low-power follicular lymphoma",
+        "caption": "Back-to-back neoplastic follicles."
+      },
+      {
+        "src": "/assets/images/hematopathology/follicular-lymphoma/high.svg",
+        "alt": "High-power follicular lymphoma",
+        "caption": "Centroblasts and centrocytes."
+      }
+    ]
   },
   {
     "id": "po-heme-0002",
@@ -44,8 +61,13 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
     "po_subspecialty_id": 11,
     "po_chapter": "Lymphoma",
-    "fields": ["hematopathology"],
-    "tags": ["malignant", "b-cell"],
+    "fields": [
+      "hematopathology"
+    ],
+    "tags": [
+      "malignant",
+      "b-cell"
+    ],
     "stem": "The t(11;14) IGH::CCND1 rearrangement is the genetic hallmark of:",
     "image": null,
     "options": [
@@ -75,7 +97,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-heme-0003",
@@ -83,8 +106,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
     "po_subspecialty_id": 11,
     "po_chapter": "Hodgkin lymphoma",
-    "fields": ["hematopathology"],
-    "tags": ["malignant"],
+    "fields": [
+      "hematopathology"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Classic Reed-Sternberg cells of classic Hodgkin lymphoma are typically:",
     "image": null,
     "options": [
@@ -114,7 +141,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-heme-0004",
@@ -122,8 +150,13 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
     "po_subspecialty_id": 11,
     "po_chapter": "Plasma cell neoplasms",
-    "fields": ["hematopathology"],
-    "tags": ["malignant", "b-cell"],
+    "fields": [
+      "hematopathology"
+    ],
+    "tags": [
+      "malignant",
+      "b-cell"
+    ],
     "stem": "Which finding best supports plasma cell myeloma over a reactive plasmacytosis?",
     "image": null,
     "options": [
@@ -153,7 +186,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-heme-0005",
@@ -161,8 +195,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=11",
     "po_subspecialty_id": 11,
     "po_chapter": "Acute leukemia",
-    "fields": ["hematopathology"],
-    "tags": ["malignant"],
+    "fields": [
+      "hematopathology"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Auer rods are most specific for which lineage of acute leukemia?",
     "image": null,
     "options": [
@@ -192,6 +230,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   }
 ]

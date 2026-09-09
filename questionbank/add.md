@@ -37,6 +37,22 @@ qb_page: add
     <label for="qb-add-related">Related disease slug (optional)</label>
     <input type="text" id="qb-add-related" name="related_disease" placeholder="tubular-adenoma">
 
+    <fieldset class="qb-images-fieldset">
+      <legend>Images (optional)</legend>
+      <p class="muted small">Add one or more photomicrographs. Upload from your device and/or paste PathologyOutlines image URLs. Click a preview to zoom and pan.</p>
+      <div class="qb-add-image-controls">
+        <label class="btn btn-secondary qb-file-label">
+          Upload images
+          <input type="file" id="qb-add-image-files" accept="image/*" multiple hidden>
+        </label>
+        <div class="qb-inline-form qb-add-url-row">
+          <input type="url" id="qb-add-image-url" placeholder="https://www.pathologyoutlines.com/imgau/….jpg" aria-label="Image URL">
+          <button type="button" id="qb-add-image-url-btn" class="btn btn-secondary">Add URL</button>
+        </div>
+      </div>
+      <div id="qb-add-image-previews" class="qb-image-gallery qb-add-previews"></div>
+    </fieldset>
+
     <fieldset class="qb-options-fieldset">
       <legend>Answer options</legend>
       <div id="qb-add-options">

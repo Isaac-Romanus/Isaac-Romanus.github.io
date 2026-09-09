@@ -84,7 +84,11 @@
   }
 
   function collectGallery(fromBtn) {
-    var root = document.querySelector('.disease-main') || document;
+    var root =
+      (fromBtn && fromBtn.closest && (fromBtn.closest('.qb-question-images') || fromBtn.closest('.qb-add-previews') || fromBtn.closest('.qb-quiz-app') || fromBtn.closest('.disease-main'))) ||
+      document.querySelector('.qb-question-images') ||
+      document.querySelector('.disease-main') ||
+      document;
     var buttons = root.querySelectorAll('.figure-zoom');
     gallery = Array.prototype.map.call(buttons, function (btn) {
       var inner = btn.querySelector('img');
@@ -96,7 +100,7 @@
         caption: cap ? cap.textContent : '',
         btn: btn
       };
-    });
+    }).filter(function (item) { return !!item.src; });
     index = 0;
     for (var i = 0; i < gallery.length; i++) {
       if (gallery[i].btn === fromBtn) { index = i; break; }

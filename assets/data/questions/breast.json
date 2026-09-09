@@ -5,8 +5,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
     "po_subspecialty_id": 3,
     "po_chapter": "Invasive carcinoma",
-    "fields": ["breast"],
-    "tags": ["malignant"],
+    "fields": [
+      "breast"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Which immunohistochemical profile is most typical of invasive lobular carcinoma of the breast?",
     "image": null,
     "options": [
@@ -36,7 +40,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-br-0002",
@@ -44,8 +49,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
     "po_subspecialty_id": 3,
     "po_chapter": "Fibroepithelial lesions",
-    "fields": ["breast"],
-    "tags": ["benign"],
+    "fields": [
+      "breast"
+    ],
+    "tags": [
+      "benign"
+    ],
     "stem": "Which feature best favors phyllodes tumor over fibroadenoma?",
     "image": null,
     "options": [
@@ -75,7 +84,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-br-0003",
@@ -83,8 +93,13 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
     "po_subspecialty_id": 3,
     "po_chapter": "In situ lesions",
-    "fields": ["breast"],
-    "tags": ["precursor-lesion", "high-grade"],
+    "fields": [
+      "breast"
+    ],
+    "tags": [
+      "precursor-lesion",
+      "high-grade"
+    ],
     "stem": "Comedo-type ductal carcinoma in situ is most closely associated with which finding?",
     "image": null,
     "options": [
@@ -114,7 +129,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-br-0004",
@@ -122,8 +138,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
     "po_subspecialty_id": 3,
     "po_chapter": "Immunohistochemistry",
-    "fields": ["breast"],
-    "tags": ["malignant"],
+    "fields": [
+      "breast"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "Which marker pair is most helpful to support a breast primary in a CK7+/CK20− carcinoma of unknown origin?",
     "image": null,
     "options": [
@@ -153,7 +173,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-br-0005",
@@ -161,8 +182,12 @@
     "source_url": "https://www.pathologyoutlines.com/review-questions?sid=3",
     "po_subspecialty_id": 3,
     "po_chapter": "Prognostic markers",
-    "fields": ["breast"],
-    "tags": ["malignant"],
+    "fields": [
+      "breast"
+    ],
+    "tags": [
+      "malignant"
+    ],
     "stem": "According to ASCO/CAP guidelines, which HER2 IHC result is considered equivocal and typically reflexed to ISH?",
     "image": null,
     "options": [
@@ -192,6 +217,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   }
 ]

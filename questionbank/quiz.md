@@ -26,11 +26,10 @@ qb_page: quiz
 
     <article class="qb-question-card">
       <div id="qb-question-stem" class="qb-stem"></div>
-      <figure id="qb-question-image" class="qb-question-image" hidden>
-        <button type="button" class="figure-zoom qb-image-zoom" data-full="">
-          <img src="" alt="" loading="lazy">
-        </button>
-      </figure>
+      <div id="qb-question-images" class="qb-question-images" hidden>
+        <p class="qb-images-hint muted small">Click an image to zoom and pan · scroll/pinch to zoom · drag when zoomed</p>
+        <div id="qb-question-image-gallery" class="qb-image-gallery"></div>
+      </div>
       <form id="qb-options-form" class="qb-options"></form>
       <div class="qb-quiz-actions">
         <button type="submit" form="qb-options-form" id="qb-submit-btn" class="btn btn-primary">Submit answer</button>

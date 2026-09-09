@@ -237,19 +237,90 @@
     });
   }
 
-  function renderImage(fig, question) {
-    if (!question.image) {
-      fig.hidden = true;
+  /** Normalize legacy `image` string and `images` array into [{src, alt, caption}]. */
+  function normalizeImages(question) {
+    var list = [];
+    if (Array.isArray(question.images)) {
+      question.images.forEach(function (item) {
+        if (!item) return;
+        if (typeof item === 'string') {
+          if (item) list.push({ src: item, alt: '', caption: '' });
+        } else if (item.src) {
+          list.push({
+            src: item.src,
+            alt: item.alt || item.caption || 'Question image',
+            caption: item.caption || ''
+          });
+        }
+      });
+    }
+    if (!list.length && question.image) {
+      list.push({
+        src: question.image,
+        alt: question.image_alt || 'Question image',
+        caption: question.image_caption || ''
+      });
+    }
+    return list;
+  }
+
+  function resolveImageSrc(src) {
+    if (!src) return '';
+    // Absolute http(s), data:, blob: — use as-is (PO hotlinks + custom uploads).
+    if (/^(https?:|data:|blob:)/i.test(src)) return src;
+    if (src.charAt(0) === '/') return assetUrl(src);
+    return assetUrl('/' + src);
+  }
+
+  function renderImages(container, question) {
+    if (!container) return;
+    var gallery = container.querySelector('.qb-image-gallery') || container;
+    var images = normalizeImages(question);
+    gallery.innerHTML = '';
+    if (!images.length) {
+      container.hidden = true;
       return;
     }
-    fig.hidden = false;
-    var btn = fig.querySelector('.figure-zoom');
-    var img = fig.querySelector('img');
-    var src = question.image;
-    if (src.charAt(0) === '/') src = assetUrl(src);
-    img.src = src;
-    img.alt = 'Question image';
-    btn.setAttribute('data-full', src);
+    container.hidden = false;
+    images.forEach(function (item, idx) {
+      var src = resolveImageSrc(item.src);
+      var figure = document.createElement('figure');
+      figure.className = 'qb-question-image figure';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'figure-zoom qb-image-zoom';
+      btn.setAttribute('data-full', src);
+      btn.setAttribute('aria-label', 'Open image ' + (idx + 1) + ' in zoom viewer');
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = item.alt || ('Question image ' + (idx + 1));
+      img.loading = 'lazy';
+      img.onerror = function () {
+        figure.classList.add('is-broken');
+        if (!figure.querySelector('.qb-image-error')) {
+          var err = document.createElement('p');
+          err.className = 'qb-image-error muted small';
+          err.textContent = 'Image failed to load. Check the URL or re-import/download it.';
+          figure.appendChild(err);
+        }
+      };
+      btn.appendChild(img);
+      figure.appendChild(btn);
+      if (item.caption) {
+        var cap = document.createElement('figcaption');
+        var span = document.createElement('span');
+        span.className = 'fig-caption';
+        span.textContent = item.caption;
+        cap.appendChild(span);
+        figure.appendChild(cap);
+      }
+      gallery.appendChild(figure);
+    });
+  }
+
+  // Backward-compatible alias used by older call sites.
+  function renderImage(container, question) {
+    renderImages(container, question);
   }
 
   function renderAttribution(el, question) {
@@ -283,6 +354,9 @@
     renderOptions: renderOptions,
     renderExplanations: renderExplanations,
     renderImage: renderImage,
+    renderImages: renderImages,
+    normalizeImages: normalizeImages,
+    resolveImageSrc: resolveImageSrc,
     renderAttribution: renderAttribution,
     renderRelated: renderRelated,
     shuffle: shuffle,

@@ -41,7 +41,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0002",
@@ -85,7 +86,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0003",
@@ -129,7 +131,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0004",
@@ -173,7 +176,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0005",
@@ -215,7 +219,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0006",
@@ -260,7 +265,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0007",
@@ -304,7 +310,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0008",
@@ -348,7 +355,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0009",
@@ -390,7 +398,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0010",
@@ -434,7 +443,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0011",
@@ -478,7 +488,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0012",
@@ -522,7 +533,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0013",
@@ -566,7 +578,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0014",
@@ -610,7 +623,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0015",
@@ -654,7 +668,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0016",
@@ -698,7 +713,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0017",
@@ -740,7 +756,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0018",
@@ -782,7 +799,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0019",
@@ -826,7 +844,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0020",
@@ -870,7 +889,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0021",
@@ -912,7 +932,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0022",
@@ -956,7 +977,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0023",
@@ -998,7 +1020,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0024",
@@ -1040,7 +1063,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0025",
@@ -1082,7 +1106,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0026",
@@ -1098,7 +1123,7 @@
       "precursor-lesion"
     ],
     "stem": "Which of the following is true about intestinal type adenomas of the appendix?",
-    "image": null,
+    "image": "/assets/images/gastrointestinal/tubular-adenoma/low.svg",
     "options": [
       {
         "key": "A",
@@ -1126,7 +1151,19 @@
       }
     ],
     "related_disease": "tubular-adenoma",
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": [
+      {
+        "src": "/assets/images/gastrointestinal/tubular-adenoma/low.svg",
+        "alt": "Low-power colonic tubular adenoma",
+        "caption": "Crowded dysplastic crypts (notebook histology)."
+      },
+      {
+        "src": "/assets/images/gastrointestinal/tubular-adenoma/high.svg",
+        "alt": "High-power tubular adenoma epithelium",
+        "caption": "Pencillate nuclei with pseudostratification."
+      }
+    ]
   },
   {
     "id": "po-gi-0027",
@@ -1168,7 +1205,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "complete"
+    "explanation_status": "complete",
+    "images": []
   },
   {
     "id": "po-gi-0028",
@@ -1212,7 +1250,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0029",
@@ -1254,7 +1293,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0030",
@@ -1298,7 +1338,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0031",
@@ -1342,7 +1383,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0032",
@@ -1384,7 +1426,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0033",
@@ -1426,7 +1469,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0034",
@@ -1468,7 +1512,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0035",
@@ -1510,7 +1555,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0036",
@@ -1554,7 +1600,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0037",
@@ -1598,7 +1645,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0038",
@@ -1642,7 +1690,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0039",
@@ -1686,7 +1735,8 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   },
   {
     "id": "po-gi-0040",
@@ -1728,6 +1778,7 @@
       }
     ],
     "related_disease": null,
-    "explanation_status": "partial"
+    "explanation_status": "partial",
+    "images": []
   }
 ]

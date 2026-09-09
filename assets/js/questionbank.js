@@ -427,7 +427,7 @@
     }
 
     window.QBQuiz.renderStem($('#qb-question-stem'), q.stem);
-    window.QBQuiz.renderImage($('#qb-question-image'), q);
+    window.QBQuiz.renderImages($('#qb-question-images'), q);
     window.QBQuiz.renderAttribution($('#qb-attribution'), q);
     window.QBQuiz.renderRelated($('#qb-related-disease'), q);
 
@@ -566,15 +566,106 @@
     var yamlBtn = $('#qb-export-yaml-btn');
     var yamlOut = $('#qb-add-yaml');
     var status = $('#qb-add-status');
+    var pendingImages = [];
+
+    function renderAddPreviews() {
+      var root = $('#qb-add-image-previews');
+      if (!root) return;
+      root.innerHTML = '';
+      pendingImages.forEach(function (item, idx) {
+        var figure = document.createElement('figure');
+        figure.className = 'qb-question-image figure qb-add-preview';
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'figure-zoom qb-image-zoom';
+        btn.setAttribute('data-full', item.src);
+        btn.setAttribute('aria-label', 'Preview image ' + (idx + 1));
+        var img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.alt || 'Upload preview';
+        btn.appendChild(img);
+        figure.appendChild(btn);
+        var tools = document.createElement('div');
+        tools.className = 'qb-add-preview-tools';
+        var cap = document.createElement('input');
+        cap.type = 'text';
+        cap.placeholder = 'Caption (optional)';
+        cap.value = item.caption || '';
+        cap.addEventListener('input', function () { item.caption = cap.value; });
+        var remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'btn btn-ghost btn-sm';
+        remove.textContent = 'Remove';
+        remove.addEventListener('click', function () {
+          pendingImages.splice(idx, 1);
+          renderAddPreviews();
+        });
+        tools.appendChild(cap);
+        tools.appendChild(remove);
+        figure.appendChild(tools);
+        root.appendChild(figure);
+      });
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () { resolve(reader.result); };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    var fileInput = $('#qb-add-image-files');
+    if (fileInput) {
+      fileInput.addEventListener('change', function () {
+        var files = Array.prototype.slice.call(fileInput.files || []);
+        Promise.all(files.map(function (file) {
+          return readFileAsDataUrl(file).then(function (dataUrl) {
+            return {
+              src: dataUrl,
+              alt: file.name || 'Uploaded image',
+              caption: '',
+              name: file.name
+            };
+          });
+        })).then(function (items) {
+          pendingImages = pendingImages.concat(items);
+          renderAddPreviews();
+          fileInput.value = '';
+        });
+      });
+    }
+
+    var urlBtn = $('#qb-add-image-url-btn');
+    var urlInput = $('#qb-add-image-url');
+    if (urlBtn && urlInput) {
+      urlBtn.addEventListener('click', function () {
+        var url = urlInput.value.trim();
+        if (!url) return;
+        if (!/^https?:\/\//i.test(url) && !/^data:/i.test(url)) {
+          alert('Enter a full http(s) image URL (PathologyOutlines links are supported).');
+          return;
+        }
+        pendingImages.push({
+          src: url,
+          alt: 'Question image',
+          caption: ''
+        });
+        urlInput.value = '';
+        renderAddPreviews();
+      });
+    }
 
     if (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var q = formToQuestion(form);
+        var q = formToQuestion(form, pendingImages);
         window.QBStorage.saveCustomQuestion(q).then(function (saved) {
           if (status) {
             status.hidden = false;
-            status.textContent = 'Saved question "' + saved.id + '" to this device.';
+            status.textContent = 'Saved question "' + saved.id + '" to this device' +
+              (pendingImages.length ? ' with ' + pendingImages.length + ' image(s)' : '') + '.';
           }
         });
       });
@@ -582,7 +673,7 @@
 
     if (yamlBtn) {
       yamlBtn.addEventListener('click', function () {
-        var q = formToQuestion(form);
+        var q = formToQuestion(form, pendingImages);
         var yaml = questionToYaml(q);
         if (yamlOut) {
           yamlOut.hidden = false;
@@ -592,7 +683,7 @@
     }
   }
 
-  function formToQuestion(form) {
+  function formToQuestion(form, images) {
     var stem = $('#qb-add-stem').value.trim();
     var chapter = $('#qb-add-chapter').value.trim();
     var sid = parseInt($('#qb-add-sid').value, 10);
@@ -609,6 +700,13 @@
         explanation: form.querySelector('[name="explanation_' + L + '"]').value.trim()
       };
     });
+    var normalizedImages = (images || []).map(function (item) {
+      return {
+        src: item.src,
+        alt: item.alt || 'Question image',
+        caption: item.caption || ''
+      };
+    });
     return {
       id: 'custom-' + Date.now(),
       source: 'custom',
@@ -618,7 +716,8 @@
       fields: fields,
       tags: tags,
       stem: stem,
-      image: null,
+      image: normalizedImages.length ? normalizedImages[0].src : null,
+      images: normalizedImages,
       options: options,
       related_disease: related,
       explanation_status: 'complete'
@@ -632,9 +731,23 @@
       '  po_chapter: "' + (q.po_chapter || '').replace(/"/g, '\\"') + '"',
       '  fields: [' + (q.fields || []).map(function (f) { return '"' + f + '"'; }).join(', ') + ']',
       '  tags: [' + (q.tags || []).map(function (t) { return '"' + t + '"'; }).join(', ') + ']',
-      '  stem: "' + (q.stem || '').replace(/"/g, '\\"') + '"',
-      '  image: null',
-      '  options:'];
+      '  stem: "' + (q.stem || '').replace(/"/g, '\\"') + '"'];
+    if (q.images && q.images.length) {
+      lines.push('  images:');
+      q.images.forEach(function (img) {
+        var src = img.src || '';
+        if (src.indexOf('data:') === 0) {
+          lines.push('    - src: "<data-url omitted — keep uploaded image in IndexedDB or save file under assets/images/questionbank/>"');
+        } else {
+          lines.push('    - src: "' + src.replace(/"/g, '\\"') + '"');
+        }
+        lines.push('      alt: "' + (img.alt || '').replace(/"/g, '\\"') + '"');
+        lines.push('      caption: "' + (img.caption || '').replace(/"/g, '\\"') + '"');
+      });
+    } else {
+      lines.push('  images: []');
+    }
+    lines.push('  options:');
     (q.options || []).forEach(function (o) {
       lines.push('    - key: "' + o.key + '"');
       lines.push('      text: "' + (o.text || '').replace(/"/g, '\\"') + '"');

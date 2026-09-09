@@ -66,23 +66,59 @@ def main_explanation(answer_text, correct_key)
   text.strip.gsub(/\s+/, " ")
 end
 
-def download_image(url, sid, qnum)
+def absolute_po_url(url)
   return nil if url.to_s.strip.empty?
-  uri = URI(url.start_with?("http") ? url : "https://www.pathologyoutlines.com#{url}")
+  return url if url.start_with?("http://", "https://")
+  return "https://www.pathologyoutlines.com#{url}" if url.start_with?("/")
+  "https://www.pathologyoutlines.com/#{url}"
+end
+
+# Prefer a local copy under assets/images/questionbank/; fall back to absolute PO URL
+# (PathologyOutlines permits hotlinking for personal/educational use).
+def resolve_image(url, sid, qnum, img_idx = 1)
+  abs = absolute_po_url(url)
+  return nil unless abs
+  uri = URI(abs)
   FileUtils.mkdir_p(IMG_DIR)
   ext = File.extname(uri.path)
-  ext = ".jpg" if ext.empty?
-  fname = "po-sid#{sid}-q#{format('%04d', qnum)}#{ext}"
+  ext = ".jpg" if ext.empty? || ext.length > 5
+  fname = "po-sid#{sid}-q#{format('%04d', qnum)}-#{img_idx}#{ext}"
   dest = IMG_DIR.join(fname)
-  unless dest.exist?
-    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
-      res = http.get(uri.path + (uri.query ? "?#{uri.query}" : ""))
-      File.binwrite(dest, res.body) if res.is_a?(Net::HTTPSuccess)
+  local_path = "/assets/images/questionbank/#{fname}"
+
+  begin
+    unless dest.exist? && dest.size.positive?
+      Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https", read_timeout: 30) do |http|
+        req = Net::HTTP::Get.new(uri)
+        req["User-Agent"] = "PathologyNotebookImporter/1.0 (personal study)"
+        res = http.request(req)
+        if res.is_a?(Net::HTTPSuccess) && res.body && res.body.bytesize > 500
+          File.binwrite(dest, res.body)
+        end
+      end
     end
+    return { "src" => local_path, "alt" => "PathologyOutlines question image", "caption" => "" } if dest.exist? && dest.size.positive?
+  rescue StandardError
+    # fall through to hotlink
   end
-  "/assets/images/questionbank/#{fname}"
-rescue StandardError
-  nil
+
+  { "src" => abs, "alt" => "PathologyOutlines question image", "caption" => "Source: PathologyOutlines.com" }
+end
+
+def extract_images(node, sid, qnum)
+  return [] unless node
+  urls = []
+  node.css("img").each do |img|
+    src = img["src"] || img["data-src"] || img["data-original"]
+    next if src.to_s.strip.empty?
+    next if src.match?(/logo|icon|sprite|chatbot|header|nav|1x1|pixel/i)
+    urls << src
+  end
+  urls.uniq.map.with_index(1) { |url, i| resolve_image(url, sid, qnum, i) }.compact
+end
+
+def download_image(url, sid, qnum)
+  resolve_image(url, sid, qnum, 1)&.dig("src")
 end
 
 def parse_questions(html, sid:, chapter: nil, limit: nil)
@@ -132,6 +168,7 @@ def parse_questions(html, sid:, chapter: nil, limit: nil)
         "tags" => [],
         "stem" => stem_text,
         "image" => nil,
+        "images" => [],
         "options" => options,
         "related_disease" => nil,
         "explanation_status" => "complete"
@@ -157,8 +194,8 @@ def parse_questions(html, sid:, chapter: nil, limit: nil)
         }
       end
 
-      img_url = block.at_css("img")&.[]("src")
-      image = download_image(img_url, sid, idx + 1)
+      img_urls = block.css("img").map { |img| img["src"] || img["data-src"] }.compact
+      images = extract_images(block, sid, idx + 1)
 
       questions << {
         "id" => "po-#{slug_for_sid(sid)}-#{format('%04d', idx + 1)}",
@@ -169,7 +206,8 @@ def parse_questions(html, sid:, chapter: nil, limit: nil)
         "fields" => sid == 6 ? %w[gastrointestinal liver-pancreas] : [],
         "tags" => [],
         "stem" => stem,
-        "image" => image,
+        "image" => images.first&.dig("src"),
+        "images" => images,
         "options" => options,
         "related_disease" => nil,
         "explanation_status" => options.all? { |o| !o["explanation"].to_s.strip.empty? } ? "complete" : "partial"

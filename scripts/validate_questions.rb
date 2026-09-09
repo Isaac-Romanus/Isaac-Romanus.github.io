@@ -104,6 +104,19 @@ else
       if q["source"] == "pathologyoutlines" && q["source_url"].to_s.strip.empty?
         warnings << "#{prefix}: PO question missing source_url"
       end
+
+      images = Array(q["images"])
+      if q["image"].is_a?(String) && !q["image"].strip.empty? && images.empty?
+        warnings << "#{prefix}: has legacy image string but empty images[]; prefer images: [{src, alt, caption}]"
+      end
+      images.each_with_index do |img, ii|
+        src = img.is_a?(Hash) ? img["src"] : img
+        errors << "#{prefix} images[#{ii}]: missing src" if src.to_s.strip.empty?
+        next if src.to_s.strip.empty?
+        next if src.start_with?("http://", "https://", "data:")
+        local = ROOT.join(src.sub(%r{\A/}, ""))
+        warnings << "#{prefix} images[#{ii}]: local file missing (#{src})" unless local.file?
+      end
     end
   end
 end
