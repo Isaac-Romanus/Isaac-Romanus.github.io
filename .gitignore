@@ -7,3 +7,6 @@ _site/
 vendor/bundle/
 .bundle/
 tmp/
+
+# Python venv
+.venv/
