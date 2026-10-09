@@ -244,12 +244,13 @@
       question.images.forEach(function (item) {
         if (!item) return;
         if (typeof item === 'string') {
-          if (item) list.push({ src: item, alt: '', caption: '' });
+          if (item) list.push({ src: item, alt: '', caption: '', source_url: '' });
         } else if (item.src) {
           list.push({
             src: item.src,
             alt: item.alt || item.caption || 'Question image',
-            caption: item.caption || ''
+            caption: item.caption || '',
+            source_url: item.source_url || ''
           });
         }
       });
@@ -276,6 +277,7 @@
     if (!container) return;
     var gallery = container.querySelector('.qb-image-gallery') || container;
     var images = normalizeImages(question);
+    var qId = question && question.id ? String(question.id) : '';
     gallery.innerHTML = '';
     if (!images.length) {
       container.hidden = true;
@@ -284,8 +286,12 @@
     container.hidden = false;
     images.forEach(function (item, idx) {
       var src = resolveImageSrc(item.src);
+      // Prefer original PO URL for attribution / fallback when local file fails.
+      var sourceUrl = item.source_url || ( /^(https?:)/i.test(item.src || '') ? item.src : '' );
       var figure = document.createElement('figure');
       figure.className = 'qb-question-image figure';
+      figure.setAttribute('data-image-index', String(idx));
+      if (qId) figure.setAttribute('data-question-id', qId);
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'figure-zoom qb-image-zoom';
@@ -295,12 +301,25 @@
       img.src = src;
       img.alt = item.alt || ('Question image ' + (idx + 1));
       img.loading = 'lazy';
+      // Avoid PO hotlink blocks that key off Referer from GitHub Pages.
+      img.referrerPolicy = 'no-referrer';
+      img.decoding = 'async';
       img.onerror = function () {
+        // Fall back to original remote URL once if local path failed.
+        if (sourceUrl && img.getAttribute('data-fallback') !== '1' && src !== sourceUrl) {
+          img.setAttribute('data-fallback', '1');
+          img.referrerPolicy = 'no-referrer';
+          img.src = sourceUrl;
+          btn.setAttribute('data-full', sourceUrl);
+          return;
+        }
         figure.classList.add('is-broken');
         if (!figure.querySelector('.qb-image-error')) {
           var err = document.createElement('p');
           err.className = 'qb-image-error muted small';
-          err.textContent = 'Image failed to load. Check the URL or re-import/download it.';
+          var link = sourceUrl || src;
+          err.innerHTML = 'Image failed to load.' +
+            (link ? ' <a href="' + escapeHtml(link) + '" target="_blank" rel="noopener noreferrer">Open image link</a>' : '');
           figure.appendChild(err);
         }
       };
