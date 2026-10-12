@@ -724,6 +724,7 @@
       return;
     }
     session.answers[session.index] = selected;
+    updateProgressUi();
 
     if (session.index >= session.questions.length - 1) finishExam();
     else {
