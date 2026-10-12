@@ -19,10 +19,24 @@ qb_page: quiz
       </div>
       <div class="qb-quiz-tools">
         <span id="qb-exam-timer" class="qb-exam-timer" hidden></span>
-        <button type="button" id="qb-bookmark-btn" class="btn btn-ghost btn-sm" title="Bookmark">☆ Bookmark</button>
+        <div class="qb-flag-tools">
+          <button type="button" id="qb-flag-btn" class="btn btn-ghost btn-sm" title="Flag for later">⚑ Flag</button>
+          <button type="button" id="qb-flagged-list-btn" class="btn btn-secondary btn-sm" aria-expanded="false" aria-controls="qb-flagged-panel">Flagged <span id="qb-flagged-count">0</span></button>
+          <div id="qb-flagged-panel" class="qb-flagged-panel" hidden>
+            <p class="qb-flagged-heading">Flagged in this session</p>
+            <ul id="qb-flagged-list" class="qb-flagged-list"></ul>
+            <p id="qb-flagged-empty" class="muted small">No flagged questions yet.</p>
+            <a id="qb-review-flagged-link" class="btn btn-primary btn-sm" href="{{ '/questionbank/quiz/' | relative_url }}?mode=flagged">Review all flagged</a>
+          </div>
+        </div>
         <button type="button" id="qb-end-session" class="btn btn-ghost btn-sm">End session</button>
       </div>
     </header>
+
+    <div class="qb-progress" aria-hidden="true">
+      <div id="qb-progress-bar" class="qb-progress-bar" style="width: 0%"></div>
+    </div>
+    <p id="qb-progress-label" class="qb-progress-label muted small" aria-live="polite"></p>
 
     <article class="qb-question-card">
       <div id="qb-question-stem" class="qb-stem"></div>
@@ -32,8 +46,9 @@ qb_page: quiz
       </div>
       <form id="qb-options-form" class="qb-options"></form>
       <div class="qb-quiz-actions">
+        <button type="button" id="qb-prev-btn" class="btn btn-secondary">← Previous</button>
         <button type="submit" form="qb-options-form" id="qb-submit-btn" class="btn btn-primary">Submit answer</button>
-        <button type="button" id="qb-next-btn" class="btn btn-secondary" hidden>Next question</button>
+        <button type="button" id="qb-next-btn" class="btn btn-secondary" hidden>Next question →</button>
         <button type="button" id="qb-finish-exam-btn" class="btn btn-primary" hidden>Finish exam</button>
       </div>
       <div id="qb-explanations" class="qb-explanations" hidden></div>

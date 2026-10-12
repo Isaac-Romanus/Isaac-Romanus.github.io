@@ -118,7 +118,24 @@
         return questions.filter(function (q) { return !set[q.id]; });
       });
     }
+    if (mode === 'flagged') {
+      return global.QBStorage.getBookmarks(profileId).then(function (rows) {
+        var set = {};
+        (rows || []).forEach(function (r) { set[r.questionId] = true; });
+        return questions.filter(function (q) { return set[q.id]; });
+      });
+    }
     return Promise.resolve(questions);
+  }
+
+  function loadAllBanks() {
+    return loadManifest().then(function (manifest) {
+      var banks = manifest.banks || {};
+      var slugs = Object.keys(banks);
+      return Promise.all(slugs.map(loadBank)).then(function (parts) {
+        return parts.reduce(function (acc, qs) { return acc.concat(qs); }, []);
+      });
+    });
   }
 
   function prepareSession(opts) {
@@ -128,7 +145,12 @@
     var tag = opts.tag || null;
     var profileId = opts.profileId;
 
-    return Promise.all([loadBySids(sids), loadCustomQuestions(sids)]).then(function (parts) {
+    // Flagged review can span all banks when no sid filter is provided.
+    var staticPromise = (mode === 'flagged' && !sids.length)
+      ? loadAllBanks()
+      : loadBySids(sids);
+
+    return Promise.all([staticPromise, loadCustomQuestions(sids.length ? sids : null)]).then(function (parts) {
       var merged = mergeQuestions(parts[0], parts[1]);
       merged = filterByTag(merged, tag);
       if (mode === 'exam') merged = filterComplete(merged);
@@ -141,7 +163,8 @@
             return due;
           });
         }
-        var pool = shuffle(filtered);
+        // Keep flagged order stable (bookmark order approximated by bank order).
+        var pool = mode === 'flagged' ? filtered : shuffle(filtered);
         if (count) pool = pool.slice(0, count);
         return pool;
       });
@@ -167,9 +190,19 @@
       leitner: 'Leitner',
       exam: 'Exam',
       mixed: 'Mixed quiz',
-      tag: 'Tag quiz'
+      tag: 'Tag quiz',
+      flagged: 'Flagged'
     };
     return labels[mode] || mode;
+  }
+
+  var GENERIC_EXPL_RE = /this option is incorrect\. review the correct-answer|see pathologyoutlines\.com for/i;
+
+  function isMeaningfulExplanation(text) {
+    var t = String(text || '').trim();
+    if (!t) return false;
+    if (GENERIC_EXPL_RE.test(t)) return false;
+    return true;
   }
 
   function renderStem(el, text) {
@@ -190,7 +223,6 @@
     var disabled = opts.disabled;
     var reveal = opts.reveal;
     var selected = opts.selected;
-    var examMode = opts.examMode;
 
     (question.options || []).forEach(function (opt) {
       var label = document.createElement('label');
@@ -202,23 +234,25 @@
       }
 
       var input = document.createElement('input');
-      input.type = examMode ? 'radio' : 'radio';
+      input.type = 'radio';
       input.name = 'qb-answer';
       input.value = opt.key;
       input.disabled = disabled;
       if (selected === opt.key) input.checked = true;
 
-      var key = document.createElement('span');
-      key.className = 'qb-option-key';
-      key.textContent = opt.key + '.';
-
       var text = document.createElement('span');
       text.className = 'qb-option-text';
       text.textContent = opt.text;
 
+      // Letter keys sit on the far right and share a fixed column for alignment.
+      var key = document.createElement('span');
+      key.className = 'qb-option-key';
+      key.textContent = opt.key + '.';
+      key.setAttribute('aria-hidden', 'true');
+
       label.appendChild(input);
-      label.appendChild(key);
       label.appendChild(text);
+      label.appendChild(key);
       form.appendChild(label);
     });
   }
@@ -227,14 +261,29 @@
     container.innerHTML = '';
     container.hidden = false;
     (question.options || []).forEach(function (opt) {
+      var meaningful = isMeaningfulExplanation(opt.explanation);
+      var isSelectedWrong = selectedKey === opt.key && !opt.correct;
+      // Always show the correct answer; include wrong answers that have real explanations
+      // (and always include the option the user picked, even if generic).
+      if (!opt.correct && !meaningful && !isSelectedWrong) return;
+
       var div = document.createElement('div');
       div.className = 'qb-explanation';
       if (opt.correct) div.classList.add('is-correct');
-      else if (selectedKey === opt.key) div.classList.add('is-wrong');
+      else if (isSelectedWrong) div.classList.add('is-wrong');
+      var body = meaningful
+        ? opt.explanation
+        : (opt.explanation || 'No explanation provided.');
       div.innerHTML = '<strong>' + escapeHtml(opt.key) + (opt.correct ? ' (correct)' : '') + '</strong>' +
-        escapeHtml(opt.explanation || 'No explanation provided.');
+        escapeHtml(body);
       container.appendChild(div);
     });
+  }
+
+  function clearExplanations(container) {
+    if (!container) return;
+    container.innerHTML = '';
+    container.hidden = true;
   }
 
   /** Normalize legacy `image` string and `images` array into [{src, alt, caption}]. */
@@ -372,6 +421,8 @@
     renderStem: renderStem,
     renderOptions: renderOptions,
     renderExplanations: renderExplanations,
+    clearExplanations: clearExplanations,
+    isMeaningfulExplanation: isMeaningfulExplanation,
     renderImage: renderImage,
     renderImages: renderImages,
     normalizeImages: normalizeImages,

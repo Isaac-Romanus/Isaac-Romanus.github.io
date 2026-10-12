@@ -213,7 +213,8 @@
       '<article class="qb-summary-card"><h3>Accuracy</h3><p class="qb-summary-value">' + (attempts.length ? accuracy + '%' : '—') + '</p></article>' +
       '<article class="qb-summary-card"><h3>Still wrong</h3><p class="qb-summary-value">' + wrongIds.length + '</p>' +
         '<a class="btn btn-ghost btn-sm" href="' + (window.QBQuiz ? window.QBQuiz.assetUrl('/questionbank/quiz/?mode=review&sids=' + (cfg.subspecialties || []).map(function (s) { return s.sid; }).join(',')) : '#') + '">Review</a></article>' +
-      '<article class="qb-summary-card"><h3>Bookmarks</h3><p class="qb-summary-value">' + bookmarks.length + '</p></article>' +
+      '<article class="qb-summary-card"><h3>Flagged</h3><p class="qb-summary-value">' + bookmarks.length + '</p>' +
+        '<a class="btn btn-ghost btn-sm" href="' + (window.QBQuiz ? window.QBQuiz.assetUrl('/questionbank/quiz/?mode=flagged') : '#') + '">Review flagged</a></article>' +
       '<article class="qb-summary-card qb-summary-leitner"><h3>Leitner boxes</h3>' +
         '<div class="qb-leitner-bars">' + boxCounts.map(function (n, i) {
           return '<span title="Box ' + (i + 1) + ': ' + n + '"><em>B' + (i + 1) + '</em><strong>' + n + '</strong></span>';
@@ -363,12 +364,20 @@
         questions: questions,
         index: 0,
         answers: [],
+        revealed: [],
+        flaggedIds: {},
         params: params
       };
 
       if (params.mode === 'exam' && params.timer && window.QBExam) {
         window.QBExam.startTimer(params.timer, $('#qb-exam-timer'), finishExam);
       }
+
+      // Prefetch persistent flags so the session panel can jump to them.
+      window.QBStorage.getBookmarks(profile.id).then(function (rows) {
+        (rows || []).forEach(function (r) { session.flaggedIds[r.questionId] = true; });
+        updateFlaggedUi();
+      });
 
       bindQuizControls();
       showQuestion();
@@ -379,10 +388,11 @@
 
   function bindQuizControls() {
     var form = $('#qb-options-form');
-    var submitBtn = $('#qb-submit-btn');
     var nextBtn = $('#qb-next-btn');
+    var prevBtn = $('#qb-prev-btn');
     var finishBtn = $('#qb-finish-exam-btn');
-    var bookmarkBtn = $('#qb-bookmark-btn');
+    var flagBtn = $('#qb-flag-btn');
+    var flaggedListBtn = $('#qb-flagged-list-btn');
     var endBtn = $('#qb-end-session');
 
     if (form) {
@@ -394,6 +404,7 @@
     }
 
     if (nextBtn) nextBtn.addEventListener('click', nextQuestion);
+    if (prevBtn) prevBtn.addEventListener('click', prevQuestion);
     if (finishBtn) finishBtn.addEventListener('click', finishExam);
     if (endBtn) endBtn.addEventListener('click', function () {
       if (confirm('End this session?')) {
@@ -401,59 +412,178 @@
       }
     });
 
-    if (bookmarkBtn) {
-      bookmarkBtn.addEventListener('click', function () {
+    if (flagBtn) {
+      flagBtn.addEventListener('click', function () {
         var q = session.questions[session.index];
         window.QBStorage.toggleBookmark(profile.id, q.id).then(function (on) {
-          bookmarkBtn.textContent = on ? '★ Bookmarked' : '☆ Bookmark';
+          if (on) session.flaggedIds[q.id] = true;
+          else delete session.flaggedIds[q.id];
+          updateFlagButton(on);
+          updateFlaggedUi();
         });
       });
+    }
+
+    if (flaggedListBtn) {
+      flaggedListBtn.addEventListener('click', function () {
+        var panel = $('#qb-flagged-panel');
+        if (!panel) return;
+        var open = panel.hidden;
+        panel.hidden = !open;
+        flaggedListBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) updateFlaggedUi();
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      var panel = $('#qb-flagged-panel');
+      var tools = document.querySelector('.qb-flag-tools');
+      if (!panel || panel.hidden || !tools) return;
+      if (!tools.contains(e.target)) {
+        panel.hidden = true;
+        if (flaggedListBtn) flaggedListBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  function updateProgressUi() {
+    var total = session.questions.length;
+    var n = session.index + 1;
+    var pct = total ? Math.round((n / total) * 100) : 0;
+    var progressEl = $('#qb-quiz-progress');
+    var bar = $('#qb-progress-bar');
+    var label = $('#qb-progress-label');
+    if (progressEl) progressEl.textContent = 'Question ' + n + ' of ' + total;
+    if (bar) bar.style.width = pct + '%';
+    if (label) label.textContent = n + ' / ' + total + ' · ' + pct + '%';
+  }
+
+  function updateFlagButton(on) {
+    var flagBtn = $('#qb-flag-btn');
+    if (!flagBtn) return;
+    flagBtn.textContent = on ? '⚑ Flagged' : '⚑ Flag';
+    flagBtn.classList.toggle('is-flagged', !!on);
+    flagBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  function updateFlaggedUi() {
+    var countEl = $('#qb-flagged-count');
+    var list = $('#qb-flagged-list');
+    var empty = $('#qb-flagged-empty');
+    var reviewLink = $('#qb-review-flagged-link');
+    if (!session) return;
+
+    var flaggedInSession = [];
+    session.questions.forEach(function (q, i) {
+      if (session.flaggedIds[q.id]) flaggedInSession.push({ q: q, index: i });
+    });
+
+    if (countEl) countEl.textContent = String(flaggedInSession.length);
+    if (reviewLink) {
+      var sids = (session.params && session.params.sids) || [];
+      var href = window.QBQuiz.assetUrl('/questionbank/quiz/') + '?mode=flagged';
+      if (sids.length) href += '&sids=' + encodeURIComponent(sids.join(','));
+      reviewLink.href = href;
+    }
+    if (!list) return;
+    list.innerHTML = '';
+    flaggedInSession.forEach(function (row) {
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      if (row.index === session.index) btn.classList.add('is-current');
+      var stem = (row.q.stem || '').slice(0, 72);
+      btn.innerHTML = '<span>Q' + (row.index + 1) + ': ' + esc(stem) + (row.q.stem && row.q.stem.length > 72 ? '…' : '') + '</span>' +
+        '<span class="qb-flag-meta">' + esc(row.q.po_chapter || 'Flagged') + '</span>';
+      btn.addEventListener('click', function () {
+        hideAnswerReveal();
+        session.index = row.index;
+        showQuestion();
+        var panel = $('#qb-flagged-panel');
+        if (panel) panel.hidden = true;
+        var flaggedListBtn = $('#qb-flagged-list-btn');
+        if (flaggedListBtn) flaggedListBtn.setAttribute('aria-expanded', 'false');
+      });
+      li.appendChild(btn);
+      list.appendChild(li);
+    });
+    if (empty) empty.hidden = flaggedInSession.length > 0;
+  }
+
+  function hideAnswerReveal() {
+    var expl = $('#qb-explanations');
+    if (window.QBQuiz.clearExplanations) window.QBQuiz.clearExplanations(expl);
+    else if (expl) {
+      expl.innerHTML = '';
+      expl.hidden = true;
     }
   }
 
   function showQuestion() {
     var q = session.questions[session.index];
     var total = session.questions.length;
-    var progressEl = $('#qb-quiz-progress');
     var form = $('#qb-options-form');
-    var expl = $('#qb-explanations');
     var submitBtn = $('#qb-submit-btn');
     var nextBtn = $('#qb-next-btn');
+    var prevBtn = $('#qb-prev-btn');
     var finishBtn = $('#qb-finish-exam-btn');
-    var bookmarkBtn = $('#qb-bookmark-btn');
+    var flagBtn = $('#qb-flag-btn');
+    var examMode = session.mode === 'exam';
+    var alreadyRevealed = !examMode && !!session.revealed[session.index];
+    var selected = session.answers[session.index] || null;
 
-    if (progressEl) {
-      progressEl.textContent = 'Question ' + (session.index + 1) + ' of ' + total;
-    }
+    updateProgressUi();
+    hideAnswerReveal();
 
     window.QBQuiz.renderStem($('#qb-question-stem'), q.stem);
     window.QBQuiz.renderImages($('#qb-question-images'), q);
     window.QBQuiz.renderAttribution($('#qb-attribution'), q);
     window.QBQuiz.renderRelated($('#qb-related-disease'), q);
 
-    var examMode = session.mode === 'exam';
     window.QBQuiz.renderOptions(form, q, {
-      disabled: false,
-      reveal: false,
-      selected: session.answers[session.index] || null,
+      disabled: alreadyRevealed,
+      reveal: alreadyRevealed,
+      selected: selected,
       examMode: examMode
     });
 
-    if (expl) expl.hidden = true;
-    if (submitBtn) submitBtn.hidden = false;
-    if (nextBtn) nextBtn.hidden = true;
+    if (alreadyRevealed) {
+      window.QBQuiz.renderExplanations($('#qb-explanations'), q, selected);
+      if (submitBtn) submitBtn.hidden = true;
+      if (nextBtn) {
+        nextBtn.hidden = false;
+        nextBtn.textContent = session.index >= total - 1 ? 'Finish →' : 'Next question →';
+      }
+    } else {
+      if (submitBtn) submitBtn.hidden = false;
+      if (nextBtn) nextBtn.hidden = true;
+    }
+
+    if (prevBtn) {
+      prevBtn.disabled = session.index <= 0;
+      prevBtn.hidden = false;
+    }
+
     if (finishBtn) {
       finishBtn.hidden = !examMode;
       finishBtn.textContent = session.index >= total - 1 ? 'Finish exam' : 'Finish early';
     }
 
-    if (bookmarkBtn && !examMode) {
-      window.QBStorage.isBookmarked(profile.id, q.id).then(function (on) {
-        bookmarkBtn.textContent = on ? '★ Bookmarked' : '☆ Bookmark';
-      });
-    } else if (bookmarkBtn) {
-      bookmarkBtn.hidden = examMode;
+    if (flagBtn) {
+      flagBtn.hidden = !!examMode;
+      if (!examMode) {
+        var on = !!session.flaggedIds[q.id];
+        updateFlagButton(on);
+        window.QBStorage.isBookmarked(profile.id, q.id).then(function (bookmarked) {
+          session.flaggedIds[q.id] = bookmarked;
+          if (!bookmarked) delete session.flaggedIds[q.id];
+          updateFlagButton(bookmarked);
+          updateFlaggedUi();
+        });
+      }
     }
+
+    updateFlaggedUi();
   }
 
   function getSelectedKey() {
@@ -487,6 +617,9 @@
       });
     }
 
+    session.answers[session.index] = selected;
+    session.revealed[session.index] = true;
+
     window.QBQuiz.renderOptions($('#qb-options-form'), q, {
       disabled: true,
       reveal: true,
@@ -496,7 +629,11 @@
     window.QBQuiz.renderExplanations($('#qb-explanations'), q, selected);
 
     $('#qb-submit-btn').hidden = true;
-    $('#qb-next-btn').hidden = false;
+    var nextBtn = $('#qb-next-btn');
+    if (nextBtn) {
+      nextBtn.hidden = false;
+      nextBtn.textContent = session.index >= session.questions.length - 1 ? 'Finish →' : 'Next question →';
+    }
   }
 
   function submitExamAnswer() {
@@ -509,17 +646,26 @@
 
     if (session.index >= session.questions.length - 1) finishExam();
     else {
+      hideAnswerReveal();
       session.index += 1;
       showQuestion();
     }
   }
 
   function nextQuestion() {
+    hideAnswerReveal();
     if (session.index >= session.questions.length - 1) {
       window.location.href = window.QBQuiz.assetUrl('/questionbank/');
       return;
     }
     session.index += 1;
+    showQuestion();
+  }
+
+  function prevQuestion() {
+    if (!session || session.index <= 0) return;
+    hideAnswerReveal();
+    session.index -= 1;
     showQuestion();
   }
 

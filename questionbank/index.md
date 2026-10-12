@@ -14,6 +14,7 @@ qb_page: index
       <a class="btn btn-primary" href="{{ '/questionbank/dashboard/' | relative_url }}">Dashboard</a>
       <a class="btn btn-secondary" href="{{ '/questionbank/mixed/' | relative_url }}">Mixed quiz</a>
       <a class="btn btn-secondary" href="{{ '/questionbank/exam/' | relative_url }}">Exam mode</a>
+      <a class="btn btn-secondary" href="{{ '/questionbank/quiz/' | relative_url }}?mode=flagged">Flagged</a>
       <a class="btn btn-secondary" href="{{ '/questionbank/add/' | relative_url }}">Add question</a>
     </div>
   </div>
