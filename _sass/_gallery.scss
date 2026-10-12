@@ -1,4 +1,4 @@
-.gallery-block { margin: 28px 0 32px; scroll-margin-top: 92px; }
+.gallery-block { margin: 28px 0 32px; scroll-margin-top: var(--header-offset); }
 .gallery-title { font-family: var(--font-serif); font-weight: 600; font-size: var(--text-section); margin: 0 0 14px; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
 .gallery-single { grid-template-columns: minmax(0, 520px); }
@@ -13,4 +13,4 @@
 .fig-stain { font-weight: 600; color: var(--ink-soft); }
 .fig-meta .dot { margin: 0 6px; }
 
-#histology { scroll-margin-top: 92px; }
+#histology { scroll-margin-top: var(--header-offset); }

@@ -8,6 +8,10 @@
     document.documentElement.classList.toggle('nav-open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) {
+      var first = panel.querySelector('a, button');
+      if (first) setTimeout(function () { first.focus(); }, 0);
+    }
   }
 
   btn.addEventListener('click', function () {
@@ -15,7 +19,12 @@
   });
 
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') setOpen(false);
+    if (e.key !== 'Escape') return;
+    if (document.querySelector('.lightbox.open')) return;
+    if (document.documentElement.classList.contains('nav-open')) {
+      setOpen(false);
+      btn.focus();
+    }
   });
 
   document.addEventListener('click', function (e) {

@@ -6,7 +6,7 @@ layout: default
 
 <section class="field-header" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
   <div class="wrap">
-    <nav class="crumbs"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>{{ fld.name | default: page.title }}</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>{{ fld.name | default: page.title }}</span></nav>
     <h1>{% if fld.icon %}<span class="crumb-icon">{{ fld.icon }}</span>{% endif %}{{ fld.name | default: page.title }}</h1>
     {% if fld.description %}<p class="field-desc">{{ fld.description }}</p>{% endif %}
     <p class="muted">{{ items | size }} entr{% if items.size == 1 %}y{% else %}ies{% endif %}</p>
@@ -29,7 +29,7 @@ layout: default
     {% assign field_tags = field_tags | uniq | sort %}
 
     {% if field_tags.size > 0 %}
-      <div class="tag-filters" data-filter-root aria-label="Filter by tag">
+      <div class="tag-filters" data-filter-root role="group" aria-label="Filter by tag">
         <button type="button" class="tag-filter is-active" data-filter="all">All</button>
         {% for t_key in field_tags %}
           {% assign label = t_key %}

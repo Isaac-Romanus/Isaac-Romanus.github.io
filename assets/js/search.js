@@ -202,6 +202,8 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== '/') return;
+    if (document.querySelector('.lightbox.open')) return;
+    if (document.documentElement.classList.contains('nav-open')) return;
     var tag = (document.activeElement && document.activeElement.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || (document.activeElement && document.activeElement.isContentEditable)) return;
     e.preventDefault();
