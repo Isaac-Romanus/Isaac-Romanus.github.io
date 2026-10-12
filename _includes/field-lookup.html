@@ -1,0 +1,6 @@
+{% comment %}
+  Resolve a field record from `_data/fields.yml`.
+  Usage: {% include field-lookup.html slug=page.field %}
+  Sets `fld` in the caller scope (Jekyll assign leakage).
+{% endcomment %}
+{% assign fld = site.data.fields | where: "slug", include.slug | first %}

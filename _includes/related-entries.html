@@ -1,0 +1,62 @@
+{% comment %}
+  Related entries: same field, preferring shared tags. Excludes current page.
+  Compatible with Jekyll 3 / Liquid 4.
+{% endcomment %}
+{% assign current = include.disease %}
+{% assign pool = site.diseases | where: "field", current.field | sort: "title" %}
+{% assign related_count = 0 %}
+{% assign related_urls = "|" %}
+
+{% comment %}Count how many same-field peers exist (excluding self){% endcomment %}
+{% assign peer_total = 0 %}
+{% for d in pool %}
+  {% unless d.url == current.url %}
+    {% assign peer_total = peer_total | plus: 1 %}
+  {% endunless %}
+{% endfor %}
+
+{% if peer_total > 0 %}
+<section class="related-block" aria-label="Related entries">
+  <h2 class="related-title">Related in {{ include.field_name | default: "this field" }}</h2>
+  <div class="disease-list related-list">
+    {% comment %}Pass 1: shared tags{% endcomment %}
+    {% for d in pool %}
+      {% unless d.url == current.url %}
+        {% if related_count < 4 %}
+          {% assign shared = 0 %}
+          {% if current.tags and d.tags %}
+            {% for t in d.tags %}
+              {% assign t_norm = t | strip | downcase %}
+              {% for ct in current.tags %}
+                {% assign ct_norm = ct | strip | downcase %}
+                {% if t_norm == ct_norm %}
+                  {% assign shared = shared | plus: 1 %}
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+          {% if shared > 0 %}
+            {% include disease-card.html disease=d %}
+            {% assign related_count = related_count | plus: 1 %}
+            {% assign related_urls = related_urls | append: d.url | append: "|" %}
+          {% endif %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+
+    {% comment %}Pass 2: fill remaining slots{% endcomment %}
+    {% for d in pool %}
+      {% unless d.url == current.url %}
+        {% assign needle = d.url | prepend: "|" | append: "|" %}
+        {% unless related_urls contains needle %}
+          {% if related_count < 4 %}
+            {% include disease-card.html disease=d %}
+            {% assign related_count = related_count | plus: 1 %}
+            {% assign related_urls = related_urls | append: d.url | append: "|" %}
+          {% endif %}
+        {% endunless %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

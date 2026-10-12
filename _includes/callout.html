@@ -1,0 +1,14 @@
+{% assign kind = include.kind | default: "pearl" | downcase %}
+{% assign title = include.title %}
+{% unless title %}
+  {% case kind %}
+    {% when "pitfall" %}{% assign title = "Pitfall" %}
+    {% when "grading" %}{% assign title = "Grading" %}
+    {% when "note" %}{% assign title = "Note" %}
+    {% else %}{% assign title = "Pearl" %}
+  {% endcase %}
+{% endunless %}
+<aside class="callout callout-{{ kind }}" role="note">
+  <p class="callout-title">{{ title }}</p>
+  <div class="callout-body">{{ include.text | markdownify }}</div>
+</aside>

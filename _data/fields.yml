@@ -1,0 +1,86 @@
+# Pathology subspecialty taxonomy.
+# Each disease's front matter `field:` must match one of these `slug` values.
+# `accent` is a pastel color used for that field's cards and page header.
+- slug: gastrointestinal
+  name: Gastrointestinal
+  short: GI
+  description: Esophagus, stomach, small bowel, colon, appendix, anus and peritoneum.
+  accent: "#A8E6CF"
+  icon: "🫁"
+
+- slug: liver-pancreas
+  name: Liver, Pancreas & Biliary
+  short: Hepatobiliary
+  description: Hepatocellular, biliary tract and pancreatic pathology.
+  accent: "#FFE0AC"
+  icon: "🩸"
+
+- slug: dermatopathology
+  name: Dermatopathology
+  short: Derm
+  description: Inflammatory dermatoses, melanocytic lesions and cutaneous tumors.
+  accent: "#FFD3B6"
+  icon: "🧫"
+
+- slug: hematopathology
+  name: Hematopathology
+  short: Heme
+  description: Lymph node, bone marrow, leukemias and lymphomas.
+  accent: "#D6CDEA"
+  icon: "🔬"
+
+- slug: genitourinary
+  name: Genitourinary
+  short: GU
+  description: Kidney, bladder, prostate, testis and penis.
+  accent: "#A0D2EB"
+  icon: "🫘"
+
+- slug: gynecologic
+  name: Gynecologic
+  short: Gyn
+  description: Cervix, uterus, endometrium, ovary, fallopian tube and vulva.
+  accent: "#FBC2D4"
+  icon: "🌸"
+
+- slug: breast
+  name: Breast
+  short: Breast
+  description: Benign, proliferative and malignant breast pathology.
+  accent: "#FFAAA5"
+  icon: "🎀"
+
+- slug: head-neck
+  name: Head & Neck
+  short: H&N
+  description: Salivary gland, oral cavity, larynx, thyroid and parathyroid.
+  accent: "#FFF1B6"
+  icon: "🦷"
+
+- slug: pulmonary
+  name: Pulmonary & Mediastinum
+  short: Pulm
+  description: Lung, pleura, mediastinum and thymus.
+  accent: "#B5EAD7"
+  icon: "🌬️"
+
+- slug: soft-tissue-bone
+  name: Soft Tissue & Bone
+  short: STB
+  description: Mesenchymal tumors, sarcomas and bone lesions.
+  accent: "#C7CEEA"
+  icon: "🦴"
+
+- slug: neuropathology
+  name: Neuropathology
+  short: Neuro
+  description: CNS tumors, degenerative and demyelinating disease.
+  accent: "#E2C2FF"
+  icon: "🧠"
+
+- slug: cytopathology
+  name: Cytopathology
+  short: Cyto
+  description: FNA and exfoliative cytology across organ systems.
+  accent: "#BDE4F0"
+  icon: "💧"

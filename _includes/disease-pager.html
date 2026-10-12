@@ -1,0 +1,40 @@
+{% comment %}
+  Previous / next navigation within the same field (alphabetical by title).
+  Compatible with Jekyll 3 / Liquid 4 (no continue/break).
+{% endcomment %}
+{% assign current = include.disease %}
+{% assign siblings = site.diseases | where: "field", current.field | sort: "title" %}
+{% assign prev_d = nil %}
+{% assign next_d = nil %}
+{% assign saw_current = false %}
+
+{% for d in siblings %}
+  {% if d.url == current.url %}
+    {% assign saw_current = true %}
+  {% elsif saw_current == false %}
+    {% assign prev_d = d %}
+  {% elsif next_d == nil %}
+    {% assign next_d = d %}
+  {% endif %}
+{% endfor %}
+
+{% if prev_d or next_d %}
+<nav class="disease-pager" aria-label="Nearby entries in this field">
+  {% if prev_d %}
+    <a class="pager-link pager-prev" href="{{ prev_d.url | relative_url }}">
+      <span class="pager-label">Previous</span>
+      <span class="pager-title">{{ prev_d.title }}</span>
+    </a>
+  {% else %}
+    <span class="pager-link pager-prev is-empty" aria-hidden="true"></span>
+  {% endif %}
+  {% if next_d %}
+    <a class="pager-link pager-next" href="{{ next_d.url | relative_url }}">
+      <span class="pager-label">Next</span>
+      <span class="pager-title">{{ next_d.title }}</span>
+    </a>
+  {% else %}
+    <span class="pager-link pager-next is-empty" aria-hidden="true"></span>
+  {% endif %}
+</nav>
+{% endif %}

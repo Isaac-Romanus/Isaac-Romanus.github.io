@@ -1,0 +1,24 @@
+@media print {
+  .site-header, .disease-toc, .toc-mobile, .hero-actions, .lock-btn, .nav-toggle, .lb-hint, .lightbox {
+    display: none !important;
+  }
+  .pn-auth:not(.pn-unlocked) #app { display: block !important; }
+  #login-overlay { display: none !important; }
+  body { background: #fff; }
+  .disease-layout { grid-template-columns: 1fr; }
+  a { color: var(--ink); text-decoration: none; }
+
+  .figure { break-inside: avoid; page-break-inside: avoid; }
+  .figure-zoom {
+    display: block !important;
+    cursor: default;
+    background: none;
+  }
+  .figure-zoom img {
+    height: auto !important;
+    max-height: 420px;
+    object-fit: contain;
+    transform: none !important;
+  }
+  .disease-pager, .related-block, .tag-filters, .search { display: none !important; }
+}

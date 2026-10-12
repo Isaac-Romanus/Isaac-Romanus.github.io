@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Placeholder high-power histology of basal cell carcinoma">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4eaf6"/>
+      <stop offset="1" stop-color="#eae3fb"/>
+    </linearGradient>
+    <pattern id="cells" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
+      <ellipse cx="20" cy="20" rx="11" ry="7" fill="#5f3f92" opacity="0.62"/>
+      <ellipse cx="44" cy="42" rx="10" ry="6" fill="#8155a6" opacity="0.55"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect width="800" height="600" fill="url(#cells)"/>
+  <rect x="0" y="516" width="800" height="84" fill="#1e142dbf"/>
+  <text x="28" y="552" font-family="Inter, sans-serif" font-size="26" fill="#ffffff" font-weight="700">Basal cell carcinoma</text>
+  <text x="28" y="582" font-family="Inter, sans-serif" font-size="18" fill="#e9e2f5">H&amp;E &#183; 200&#215; &#183; placeholder image</text>
+</svg>

@@ -1,0 +1,14 @@
+{% assign raw = include.tag | strip | downcase %}
+{% assign tag_rec = nil %}
+{% for t in site.data.tags %}
+  {% assign t_slug = t.slug | downcase %}
+  {% assign t_name = t.name | downcase %}
+  {% if raw == t_slug or raw == t_name %}
+    {% assign tag_rec = t %}
+  {% endif %}
+{% endfor %}
+{% if tag_rec %}
+  <a class="badge badge-tag" href="{{ '/tags/' | relative_url }}#{{ tag_rec.slug }}">{{ tag_rec.name }}</a>
+{% else %}
+  <span class="badge badge-tag">{{ include.tag }}</span>
+{% endif %}

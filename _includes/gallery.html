@@ -1,0 +1,11 @@
+{% assign images = include.images %}
+{% if images and images.size > 0 %}
+<section class="gallery-block">
+  <h2 class="gallery-title">Histology{% if images.size > 1 %} <span class="muted small">({{ images.size }} images)</span>{% endif %}</h2>
+  <div class="gallery{% if images.size == 1 %} gallery-single{% endif %}">
+    {% for image in images %}
+      {% include figure.html image=image %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
