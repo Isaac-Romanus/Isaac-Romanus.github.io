@@ -1,6 +1,7 @@
 ---
 title: Tubular adenoma
 field: gastrointestinal
+updated: 2026-08-05
 synonyms:
   - Conventional colorectal adenoma
 tags:

@@ -1,6 +1,7 @@
 ---
 title: Follicular lymphoma
 field: hematopathology
+updated: 2026-08-04
 synonyms:
   - FL
 tags:

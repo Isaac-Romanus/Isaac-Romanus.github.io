@@ -5,7 +5,7 @@ permalink: /about/
 ---
 <section class="field-header" style="--accent: #A0D2EB">
   <div class="wrap">
-    <nav class="crumbs"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>About</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>About</span></nav>
     <h1>About this notebook</h1>
     <p class="field-desc">What this is, how it is organized, and how to add to it.</p>
   </div>

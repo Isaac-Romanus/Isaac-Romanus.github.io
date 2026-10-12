@@ -7,13 +7,25 @@
   if (!toc || !main) return;
 
   var sections = [];
+  var usedIds = {};
+
+  function slugify(label, i) {
+    var base = (label || 'section')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'section-' + i;
+    var id = base;
+    var n = 2;
+    while (usedIds[id] || document.getElementById(id)) {
+      id = base + '-' + n;
+      n += 1;
+    }
+    usedIds[id] = true;
+    return id;
+  }
 
   function addNode(el, label) {
     if (!el) return;
-    if (!el.id) {
-      el.id = (label || 'section')
-        .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'section';
-    }
+    if (!el.id) el.id = slugify(label, sections.length);
+    else usedIds[el.id] = true;
     sections.push({ el: el, label: label || el.getAttribute('data-toc-label') || el.textContent });
   }
 
@@ -21,8 +33,6 @@
   if (qf) addNode(qf, qf.getAttribute('data-toc-label') || 'Quick facts');
 
   var hist = main.querySelector('#histology');
-  // Prefer histology after body in TOC order when gallery is after prose:
-  // we'll insert body h2s first if histology comes after .disease-body in DOM.
   var histBeforeBody = hist && body &&
     (hist.compareDocumentPosition(body) & Node.DOCUMENT_POSITION_FOLLOWING);
 
@@ -42,7 +52,6 @@
     return;
   }
 
-  // Mobile in-page TOC (shown when sidebar is hidden)
   var mobile = document.createElement('details');
   mobile.className = 'toc-mobile';
   mobile.innerHTML = '<summary>On this page</summary><nav class="toc-mobile-nav"></nav>';
@@ -56,10 +65,13 @@
     a.href = '#' + sec.el.id;
     a.textContent = sec.label;
     toc.appendChild(a);
-    links.push({ a: a, el: sec.el });
 
-    var a2 = a.cloneNode(true);
+    var a2 = document.createElement('a');
+    a2.href = '#' + sec.el.id;
+    a2.textContent = sec.label;
     mobileNav.appendChild(a2);
+
+    links.push({ a: a, a2: a2, el: sec.el });
   });
 
   if ('IntersectionObserver' in window) {
@@ -67,7 +79,9 @@
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         links.forEach(function (item) {
-          item.a.classList.toggle('active', item.el === en.target);
+          var on = item.el === en.target;
+          item.a.classList.toggle('active', on);
+          item.a2.classList.toggle('active', on);
         });
       });
     }, { rootMargin: '-80px 0px -70% 0px' });

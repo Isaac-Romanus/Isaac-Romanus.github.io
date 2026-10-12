@@ -18,8 +18,10 @@ quick_facts:
     value: "—"
   - label: Key IHC
     value: "—"
-# Gallery placement: omit or "after" (default, after body) · "before" (above body)
-# gallery_position: before
+# Gallery placement: omit or "before" (default, above body) · "after" (below body)
+# gallery_position: after
+# Optional ISO date for Home "Recent entries" sorting
+# updated: 2026-08-06
 # Histology images. Store files under assets/images/<field>/<entry-slug>/
 # Prefer stain names from _data/stains.yml
 images:

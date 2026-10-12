@@ -1,6 +1,7 @@
 {% assign image = include.image %}
+{% capture zoom_label %}Open image in viewer{% if image.caption %}: {{ image.caption }}{% endif %}{% endcapture %}
 <figure class="figure">
-  <button type="button" class="figure-zoom" data-full="{{ image.src | relative_url }}" aria-label="Open image in viewer">
+  <button type="button" class="figure-zoom" data-full="{{ image.src | relative_url }}" aria-label="{{ zoom_label | strip }}">
     <img src="{{ image.src | relative_url }}" alt="{{ image.alt | default: image.caption | default: 'Histology image' }}" loading="lazy">
   </button>
   {% if image.caption or image.stain or image.magnification %}

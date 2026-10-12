@@ -5,13 +5,14 @@ permalink: /tags/
 ---
 <section class="field-header" style="--accent: #cabdf0">
   <div class="wrap">
-    <nav class="crumbs"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>Tags</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ '/' | relative_url }}">Home</a> <span>/</span> <span>Tags</span></nav>
     <h1>Tags</h1>
     <p class="field-desc">Browse entries by controlled vocabulary tags. Tag badges on disease pages link here.</p>
   </div>
 </section>
 
 <section class="section wrap">
+  {% assign used_tags = "" | split: "" %}
   {% for tag in site.data.tags %}
     {% assign tag_slug = tag.slug | downcase %}
     {% assign tag_name = tag.name | downcase %}
@@ -29,22 +30,25 @@ permalink: /tags/
       {% endif %}
     {% endfor %}
 
-    <section class="tag-group" id="{{ tag.slug }}">
-      <div class="tag-group-head">
-        <h2>{{ tag.name }}</h2>
-        {% if tag.description %}<p class="muted">{{ tag.description }}</p>{% endif %}
-        <p class="muted small">{{ matches | size }} entr{% if matches.size == 1 %}y{% else %}ies{% endif %}</p>
-      </div>
-      {% if matches.size == 0 %}
-        <p class="empty-state">No entries with this tag yet.</p>
-      {% else %}
+    {% if matches.size > 0 %}
+      {% assign used_tags = used_tags | push: tag %}
+      <section class="tag-group" id="{{ tag.slug }}">
+        <div class="tag-group-head">
+          <h2>{{ tag.name }}</h2>
+          {% if tag.description %}<p class="muted">{{ tag.description }}</p>{% endif %}
+          <p class="muted small">{{ matches | size }} entr{% if matches.size == 1 %}y{% else %}ies{% endif %}</p>
+        </div>
         {% assign sorted = matches | sort: "title" %}
         <div class="disease-list">
           {% for disease in sorted %}
             {% include disease-card.html disease=disease %}
           {% endfor %}
         </div>
-      {% endif %}
-    </section>
+      </section>
+    {% endif %}
   {% endfor %}
+
+  {% if used_tags.size == 0 %}
+    <p class="empty-state">No tagged entries yet.</p>
+  {% endif %}
 </section>
