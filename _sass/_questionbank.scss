@@ -90,25 +90,41 @@
 .qb-exam-timer.is-low { background: #f8d7da; color: #721c24; animation: qb-pulse 1s infinite; }
 @keyframes qb-pulse { 50% { opacity: .7; } }
 
+.qb-progress-block { margin: 0 0 18px; }
+.qb-progress-top {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 0 0 8px; flex-wrap: wrap;
+}
+.qb-progress-label {
+  margin: 0; font-weight: 650; font-variant-numeric: tabular-nums; font-size: .98rem;
+}
+.qb-progress-sub { margin: 0; font-variant-numeric: tabular-nums; }
 .qb-progress {
-  width: 100%; height: 8px; border-radius: 999px;
+  position: relative;
+  width: 100%; height: 10px; border-radius: 999px;
   background: var(--surface-2, #eceff3); border: 1px solid var(--line);
-  overflow: hidden; margin: 0 0 6px;
+  overflow: hidden;
 }
 .qb-progress-bar {
   height: 100%; width: 0;
   background: linear-gradient(90deg, var(--brand, #3a5a78), #5b8fb8);
-  transition: width .25s ease;
+  transition: width .28s ease;
 }
-.qb-progress-label { margin: 0 0 16px; font-variant-numeric: tabular-nums; }
+.qb-progress.is-complete .qb-progress-bar {
+  background: linear-gradient(90deg, #2e7d4f, #4caf75);
+}
 
 .qb-flag-tools { position: relative; display: flex; align-items: center; gap: 6px; }
 .qb-flag-tools #qb-flag-btn.is-flagged {
   color: #b35c00; border-color: #e0a96d; background: #fff7eb;
 }
+.qb-flag-tools #qb-flag-btn:disabled { opacity: .55; cursor: wait; }
+.qb-flagged-count {
+  display: inline-block; min-width: 1.25em; font-variant-numeric: tabular-nums;
+}
 .qb-flagged-panel {
   position: absolute; right: 0; top: calc(100% + 6px); z-index: 20;
-  width: min(340px, 85vw); max-height: 320px; overflow: auto;
+  width: min(360px, 90vw); max-height: 360px; overflow: auto;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm); padding: 12px;
 }
@@ -122,6 +138,7 @@
 .qb-flagged-list button:hover { border-color: var(--brand); }
 .qb-flagged-list button.is-current { border-color: var(--brand); background: #eef4f8; }
 .qb-flagged-list .qb-flag-meta { display: block; font-size: .78rem; color: var(--muted, #667); margin-top: 2px; }
+.qb-flagged-panel #qb-review-flagged-link { display: inline-flex; margin-top: 4px; }
 
 .qb-question-card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
@@ -158,30 +175,35 @@
 }
 .qb-add-preview-tools input[type="text"] { flex: 1 1 160px; }
 
-.qb-options { display: grid; gap: 10px; margin-bottom: 20px; }
+.qb-options { display: grid; gap: 12px; margin-bottom: 20px; }
 .qb-option {
-  display: grid;
-  grid-template-columns: auto 1fr 2ch;
-  column-gap: 14px;
-  align-items: start;
-  padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 12px 16px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm);
   cursor: pointer; transition: border-color .15s ease, background .15s ease;
 }
 .qb-option:hover { border-color: var(--brand); }
-.qb-option input { margin-top: 4px; accent-color: var(--brand); }
+.qb-option-key {
+  display: block;
+  font-weight: 700;
+  text-align: left;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--ink, #1a1a1a);
+}
+.qb-option-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: start;
+}
+.qb-option input { margin-top: 3px; accent-color: var(--brand); }
 .qb-option.is-correct { border-color: #2e7d4f; background: #eef8f1; }
 .qb-option.is-wrong { border-color: #c0392b; background: #fdf0ef; }
 .qb-option.is-reveal-correct { border-color: #2e7d4f; }
 .qb-option-text { line-height: 1.45; min-width: 0; }
-.qb-option-key {
-  font-weight: 700;
-  width: 2ch;
-  text-align: right;
-  justify-self: end;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.45;
-  color: var(--ink, #1a1a1a);
-}
 
 .qb-quiz-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; align-items: center; }
 .qb-quiz-actions #qb-prev-btn:disabled { opacity: .45; cursor: not-allowed; }

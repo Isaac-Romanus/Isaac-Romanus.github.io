@@ -15,17 +15,19 @@ qb_page: quiz
     <header class="qb-quiz-header">
       <div class="qb-quiz-meta">
         <span id="qb-quiz-mode-label" class="badge badge-field"></span>
-        <span id="qb-quiz-progress" class="muted"></span>
       </div>
       <div class="qb-quiz-tools">
         <span id="qb-exam-timer" class="qb-exam-timer" hidden></span>
         <div class="qb-flag-tools">
-          <button type="button" id="qb-flag-btn" class="btn btn-ghost btn-sm" title="Flag for later">⚑ Flag</button>
-          <button type="button" id="qb-flagged-list-btn" class="btn btn-secondary btn-sm" aria-expanded="false" aria-controls="qb-flagged-panel">Flagged <span id="qb-flagged-count">0</span></button>
-          <div id="qb-flagged-panel" class="qb-flagged-panel" hidden>
-            <p class="qb-flagged-heading">Flagged in this session</p>
+          <button type="button" id="qb-flag-btn" class="btn btn-ghost btn-sm" title="Flag this question for later review" aria-pressed="false">⚑ Flag</button>
+          <button type="button" id="qb-flagged-list-btn" class="btn btn-secondary btn-sm" aria-expanded="false" aria-controls="qb-flagged-panel">
+            Flagged <span id="qb-flagged-count" class="qb-flagged-count">0</span>
+          </button>
+          <div id="qb-flagged-panel" class="qb-flagged-panel" hidden role="dialog" aria-label="Flagged questions">
+            <p class="qb-flagged-heading">In this quiz</p>
             <ul id="qb-flagged-list" class="qb-flagged-list"></ul>
-            <p id="qb-flagged-empty" class="muted small">No flagged questions yet.</p>
+            <p id="qb-flagged-empty" class="muted small">No flagged questions in this quiz yet. Tap Flag on any question to save it.</p>
+            <p id="qb-flagged-extra" class="muted small" hidden></p>
             <a id="qb-review-flagged-link" class="btn btn-primary btn-sm" href="{{ '/questionbank/quiz/' | relative_url }}?mode=flagged">Review all flagged</a>
           </div>
         </div>
@@ -33,10 +35,23 @@ qb_page: quiz
       </div>
     </header>
 
-    <div class="qb-progress" aria-hidden="true">
-      <div id="qb-progress-bar" class="qb-progress-bar" style="width: 0%"></div>
+    <div class="qb-progress-block">
+      <div class="qb-progress-top">
+        <p id="qb-progress-label" class="qb-progress-label">Question 0 of 0</p>
+        <p id="qb-progress-sub" class="qb-progress-sub muted small">0 answered</p>
+      </div>
+      <div
+        class="qb-progress"
+        role="progressbar"
+        id="qb-progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        aria-labelledby="qb-progress-label"
+      >
+        <div id="qb-progress-bar" class="qb-progress-bar"></div>
+      </div>
     </div>
-    <p id="qb-progress-label" class="qb-progress-label muted small" aria-live="polite"></p>
 
     <article class="qb-question-card">
       <div id="qb-question-stem" class="qb-stem"></div>

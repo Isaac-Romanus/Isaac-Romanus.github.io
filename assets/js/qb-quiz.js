@@ -233,26 +233,30 @@
         if (selected === opt.key && opt.correct) label.classList.add('is-correct');
       }
 
+      // Letter on its own row (left), independent of option text length.
+      var key = document.createElement('span');
+      key.className = 'qb-option-key';
+      key.textContent = opt.key + '.';
+
+      var body = document.createElement('span');
+      body.className = 'qb-option-body';
+
       var input = document.createElement('input');
       input.type = 'radio';
       input.name = 'qb-answer';
       input.value = opt.key;
       input.disabled = disabled;
       if (selected === opt.key) input.checked = true;
+      input.setAttribute('aria-label', 'Option ' + opt.key);
 
       var text = document.createElement('span');
       text.className = 'qb-option-text';
       text.textContent = opt.text;
 
-      // Letter keys sit on the far right and share a fixed column for alignment.
-      var key = document.createElement('span');
-      key.className = 'qb-option-key';
-      key.textContent = opt.key + '.';
-      key.setAttribute('aria-hidden', 'true');
-
-      label.appendChild(input);
-      label.appendChild(text);
+      body.appendChild(input);
+      body.appendChild(text);
       label.appendChild(key);
+      label.appendChild(body);
       form.appendChild(label);
     });
   }
