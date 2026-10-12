@@ -366,6 +366,9 @@
         answers: [],
         revealed: [],
         flaggedIds: {},
+        totalFlagged: 0,
+        flagBusy: false,
+        flagSyncGen: 0,
         params: params
       };
 
@@ -373,10 +376,9 @@
         window.QBExam.startTimer(params.timer, $('#qb-exam-timer'), finishExam);
       }
 
-      // Prefetch persistent flags so the session panel can jump to them.
-      window.QBStorage.getBookmarks(profile.id).then(function (rows) {
-        (rows || []).forEach(function (r) { session.flaggedIds[r.questionId] = true; });
+      refreshFlagState().then(function () {
         updateFlaggedUi();
+        syncFlagButtonForCurrent();
       });
 
       bindQuizControls();
@@ -414,48 +416,109 @@
 
     if (flagBtn) {
       flagBtn.addEventListener('click', function () {
+        if (!session || session.flagBusy || session.mode === 'exam') return;
         var q = session.questions[session.index];
+        if (!q) return;
+        session.flagBusy = true;
+        flagBtn.disabled = true;
+        var gen = ++session.flagSyncGen;
         window.QBStorage.toggleBookmark(profile.id, q.id).then(function (on) {
+          if (gen !== session.flagSyncGen) return;
           if (on) session.flaggedIds[q.id] = true;
           else delete session.flaggedIds[q.id];
-          updateFlagButton(on);
-          updateFlaggedUi();
+          return refreshFlagState().then(function () {
+            if (gen !== session.flagSyncGen) return;
+            updateFlagButton(!!session.flaggedIds[q.id]);
+            updateFlaggedUi();
+          });
+        }).catch(function () {
+          // Keep prior UI; re-sync from storage.
+          return refreshFlagState().then(function () {
+            syncFlagButtonForCurrent();
+            updateFlaggedUi();
+          });
+        }).then(function () {
+          session.flagBusy = false;
+          flagBtn.disabled = false;
         });
       });
     }
 
     if (flaggedListBtn) {
-      flaggedListBtn.addEventListener('click', function () {
+      flaggedListBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
         var panel = $('#qb-flagged-panel');
         if (!panel) return;
         var open = panel.hidden;
         panel.hidden = !open;
         flaggedListBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if (open) updateFlaggedUi();
+        if (open) {
+          refreshFlagState().then(updateFlaggedUi);
+        }
       });
     }
 
-    document.addEventListener('click', function (e) {
-      var panel = $('#qb-flagged-panel');
-      var tools = document.querySelector('.qb-flag-tools');
-      if (!panel || panel.hidden || !tools) return;
-      if (!tools.contains(e.target)) {
-        panel.hidden = true;
-        if (flaggedListBtn) flaggedListBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
+    if (!bindQuizControls._outsideBound) {
+      bindQuizControls._outsideBound = true;
+      document.addEventListener('click', function (e) {
+        var panel = $('#qb-flagged-panel');
+        var tools = document.querySelector('.qb-flag-tools');
+        if (!panel || panel.hidden || !tools) return;
+        if (!tools.contains(e.target)) {
+          panel.hidden = true;
+          var btn = $('#qb-flagged-list-btn');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+
+  function countAnsweredInSession() {
+    if (!session) return 0;
+    if (session.mode === 'exam') {
+      return session.answers.filter(function (a) { return a != null && a !== ''; }).length;
+    }
+    var n = 0;
+    for (var i = 0; i < session.revealed.length; i++) {
+      if (session.revealed[i]) n += 1;
+    }
+    return n;
   }
 
   function updateProgressUi() {
+    if (!session) return;
     var total = session.questions.length;
-    var n = session.index + 1;
-    var pct = total ? Math.round((n / total) * 100) : 0;
-    var progressEl = $('#qb-quiz-progress');
+    var position = session.index + 1;
+    var answered = countAnsweredInSession();
+    // Fill reflects work completed (answered), not merely current index.
+    var pct = total ? Math.round((answered / total) * 100) : 0;
     var bar = $('#qb-progress-bar');
+    var track = $('#qb-progress');
     var label = $('#qb-progress-label');
-    if (progressEl) progressEl.textContent = 'Question ' + n + ' of ' + total;
+    var sub = $('#qb-progress-sub');
+
+    if (label) label.textContent = 'Question ' + position + ' of ' + total;
+    if (sub) {
+      sub.textContent = answered + ' answered' + (total ? ' · ' + pct + '% complete' : '');
+    }
     if (bar) bar.style.width = pct + '%';
-    if (label) label.textContent = n + ' / ' + total + ' · ' + pct + '%';
+    if (track) {
+      track.setAttribute('aria-valuenow', String(pct));
+      track.setAttribute('aria-valuemax', '100');
+      track.classList.toggle('is-complete', total > 0 && answered >= total);
+    }
+  }
+
+  function refreshFlagState() {
+    if (!session || !window.QBStorage) return Promise.resolve();
+    return window.QBStorage.getBookmarks(profile.id).then(function (rows) {
+      var map = {};
+      (rows || []).forEach(function (r) {
+        if (r && r.questionId) map[r.questionId] = true;
+      });
+      session.flaggedIds = map;
+      session.totalFlagged = (rows || []).length;
+    });
   }
 
   function updateFlagButton(on) {
@@ -464,12 +527,29 @@
     flagBtn.textContent = on ? '⚑ Flagged' : '⚑ Flag';
     flagBtn.classList.toggle('is-flagged', !!on);
     flagBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    flagBtn.title = on
+      ? 'Remove flag from this question'
+      : 'Flag this question for later review';
+  }
+
+  function syncFlagButtonForCurrent() {
+    if (!session) return;
+    var flagBtn = $('#qb-flag-btn');
+    var q = session.questions[session.index];
+    if (!flagBtn || !q) return;
+    if (session.mode === 'exam') {
+      flagBtn.hidden = true;
+      return;
+    }
+    flagBtn.hidden = false;
+    updateFlagButton(!!session.flaggedIds[q.id]);
   }
 
   function updateFlaggedUi() {
     var countEl = $('#qb-flagged-count');
     var list = $('#qb-flagged-list');
     var empty = $('#qb-flagged-empty');
+    var extra = $('#qb-flagged-extra');
     var reviewLink = $('#qb-review-flagged-link');
     if (!session) return;
 
@@ -477,13 +557,16 @@
     session.questions.forEach(function (q, i) {
       if (session.flaggedIds[q.id]) flaggedInSession.push({ q: q, index: i });
     });
+    var outside = Math.max(0, (session.totalFlagged || 0) - flaggedInSession.length);
 
-    if (countEl) countEl.textContent = String(flaggedInSession.length);
+    // Button badge = total saved flags (persistent), so it stays meaningful across quizzes.
+    if (countEl) countEl.textContent = String(session.totalFlagged || 0);
     if (reviewLink) {
       var sids = (session.params && session.params.sids) || [];
       var href = window.QBQuiz.assetUrl('/questionbank/quiz/') + '?mode=flagged';
       if (sids.length) href += '&sids=' + encodeURIComponent(sids.join(','));
       reviewLink.href = href;
+      reviewLink.hidden = (session.totalFlagged || 0) === 0;
     }
     if (!list) return;
     list.innerHTML = '';
@@ -494,7 +577,8 @@
       if (row.index === session.index) btn.classList.add('is-current');
       var stem = (row.q.stem || '').slice(0, 72);
       btn.innerHTML = '<span>Q' + (row.index + 1) + ': ' + esc(stem) + (row.q.stem && row.q.stem.length > 72 ? '…' : '') + '</span>' +
-        '<span class="qb-flag-meta">' + esc(row.q.po_chapter || 'Flagged') + '</span>';
+        '<span class="qb-flag-meta">' + esc(row.q.po_chapter || 'Flagged') +
+        (session.revealed[row.index] ? ' · answered' : '') + '</span>';
       btn.addEventListener('click', function () {
         hideAnswerReveal();
         session.index = row.index;
@@ -508,6 +592,15 @@
       list.appendChild(li);
     });
     if (empty) empty.hidden = flaggedInSession.length > 0;
+    if (extra) {
+      if (outside > 0) {
+        extra.hidden = false;
+        extra.textContent = outside + ' more flagged outside this quiz — use “Review all flagged”.';
+      } else {
+        extra.hidden = true;
+        extra.textContent = '';
+      }
+    }
   }
 
   function hideAnswerReveal() {
@@ -527,7 +620,6 @@
     var nextBtn = $('#qb-next-btn');
     var prevBtn = $('#qb-prev-btn');
     var finishBtn = $('#qb-finish-exam-btn');
-    var flagBtn = $('#qb-flag-btn');
     var examMode = session.mode === 'exam';
     var alreadyRevealed = !examMode && !!session.revealed[session.index];
     var selected = session.answers[session.index] || null;
@@ -569,20 +661,7 @@
       finishBtn.textContent = session.index >= total - 1 ? 'Finish exam' : 'Finish early';
     }
 
-    if (flagBtn) {
-      flagBtn.hidden = !!examMode;
-      if (!examMode) {
-        var on = !!session.flaggedIds[q.id];
-        updateFlagButton(on);
-        window.QBStorage.isBookmarked(profile.id, q.id).then(function (bookmarked) {
-          session.flaggedIds[q.id] = bookmarked;
-          if (!bookmarked) delete session.flaggedIds[q.id];
-          updateFlagButton(bookmarked);
-          updateFlaggedUi();
-        });
-      }
-    }
-
+    syncFlagButtonForCurrent();
     updateFlaggedUi();
   }
 
@@ -619,6 +698,7 @@
 
     session.answers[session.index] = selected;
     session.revealed[session.index] = true;
+    updateProgressUi();
 
     window.QBQuiz.renderOptions($('#qb-options-form'), q, {
       disabled: true,
@@ -634,6 +714,7 @@
       nextBtn.hidden = false;
       nextBtn.textContent = session.index >= session.questions.length - 1 ? 'Finish →' : 'Next question →';
     }
+    updateFlaggedUi();
   }
 
   function submitExamAnswer() {
@@ -643,6 +724,7 @@
       return;
     }
     session.answers[session.index] = selected;
+    updateProgressUi();
 
     if (session.index >= session.questions.length - 1) finishExam();
     else {
