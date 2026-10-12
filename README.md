@@ -61,7 +61,8 @@ Optional scaffolding in Markdown / front matter:
 - `{% include callout.html kind="pearl" text="…" %}` — pearl / pitfall / grading / note
 - `{% include ihc-table.html rows=page.ihc %}` and `{% include ddx-table.html rows=page.ddx %}` —
   place these includes under the matching `##` sections; define the rows in front matter
-- `gallery_position: before` — show histology above the body (default is after)
+- `gallery_position: after` — show histology below the body (default is before, scan-first)
+- `updated: YYYY-MM-DD` — sorts Home “Recent entries”
 
 ## Adding a new field
 

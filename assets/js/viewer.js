@@ -11,14 +11,14 @@
   lb.setAttribute('aria-label', 'Histology image viewer');
   lb.innerHTML =
     '<div class="lb-toolbar">' +
-      '<button type="button" class="lb-btn" data-act="prev" title="Previous (←)">‹</button>' +
-      '<button type="button" class="lb-btn" data-act="out" title="Zoom out (-)">&minus;</button>' +
-      '<span class="lb-zoom" data-role="zoom">100%</span>' +
-      '<button type="button" class="lb-btn" data-act="in" title="Zoom in (+)">+</button>' +
-      '<button type="button" class="lb-btn" data-act="next" title="Next (→)">›</button>' +
-      '<button type="button" class="lb-btn" data-act="reset" title="Reset (0)">Reset</button>' +
-      '<button type="button" class="lb-btn" data-act="invert" title="Invert (I)">Invert</button>' +
-      '<button type="button" class="lb-btn lb-close" data-act="close" title="Close (Esc)">&times;</button>' +
+      '<button type="button" class="lb-btn" data-act="prev" title="Previous (←)" aria-label="Previous image">‹</button>' +
+      '<button type="button" class="lb-btn" data-act="out" title="Zoom out (-)" aria-label="Zoom out">&minus;</button>' +
+      '<span class="lb-zoom" data-role="zoom" aria-live="polite">100%</span>' +
+      '<button type="button" class="lb-btn" data-act="in" title="Zoom in (+)" aria-label="Zoom in">+</button>' +
+      '<button type="button" class="lb-btn" data-act="next" title="Next (→)" aria-label="Next image">›</button>' +
+      '<button type="button" class="lb-btn" data-act="reset" title="Reset (0)" aria-label="Reset view">Reset</button>' +
+      '<button type="button" class="lb-btn" data-act="invert" title="Invert (I)" aria-label="Invert colors">Invert</button>' +
+      '<button type="button" class="lb-btn lb-close" data-act="close" title="Close (Esc)" aria-label="Close viewer">&times;</button>' +
     '</div>' +
     '<div class="lb-stage">' +
       '<img alt="" draggable="false">' +
@@ -116,12 +116,25 @@
     resetView();
   }
 
+  function setAppInert(on) {
+    var app = document.getElementById('app');
+    if (!app) return;
+    if (on) {
+      app.setAttribute('inert', '');
+      app.setAttribute('aria-hidden', 'true');
+    } else {
+      app.removeAttribute('inert');
+      app.removeAttribute('aria-hidden');
+    }
+  }
+
   function open(fromBtn) {
     lastFocus = document.activeElement;
     collectGallery(fromBtn);
     showCurrent();
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
+    setAppInert(true);
     lb.querySelector('.lb-close').focus();
   }
 
@@ -129,6 +142,7 @@
     lb.classList.remove('open');
     document.body.style.overflow = '';
     img.src = '';
+    setAppInert(false);
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 

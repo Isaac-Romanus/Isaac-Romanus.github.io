@@ -1,30 +1,36 @@
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="{{ '/' | relative_url }}">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }}">
       <span class="brand-mark" aria-hidden="true">🔬</span>
-      <span class="brand-text">{{ site.title }}</span>
+      <span class="brand-text" aria-hidden="true">{{ site.title }}</span>
+      <span class="brand-text-short" aria-hidden="true">PN</span>
     </a>
+
+    <div class="header-search-slot">
+      <div class="search" role="search" data-search-url="{{ '/search.json' | relative_url }}"{% if page.field %} data-field="{{ page.field }}"{% endif %}>
+        <span class="search-icon" aria-hidden="true">🔎</span>
+        <input type="search" id="site-search" class="search-input" placeholder="Search entries…" role="combobox" aria-label="Search entries" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" aria-haspopup="listbox" autocomplete="off" spellcheck="false">
+        <kbd class="search-kbd" aria-hidden="true">/</kbd>
+        <div id="search-results" class="search-results" role="listbox" aria-label="Search results" hidden></div>
+        <div class="visually-hidden" id="search-status" aria-live="polite"></div>
+      </div>
+    </div>
 
     <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav-panel" aria-label="Open menu">
       <span class="nav-toggle-bars" aria-hidden="true"></span>
     </button>
 
     <div class="header-tools" id="site-nav-panel">
-      <div class="search" role="search" data-search-url="{{ '/search.json' | relative_url }}">
-        <span class="search-icon" aria-hidden="true">🔎</span>
-        <input type="search" id="site-search" class="search-input" placeholder="Search entries…" aria-label="Search entries" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" autocomplete="off" spellcheck="false">
-        <kbd class="search-kbd" aria-hidden="true">/</kbd>
-        <div id="search-results" class="search-results" role="listbox" aria-label="Search results" hidden></div>
-        <div class="visually-hidden" id="search-status" aria-live="polite"></div>
-      </div>
-
       <nav class="site-nav" aria-label="Primary">
-        <a href="{{ '/' | relative_url }}">Fields</a>
-        <a href="{{ '/diseases/' | relative_url }}">A&ndash;Z</a>
-        <a href="{{ '/tags/' | relative_url }}">Tags</a>
-        <a href="{{ '/about/' | relative_url }}">About</a>
+        {% assign path = page.url | default: '' %}
+        <a href="{{ '/' | relative_url }}"{% if path == '/' %} aria-current="page"{% endif %}>Home</a>
+        <a href="{{ '/' | relative_url }}#fields">Fields</a>
+        <a href="{{ '/diseases/' | relative_url }}"{% if path == '/diseases/' %} aria-current="page"{% endif %}>A&ndash;Z</a>
+        <a href="{{ '/tags/' | relative_url }}"{% if path == '/tags/' %} aria-current="page"{% endif %}>Tags</a>
+        <a href="{{ '/about/' | relative_url }}"{% if path == '/about/' %} aria-current="page"{% endif %}>About</a>
         {% if site.auth.enabled %}
-          <button type="button" id="lock-btn" class="lock-btn" title="Lock the notebook">Lock</button>
+          <button type="button" id="lock-btn" class="lock-btn" title="Lock the notebook" aria-label="Lock the notebook">Lock</button>
         {% endif %}
       </nav>
     </div>

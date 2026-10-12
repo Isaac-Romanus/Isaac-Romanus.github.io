@@ -6,7 +6,7 @@ layout: default
 <article class="disease" style="--accent: {{ fld.accent | default: '#D6CDEA' }}">
   <header class="disease-header">
     <div class="wrap">
-      <nav class="crumbs">
+      <nav class="crumbs" aria-label="Breadcrumb">
         <a href="{{ '/' | relative_url }}">Home</a> <span>/</span>
         {% if fld %}<a href="{{ '/fields/' | append: fld.slug | append: '/' | relative_url }}">{{ fld.name }}</a> <span>/</span>{% endif %}
         <span>{{ page.title }}</span>
@@ -37,9 +37,10 @@ layout: default
         </aside>
       {% endif %}
 
-      {% assign gallery_before = false %}
-      {% if page.gallery_position == "before" %}
-        {% assign gallery_before = true %}
+      {% comment %}Default: histology before body (scan-first). Opt out with gallery_position: after{% endcomment %}
+      {% assign gallery_before = true %}
+      {% if page.gallery_position == "after" %}
+        {% assign gallery_before = false %}
       {% endif %}
 
       {% if gallery_before and page.images %}

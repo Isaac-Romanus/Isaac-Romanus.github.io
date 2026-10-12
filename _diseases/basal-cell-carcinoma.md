@@ -1,6 +1,7 @@
 ---
 title: Basal cell carcinoma
 field: dermatopathology
+updated: 2026-08-06
 synonyms:
   - BCC
   - Basalioma

@@ -17,7 +17,7 @@
   box-shadow: var(--shadow-sm);
   padding: 18px 22px;
   margin: 0 0 28px;
-  scroll-margin-top: 92px;
+  scroll-margin-top: var(--header-offset);
 }
 .qf-title { font-family: var(--font-sans); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 10px; }
 .quick-facts dl { margin: 0; display: grid; gap: 8px; }
@@ -25,7 +25,7 @@
 .qf-row dt { font-weight: 600; color: var(--ink-soft); }
 .qf-row dd { margin: 0; }
 
-.disease-toc { position: sticky; top: 92px; }
+.disease-toc { position: sticky; top: var(--header-offset); }
 .toc-title { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 10px; font-weight: 700; }
 #toc { display: flex; flex-direction: column; gap: 2px; border-left: 2px solid var(--line); }
 #toc a { color: var(--ink-soft); font-size: .9rem; padding: 4px 0 4px 14px; margin-left: -2px; border-left: 2px solid transparent; }
@@ -50,6 +50,7 @@
 }
 .toc-mobile-nav { display: flex; flex-direction: column; gap: 4px; margin-top: 10px; }
 .toc-mobile-nav a { color: var(--ink-soft); font-size: .95rem; padding: 4px 0; }
+.toc-mobile-nav a.active { color: var(--brand-ink); font-weight: 600; }
 
 .prose { font-size: 1.02rem; color: var(--ink); }
 .prose > :first-child { margin-top: 0; }
@@ -58,7 +59,7 @@
   font-size: var(--text-section); letter-spacing: -.01em;
   margin: 40px 0 12px; padding-bottom: 8px;
   border-bottom: 2px solid color-mix(in srgb, var(--accent) 55%, #fff);
-  scroll-margin-top: 92px;
+  scroll-margin-top: var(--header-offset);
 }
 .prose h3 { font-size: 1.15rem; margin: 26px 0 8px; }
 .prose p { margin: 0 0 16px; }
